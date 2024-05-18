@@ -5,13 +5,15 @@
 package ec.edu.espol.proyectoed1.classes;
 
 import java.util.List;
+import java.io.Serializable;
+
 
 /**
  *
  * @author USER
  */
-public class Vehiculo {
-
+public class Vehiculo implements Serializable {
+    private static final long serialVersionUID = 1L;
     protected String placa;
     protected double precio;
     protected String marca;
@@ -135,6 +137,10 @@ public class Vehiculo {
         this.reparaciones = reparaciones;
         this.accidentes = accidentes;
         this.dueño = dueño;
+    }
+    
+    public Vehiculo(String placa){
+        this.placa =placa;
     }
 
    

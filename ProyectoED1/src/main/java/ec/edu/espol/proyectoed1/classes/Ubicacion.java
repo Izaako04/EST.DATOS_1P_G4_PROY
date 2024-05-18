@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ec.edu.espol.proyectoed1.classes;
-
+import java.io.Serializable;
 /**
  *
  * @author USER
  */
-public class Ubicacion {
+public class Ubicacion implements Serializable  {
     private String direccion1;
     private String direccion2;
     private String ciudad;
