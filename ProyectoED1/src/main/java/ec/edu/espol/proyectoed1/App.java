@@ -1,5 +1,7 @@
 package ec.edu.espol.proyectoed1;
 
+import ec.edu.espol.proyectoed1.classes.Vehiculo;
+import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
 
 /**
  * JavaFX App
@@ -36,6 +39,13 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+        
+        Vehiculo v = new Vehiculo("67hf");
+        
+        Utilitaria.agregarVehiculo_ARCHIVO(v);
+        
+        System.out.println("done");
+        
     }
 
 }
