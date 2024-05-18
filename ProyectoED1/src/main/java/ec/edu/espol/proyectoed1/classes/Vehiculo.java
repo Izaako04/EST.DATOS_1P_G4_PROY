@@ -4,12 +4,15 @@
  */
 package ec.edu.espol.proyectoed1.classes;
 
+import java.util.List;
+
 /**
  *
  * @author USER
  */
 public class Vehiculo {
 
+    protected String placa;
     protected double precio;
     protected String marca;
     protected String modelo;
@@ -18,42 +21,29 @@ public class Vehiculo {
     protected Motor motor;
     protected Transmision transmision;
     protected Ubicacion ubicacion;
-    protected 
-    
-    protected String color;
-    protected String tipoCombustible;
-    
-    protected Vendedor dueño;
-
-
-    public Vehiculo(String placa, String marca, String modelo, String tipomotor, int año, double recorrido, String color, String tipoCombustible, double precio) {
-        this.placa = placa;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.tipomotor = tipomotor;
-        this.año = año;
-        this.recorrido = recorrido;
-        this.color = color;
-        this.tipoCombustible = tipoCombustible;
-        this.precio = precio;
-    }
-    
-    public Vehiculo(String placa, String marca, String modelo, String tipomotor, int año, double recorrido, String color, String tipoCombustible, double precio, Vendedor dueño){
-        this( placa, marca,modelo,tipomotor,año,recorrido,color,tipoCombustible,precio);
-        this.dueño=dueño;
-    }
-
+    protected List<Reparacion> reparaciones;
+    protected List<Accidente> accidentes;
+    protected Persona dueño;
 
     public String getPlaca() {
-        return this.placa;
+        return placa;
     }
 
     public void setPlaca(String placa) {
         this.placa = placa;
     }
+    
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
 
     public String getMarca() {
-        return this.marca;
+        return marca;
     }
 
     public void setMarca(String marca) {
@@ -61,57 +51,96 @@ public class Vehiculo {
     }
 
     public String getModelo() {
-        return this.modelo;
+        return modelo;
     }
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
-    public String getTipomotor() {
-        return tipomotor;
-    }
-
-    public void setTipomotor(String tipomotor) {
-        this.tipomotor = tipomotor;
-    }
     public int getAño() {
-        return this.año;
+        return año;
     }
 
     public void setAño(int año) {
         this.año = año;
     }
 
-    public double getRecorrido() {
-        return this.recorrido;
+    public double getKilometraje() {
+        return kilometraje;
     }
 
-    public void setRecorrido(double recorrido) {
-        this.recorrido = recorrido;
+    public void setKilometraje(double kilometraje) {
+        this.kilometraje = kilometraje;
     }
 
-    public String getColor() {
-        return this.color;
+    public Motor getMotor() {
+        return motor;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setMotor(Motor motor) {
+        this.motor = motor;
     }
 
-    public String getTipoCombustible() {
-        return this.tipoCombustible;
+    public Transmision getTransmision() {
+        return transmision;
     }
 
-    public void setTipoCombustible(String tipoCombustible) {
-        this.tipoCombustible = tipoCombustible;
+    public void setTransmision(Transmision transmision) {
+        this.transmision = transmision;
     }
 
-    public double getPrecio() {
-        return this.precio;
+    public Ubicacion getUbicacion() {
+        return ubicacion;
     }
 
-    public void setPrecio(double precio) {
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public List<Reparacion> getReparaciones() {
+        return reparaciones;
+    }
+
+    public void setReparaciones(List<Reparacion> reparaciones) {
+        this.reparaciones = reparaciones;
+    }
+
+    public List<Accidente> getAccidentes() {
+        return accidentes;
+    }
+
+    public void setAccidentes(List<Accidente> accidentes) {
+        this.accidentes = accidentes;
+    }
+
+    public Persona getDueño() {
+        return dueño;
+    }
+
+    public void setDueño(Persona dueño) {
+        this.dueño = dueño;
+    }
+
+    public Vehiculo(String placa, double precio, String marca, String modelo, int año, double kilometraje, Motor motor, Transmision transmision, Ubicacion ubicacion, List<Reparacion> reparaciones, List<Accidente> accidentes, Persona dueño) {
+        this.placa = placa;
         this.precio = precio;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.año = año;
+        this.kilometraje = kilometraje;
+        this.motor = motor;
+        this.transmision = transmision;
+        this.ubicacion = ubicacion;
+        this.reparaciones = reparaciones;
+        this.accidentes = accidentes;
+        this.dueño = dueño;
     }
+
+   
+    
+    
+
+
+
 }
