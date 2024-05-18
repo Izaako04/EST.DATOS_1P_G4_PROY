@@ -1,5 +1,4 @@
 ec/edu/espol/proyectoed1/classes/Motor.class
-ec/edu/espol/proyectoed1/SecondaryController.class
 ec/edu/espol/proyectoed1/classes/Transmision.class
 ec/edu/espol/proyectoed1/classes/Utilitaria.class
 ec/edu/espol/proyectoed1/TDAs/ArrayListG4.class
@@ -8,6 +7,7 @@ ec/edu/espol/proyectoed1/classes/Reparacion.class
 ec/edu/espol/proyectoed1/classes/Accidente.class
 module-info.class
 ec/edu/espol/proyectoed1/classes/Ubicacion.class
-ec/edu/espol/proyectoed1/PrimaryController.class
+ec/edu/espol/proyectoed1/vInicioSesionController.class
 ec/edu/espol/proyectoed1/classes/Persona.class
 ec/edu/espol/proyectoed1/App.class
+ec/edu/espol/proyectoed1/vCrearCuentaController.class
