@@ -13,12 +13,14 @@ import java.util.ListIterator;
  *
  * @author USER
  */
-public class ArrayListG4<T> implements List<T>{
-    int defaultMax = 10;
-    T arreglo[];
+public class ArrayListG4<E> implements List<E>{
+    int dimensionMax = 10;
+    int dimensionReal; 
+    E arreglo[];
     
     public ArrayListG4(){
-        arreglo = (T[]) new Object[defaultMax ];
+        arreglo = (E[]) new Object[dimensionMax ];
+        dimensionReal = 0;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class ArrayListG4<T> implements List<T>{
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<E> iterator() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -52,7 +54,7 @@ public class ArrayListG4<T> implements List<T>{
     }
 
     @Override
-    public boolean add(T e) {
+    public boolean add(E e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -67,12 +69,12 @@ public class ArrayListG4<T> implements List<T>{
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
+    public boolean addAll(Collection<? extends E> c) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends T> c) {
+    public boolean addAll(int index, Collection<? extends E> c) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -92,22 +94,22 @@ public class ArrayListG4<T> implements List<T>{
     }
 
     @Override
-    public T get(int index) {
+    public E get(int index) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public T set(int index, T element) {
+    public E set(int index, E element) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void add(int index, T element) {
+    public void add(int index, E element) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public T remove(int index) {
+    public E remove(int index) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -122,17 +124,17 @@ public class ArrayListG4<T> implements List<T>{
     }
 
     @Override
-    public ListIterator<T> listIterator() {
+    public ListIterator<E> listIterator() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public ListIterator<T> listIterator(int index) {
+    public ListIterator<E> listIterator(int index) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<T> subList(int fromIndex, int toIndex) {
+    public List<E> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
