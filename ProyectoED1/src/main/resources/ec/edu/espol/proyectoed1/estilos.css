@@ -1,0 +1,78 @@
+.textField{
+    -fx-text-fill: #D6EEFF;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2.5 0;
+    -fx-border-color: #C880B7;
+
+}
+
+.buttonMenu:hover{
+    -fx-border-width: 0 0 2.5 0;
+    -fx-border-color: #C880B7;
+    
+}
+
+.buttonImg {
+    -fx-background-color:  #C880B7;
+    
+}
+
+.combobox{
+    -fx-background-color:transparent;
+    
+}
+
+.combobox:showing {
+    -fx-border-radius: 10;
+    -fx-background-color: #D6EEFF; /* Cambia el color de fondo de las celdas */
+    -fx-font-size: 12px; /* Cambia el tamaño de la fuente de las celdas */
+}
+
+.btn{
+    -fx-background-color: #C880B7;    
+    -fx-background-radius: 10;
+}
+
+.btn:hover {
+    -fx-background-color: #bf97b6;
+}
+
+/* Cambiar el color del texto en el cuadro de selección desplegable */
+.comboCat .list-cell:selected {
+    -fx-text-fill: #D6EEFF; /* Cambia el color aquí */    
+}
+
+/* Cambiar el color del texto en los elementos seleccionados */
+.comboCat .list-view .list-cell {
+    -fx-text-fill: #D6EEFF; /* Cambia el color aquí */
+    -fx-background-color:  #392B58;
+}
+
+.textFIeldWallet{
+    -fx-text-fill: #708B75;
+    
+}
+
+.btnWallet{
+    -fx-background-color:  #708B75;
+    
+}
+
+.btnWallet:hover{
+    -fx-background-color: #DBF4AD;
+    
+}
+
+.scroll-bar:vertical{
+    -fx-background-color: #392B58;
+}
+
+.scroll-bar:horizontal{
+    -fx-background-color: transparent;
+}
+
+.text-area {
+    -fx-control-inner-background: #503D7B;
+    -fx-text-fill: #D6EEFF;
+    -fx-prompt-text-fill: #D6EEFF;
+}
