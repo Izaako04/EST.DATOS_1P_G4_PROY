@@ -10,4 +10,24 @@ package ec.edu.espol.proyectoed1.classes;
  */
 public class Utilitaria {
     
+    public static void crearUsuario_ARCHIVO(String correo, String contrasenia){
+        
+        
+    }
+    
+    public static void verificarExistenciaUsuario_ARCHIVO(String correo, String contrasenia){
+        
+    }
+    
+    
+    
+    public static void verificarContrasenia_ARCHIVO(String correo, String contrasenia){
+        
+    }
+    
+    public static void iniciarSesion_ARCHIVO(String correo, String contrasenia){
+        
+        
+    }
+            
 }
