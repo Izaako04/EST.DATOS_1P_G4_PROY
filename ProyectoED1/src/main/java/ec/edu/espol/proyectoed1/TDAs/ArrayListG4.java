@@ -25,12 +25,12 @@ public class ArrayListG4<E> implements List<E>{
 
     @Override
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return dimensionReal;
     }
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return dimensionReal == 0;
     }
 
     @Override
@@ -55,7 +55,25 @@ public class ArrayListG4<E> implements List<E>{
 
     @Override
     public boolean add(E e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(dimensionReal<dimensionMax){
+            arreglo[dimensionReal] = e;
+            dimensionReal++;
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean isFull(){
+        return dimensionReal == dimensionMax;
+    }
+    
+    private void aumentarDim(){
+        E[] arrTemp = (E[]) new Object[dimensionMax*2];
+        for (int i=0;i<dimensionMax;i++){
+            arrTemp[i] = arreglo[i];
+        }
+        arreglo = arrTemp;
+        dimensionMax = dimensionMax * 2;
     }
 
     @Override
@@ -95,22 +113,54 @@ public class ArrayListG4<E> implements List<E>{
 
     @Override
     public E get(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(!this.isEmpty()&&index<dimensionReal){
+            return arreglo[index];
+        }
+        return null;
     }
 
     @Override
     public E set(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(index<0||index>=dimensionReal){
+            throw new IndexOutOfBoundsException();
+        }else{
+            E eviejo = arreglo[index];
+            arreglo[index] = element;
+            return eviejo;
+        }
     }
 
     @Override
     public void add(int index, E element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        if(element == null){
+            throw new NullPointerException();
+        }else if(index <0 || index>this.dimensionReal){
+            throw new IndexOutOfBoundsException();
+        }else if(this.isEmpty()){
+            arreglo[dimensionReal++] = element;
+        }else if(this.isFull()){
+            this.aumentarDim();
+        }
+        for(int i = dimensionReal;i>=index;i--){
+           arreglo[i+1] = arreglo[i];
+        }
+        arreglo[index]=element;
+        dimensionReal++;
+    };
 
     @Override
     public E remove(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        E eremove = null;
+        if(this.isEmpty()||index>this.dimensionReal||index<0){
+            throw new IndexOutOfBoundsException();
+        }else{
+            eremove = arreglo[index];
+            for(int i =0;i<this.dimensionReal-1;i++){
+                arreglo[i]=arreglo[i+1];
+            }
+            dimensionReal--;
+        }
+        return eremove;
     }
 
     @Override
@@ -138,4 +188,51 @@ public class ArrayListG4<E> implements List<E>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public void addFirst(E e) {
+        List.super.addFirst(e);
+    }
+    
+    public boolean addFrist(E e){
+        if (e == null){
+            return false;
+        } else if (isEmpty()){
+            arreglo[0] = e;
+            dimensionReal++;
+            return true;
+        } else if(isFull()){
+            aumentarDim();
+        }
+        for (int i = dimensionReal-1; i>=0;i--){
+            arreglo[i+1] = arreglo[i];
+        }
+        arreglo[0] = e;
+        dimensionReal++;
+        return true;
+    }
+
+    @Override
+    public void addLast(E e) {
+        List.super.addLast(e); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    @Override
+    public E getFirst() {
+        return List.super.getFirst(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    @Override
+    public E getLast() {
+        return List.super.getLast(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    @Override
+    public E removeFirst() {
+        return List.super.removeFirst(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    @Override
+    public E removeLast() {
+        return List.super.removeLast(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
 }
