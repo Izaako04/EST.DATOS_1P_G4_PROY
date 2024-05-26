@@ -55,12 +55,13 @@ public class ArrayListG4<E> implements List<E>{
 
     @Override
     public boolean add(E e) {
-        if(dimensionReal<dimensionMax){
-            arreglo[dimensionReal] = e;
-            dimensionReal++;
-            return true;
+        if(this.isFull()){
+            this.aumentarDim();
+        }else if(e==null){
+            return false;
         }
-        return false;
+        arreglo[dimensionReal++]= e;
+        return true;
     }
     
     private boolean isFull(){
@@ -93,7 +94,16 @@ public class ArrayListG4<E> implements List<E>{
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int espacio = dimensionMax - dimensionMax;
+        if(c.isEmpty()){
+            return true;
+        }else if(c.size()>dimensionMax || c.size()>espacio){
+            this.aumentarDim();
+        }
+        for(E elemento: c){
+            this.add(elemento);
+        }
+        return true;
     }
 
     @Override
