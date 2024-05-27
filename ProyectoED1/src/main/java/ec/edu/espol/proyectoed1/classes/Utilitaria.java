@@ -3,9 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ec.edu.espol.proyectoed1.classes;
+import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  *
@@ -16,35 +21,33 @@ public class Utilitaria {
     public static void crearUsuario_ARCHIVO(String correo, String contrasenia){
         
         
+        
     }
     
     public static void verificarExistenciaUsuario_ARCHIVO(String correo, String contrasenia){
         
-    }
-    
-    public static void verificarExistenciaVehiculo_ARCHIVO(Vehiculo v){
-        
-    }
-    
+    }    
     
     public static void verificarContrasenia_ARCHIVO(String correo, String contrasenia){
         
     }
     
-    public static void iniciarSesion_ARCHIVO(String correo, String contrasenia){
-        
-        
+    public static <T> List<T> leerArchivo(String filename){
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename+".ser"))) {
+            return (List<T>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     
-    public static void agregarVehiculo_ARCHIVO(Vehiculo v){
-        
-        try (FileOutputStream fileOut = new FileOutputStream("vehiculo.ser");
-             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-            out.writeObject(v);
-            System.out.println("Vehiculo serializado y guardado en vehiculo.ser");
-        } catch (IOException i) {
-            i.printStackTrace();
+    public static <T> void escribirArchivo(List<T> conjunto, String filename){
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename + ".ser"))) {
+            out.writeObject(conjunto);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        
     }
             
 }

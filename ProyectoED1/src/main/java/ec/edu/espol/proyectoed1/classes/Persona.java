@@ -10,13 +10,13 @@ import java.io.Serializable;
  *
  * @author USER
  */
-public class Persona implements Serializable {
+public abstract class Persona implements Serializable {
     private String nombre;
     private String cedula;
-    private String correo;
-    private String contrasenia;
-    private List<Vehiculo> vehiculosPropios;
-    private List<Vehiculo> vehiculosAgregadosAFavoritos;
+    
+    public abstract void registrarVehiculo(Vehiculo v);
+    
+    public abstract void crearUsuario_Archivo(Usuario usuario);
 
     public String getNombre() {
         return nombre;
@@ -34,46 +34,15 @@ public class Persona implements Serializable {
         this.cedula = cedula;
     }
 
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
-    public List<Vehiculo> getVehiculosPropios() {
-        return vehiculosPropios;
-    }
-
-    public void setVehiculosPropios(List<Vehiculo> vehiculosPropios) {
-        this.vehiculosPropios = vehiculosPropios;
-    }
-
-    public List<Vehiculo> getVehiculosAgregadosAFavoritos() {
-        return vehiculosAgregadosAFavoritos;
-    }
-
-    public void setVehiculosAgregadosAFavoritos(List<Vehiculo> vehiculosAgregadosAFavoritos) {
-        this.vehiculosAgregadosAFavoritos = vehiculosAgregadosAFavoritos;
-    }
-
-    public Persona(String nombre, String cedula, String correo, String contrasenia, List<Vehiculo> vehiculosPropios, List<Vehiculo> vehiculosAgregadosAFavoritos) {
+    public Persona(String nombre, String cedula) {
         this.nombre = nombre;
         this.cedula = cedula;
-        this.correo = correo;
-        this.contrasenia = contrasenia;
-        this.vehiculosPropios = vehiculosPropios;
-        this.vehiculosAgregadosAFavoritos = vehiculosAgregadosAFavoritos;
     }
     
     
+
+ 
+    
+    
+
 }
