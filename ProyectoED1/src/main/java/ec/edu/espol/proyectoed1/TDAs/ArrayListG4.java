@@ -197,11 +197,6 @@ public class ArrayListG4<E> implements List<E>{
     public List<E> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public void addFirst(E e) {
-        List.super.addFirst(e);
-    }
     
     public boolean addFrist(E e){
         if (e == null){
@@ -219,30 +214,5 @@ public class ArrayListG4<E> implements List<E>{
         arreglo[0] = e;
         dimensionReal++;
         return true;
-    }
-
-    @Override
-    public void addLast(E e) {
-        List.super.addLast(e); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
-
-    @Override
-    public E getFirst() {
-        return List.super.getFirst(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
-
-    @Override
-    public E getLast() {
-        return List.super.getLast(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
-
-    @Override
-    public E removeFirst() {
-        return List.super.removeFirst(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
-
-    @Override
-    public E removeLast() {
-        return List.super.removeLast(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
 }
