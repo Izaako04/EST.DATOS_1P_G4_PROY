@@ -65,6 +65,15 @@ public class Persona implements Serializable {
     public void setVehiculosAgregadosAFavoritos(List<Vehiculo> vehiculosAgregadosAFavoritos) {
         this.vehiculosAgregadosAFavoritos = vehiculosAgregadosAFavoritos;
     }
+    
+    public Persona(String nombre, String cedula, String correo, String contrasenia){
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.vehiculosPropios = null;
+        this.vehiculosAgregadosAFavoritos = null;       
+    }
 
     public Persona(String nombre, String cedula, String correo, String contrasenia, List<Vehiculo> vehiculosPropios, List<Vehiculo> vehiculosAgregadosAFavoritos) {
         this.nombre = nombre;
@@ -74,6 +83,5 @@ public class Persona implements Serializable {
         this.vehiculosPropios = vehiculosPropios;
         this.vehiculosAgregadosAFavoritos = vehiculosAgregadosAFavoritos;
     }
-    
     
 }

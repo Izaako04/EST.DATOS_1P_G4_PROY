@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ec.edu.espol.proyectoed1.classes.Persona;
 
 public class vInicioSesionController {
 
@@ -45,6 +46,9 @@ public class vInicioSesionController {
 
     @FXML
     private void iniciarSesion(MouseEvent event) {
+        String correo = this.fUsuario.getText();
+        String contra = this.fPassword.getText();
+        //import
     }
 
     @FXML
