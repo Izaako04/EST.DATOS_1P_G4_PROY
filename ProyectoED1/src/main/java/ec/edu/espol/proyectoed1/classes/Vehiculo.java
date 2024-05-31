@@ -90,14 +90,14 @@ public class Vehiculo implements Serializable {
         this.ubicacion = ubicacion;
     }
     
-        public void agregarVehiculo_ARCHIVO(){
+    public void agregarVehiculo_ARCHIVO(){
 
-      if (leerArchivo("vehiculos")== null){
+    if (leerArchivo("vehiculos")== null){
           List<Vehiculo> vehiculos= new ArrayListG4<>();
           vehiculos.add(this);
           escribirArchivo(vehiculos ,"vehiculos" );
       }
-      else{
+    else{
           List<Vehiculo> vehiculos= leerArchivo("vehiculos");
           vehiculos.add(this);
           escribirArchivo(vehiculos, "vehiculos");

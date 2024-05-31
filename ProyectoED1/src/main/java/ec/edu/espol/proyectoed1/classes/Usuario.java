@@ -7,6 +7,7 @@ package ec.edu.espol.proyectoed1.classes;
 import static ec.edu.espol.proyectoed1.classes.Utilitaria.leerArchivo;
 import java.util.Comparator;
 import java.util.List;
+import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
 
 /**
  *
@@ -24,12 +25,12 @@ public class Usuario extends Persona{
         super(nombre, cedula);
     }
 
-    public Usuario(String correo, String contrasenia, List<Vehiculo> vehiculosPropios, List<Vehiculo> vehiculosAgregadosAFavoritos, String nombre, String cedula) {
+    public Usuario(String correo, String contrasenia, String nombre, String cedula) {
         super(nombre, cedula);
         this.correo = correo;
         this.contrasenia = contrasenia;
-        this.vehiculosPropios = vehiculosPropios;
-        this.vehiculosAgregadosAFavoritos = vehiculosAgregadosAFavoritos;
+        this.vehiculosPropios = new ArrayListG4<Vehiculo>();
+        this.vehiculosAgregadosAFavoritos = new ArrayListG4<Vehiculo>();
     }
     
     public String getCorreo() {
