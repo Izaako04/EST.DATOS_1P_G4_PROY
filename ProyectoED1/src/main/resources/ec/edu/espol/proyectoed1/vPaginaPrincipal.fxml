@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.proyectoed1.vPaginaPrincipalController">
+   <children>
+      <Button fx:id="btnMisVehiculos" layoutX="513.0" layoutY="43.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="176.0" styleClass="btn" stylesheets="@estilos.css" text="Mis vehículos" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <VBox fx:id="contenedorHbox" alignment="TOP_CENTER" layoutX="67.0" layoutY="136.0" prefHeight="532.0" prefWidth="563.0" spacing="25.0" style="-fx-background-color: #392B58; -fx-border-width: 0;">
+         <padding>
+            <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <Button fx:id="btnVenderVehiculo" layoutX="783.0" layoutY="43.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="176.0" styleClass="btn" stylesheets="@estilos.css" text="Vende tu vehículo" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="vCerrarSesión" layoutX="1049.0" layoutY="43.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="176.0" styleClass="btn" stylesheets="@estilos.css" text="Cerrar sesión" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Text fx:id="textoSaludoUsuario" fill="WHITE" layoutX="75.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Bienvenido, nombre">
+         <font>
+            <Font name="Verdana" size="22.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="722.0" layoutY="174.0" prefHeight="462.0" prefWidth="474.0" style="-fx-background-color: #292727; -fx-background-radius: 20;" stylesheets="@estilos.css">
+         <children>
+            <Text fill="WHITE" layoutX="33.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Encuentra tu compañero de ruta perfecto" wrappingWidth="292.7728271484375">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="cmbTipoVehiculo" layoutX="24.0" layoutY="95.0" prefHeight="42.0" prefWidth="139.0" promptText="Autos" styleClass="combobox" stylesheets="@estilos.css" />
+            <ComboBox fx:id="cmbMarca" layoutX="169.0" layoutY="95.0" prefHeight="42.0" prefWidth="139.0" promptText="Marca" styleClass="combobox" stylesheets="@estilos.css" />
+            <ComboBox fx:id="cmbModelo" layoutX="313.0" layoutY="95.0" prefHeight="42.0" prefWidth="139.0" promptText="Modelo" styleClass="combobox" stylesheets="@estilos.css" />
+            <TextField fx:id="tfPrecioDesde" layoutX="21.0" layoutY="171.0" prefHeight="44.0" prefWidth="203.0" promptText="Precios desde" styleClass="textField" stylesheets="@estilos.css">
+               <font>
+                  <Font name="Verdana" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tfPrecioHasta" layoutX="244.0" layoutY="171.0" prefHeight="44.0" prefWidth="203.0" promptText="Precios hasta" styleClass="textField" stylesheets="@estilos.css">
+               <font>
+                  <Font name="Verdana" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tfKmHasta" layoutX="21.0" layoutY="240.0" prefHeight="44.0" prefWidth="203.0" promptText="Kilometraje desde" styleClass="textField" stylesheets="@estilos.css">
+               <font>
+                  <Font name="Verdana" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tfKmHasta" layoutX="244.0" layoutY="240.0" prefHeight="44.0" prefWidth="203.0" promptText="Kilometraje hasta" styleClass="textField" stylesheets="@estilos.css">
+               <font>
+                  <Font name="Verdana" size="14.0" />
+               </font>
+            </TextField>
+            <Button fx:id="btnBuscar" layoutX="83.0" layoutY="385.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="313.0" styleClass="btn" stylesheets="@estilos.css" text="Buscar" textFill="WHITE">
+               <font>
+                  <Font name="Verdana" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <TextField fx:id="tfYearDesde" layoutX="21.0" layoutY="312.0" prefHeight="44.0" prefWidth="203.0" promptText="Año desde" styleClass="textField" stylesheets="@estilos.css">
+               <font>
+                  <Font name="Verdana" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tfYearHasta" layoutX="244.0" layoutY="312.0" prefHeight="44.0" prefWidth="203.0" promptText="Año hasta" styleClass="textField" stylesheets="@estilos.css">
+               <font>
+                  <Font name="Verdana" size="14.0" />
+               </font>
+            </TextField>
+         </children></AnchorPane>
+      <ComboBox fx:id="cmbOrdenar" layoutX="67.0" layoutY="106.0" prefHeight="21.0" prefWidth="139.0" promptText="Ordenar por" styleClass="combobox" stylesheets="@estilos.css" />
+   </children>
+</AnchorPane>
