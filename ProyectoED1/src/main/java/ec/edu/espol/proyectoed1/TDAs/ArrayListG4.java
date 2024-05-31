@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.proyectoed1.TDAs;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.ListIterator;
  *
  * @author USER
  */
-public class ArrayListG4<E> implements List<E>{
+public class ArrayListG4<E> implements List<E>, Serializable{
     int dimensionMax = 10;
     int dimensionReal; 
     E arreglo[];
@@ -55,12 +56,13 @@ public class ArrayListG4<E> implements List<E>{
 
     @Override
     public boolean add(E e) {
-        if(dimensionReal<dimensionMax){
-            arreglo[dimensionReal] = e;
-            dimensionReal++;
-            return true;
+        if(this.isFull()){
+            this.aumentarDim();
+        }else if(e==null){
+            return false;
         }
-        return false;
+        arreglo[dimensionReal++]= e;
+        return true;
     }
     
     private boolean isFull(){
@@ -93,7 +95,16 @@ public class ArrayListG4<E> implements List<E>{
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int espacio = dimensionMax - dimensionMax;
+        if(c.isEmpty()){
+            return true;
+        }else if(c.size()>dimensionMax || c.size()>espacio){
+            this.aumentarDim();
+        }
+        for(E elemento: c){
+            this.add(elemento);
+        }
+        return true;
     }
 
     @Override
@@ -187,11 +198,6 @@ public class ArrayListG4<E> implements List<E>{
     public List<E> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public void addFirst(E e) {
-        List.super.addFirst(e);
-    }
     
     public boolean addFrist(E e){
         if (e == null){
@@ -209,30 +215,5 @@ public class ArrayListG4<E> implements List<E>{
         arreglo[0] = e;
         dimensionReal++;
         return true;
-    }
-
-    @Override
-    public void addLast(E e) {
-        List.super.addLast(e); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
-
-    @Override
-    public E getFirst() {
-        return List.super.getFirst(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
-
-    @Override
-    public E getLast() {
-        return List.super.getLast(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
-
-    @Override
-    public E removeFirst() {
-        return List.super.removeFirst(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
-
-    @Override
-    public E removeLast() {
-        return List.super.removeLast(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
 }
