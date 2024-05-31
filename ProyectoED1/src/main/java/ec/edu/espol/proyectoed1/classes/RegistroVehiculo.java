@@ -20,6 +20,16 @@ public class RegistroVehiculo {
     private List<Reparacion> reparaciones;
     private List<Accidente> accidentes;
 
+    public RegistroVehiculo(String placa, Persona duenio, int año, String marca, String modelo, List<Reparacion> reparaciones, List<Accidente> accidentes) {
+        this.placa = placa;
+        this.duenio = duenio;
+        this.año = año;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.reparaciones = reparaciones;
+        this.accidentes = accidentes;
+    }
+
     public String getPlaca() {
         return placa;
     }

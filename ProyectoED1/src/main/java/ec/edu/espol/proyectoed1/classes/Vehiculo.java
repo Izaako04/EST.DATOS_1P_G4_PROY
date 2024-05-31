@@ -5,8 +5,10 @@
 package ec.edu.espol.proyectoed1.classes;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
+import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
 import static ec.edu.espol.proyectoed1.classes.Utilitaria.escribirArchivo;
 import static ec.edu.espol.proyectoed1.classes.Utilitaria.leerArchivo;
+import java.io.File;
 import java.util.List;
 import java.io.Serializable;
 import java.util.Comparator;
@@ -16,6 +18,7 @@ import java.util.Comparator;
  *
  * @author USER
  */
+
 public class Vehiculo implements Serializable {
     
     // nombre archivo >>>> vehiculos
@@ -27,14 +30,16 @@ public class Vehiculo implements Serializable {
     protected double precio;
     protected double kilometraje;
     protected Ubicacion ubicacion;
+    protected CDLinkedList<File> cdLLImagenes; // se agrega CDLL de Files (va a contener las imágenes del vehículo)
 
-    public Vehiculo(RegistroVehiculo registro, Motor motor, Transmision transmision, double precio, double kilometraje, Ubicacion ubicacion) {
+    public Vehiculo(RegistroVehiculo registro, Motor motor, Transmision transmision, double precio, double kilometraje, Ubicacion ubicacion, CDLinkedList<File> cdLLImagenes) {
         this.registro = registro;
         this.motor = motor;
         this.transmision = transmision;
         this.precio = precio;
         this.kilometraje = kilometraje;
         this.ubicacion = ubicacion;
+        this.cdLLImagenes = cdLLImagenes;
     }
 
     public RegistroVehiculo getRegistro() {
@@ -138,9 +143,10 @@ public class Vehiculo implements Serializable {
         }
         return null;
     }
-    
 
-            
-            
+    // getter de la CDLL de imgs
+    public CDLinkedList<File> getCdLLImagenes() {
+        return cdLLImagenes;
+    }     
             
 }

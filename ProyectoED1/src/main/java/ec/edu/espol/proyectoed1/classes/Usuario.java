@@ -31,9 +31,7 @@ public class Usuario extends Persona{
         this.vehiculosPropios = vehiculosPropios;
         this.vehiculosAgregadosAFavoritos = vehiculosAgregadosAFavoritos;
     }
-
     
-
     public String getCorreo() {
         return correo;
     }
@@ -66,12 +64,9 @@ public class Usuario extends Persona{
         this.vehiculosAgregadosAFavoritos = vehiculosAgregadosAFavoritos;
     }
     
-    
-
-
     @Override
     public void registrarVehiculo(Vehiculo v) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        vehiculosPropios.add(v);
     }
 //
 //    @Override
