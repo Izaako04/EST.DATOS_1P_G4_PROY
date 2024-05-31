@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ec.edu.espol.proyectoed1.classes.Persona;
 
 public class vCrearCuentaController {
 
@@ -44,6 +45,10 @@ public class vCrearCuentaController {
 
     @FXML
     private void crearCuenta(MouseEvent event) {
+        String nombre = this.fcNombreApellido.getText();
+        String cedula = this.fcUsername.getText();
+        String contrasenia = this.fcPassword.getText();
+        String correo = this.fcEmail.getText();
     }
     
     public void home(){

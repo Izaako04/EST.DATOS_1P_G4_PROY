@@ -14,6 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ec.edu.espol.proyectoed1.classes.Persona;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 
 public class vInicioSesionController {
 
@@ -44,7 +47,31 @@ public class vInicioSesionController {
     }
 
     @FXML
-    private void iniciarSesion(MouseEvent event) {
+    private void iniciarSesion(MouseEvent event) throws IOException {
+        String correo = this.fUsuario.getText();
+        String contra = this.fPassword.getText();
+        //import
+        
+        
+        
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));
+        root = loader.load();
+            
+        vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
+        vPaginaPrincipalController.home();
+            
+            
+            
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root, 1280, 720); 
+            stage.setScene(scene);
+            
+            // Centrar la ventana en la pantalla
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX((primaryScreenBounds.getWidth() - stage.getWidth()) / 2);
+            stage.setY((primaryScreenBounds.getHeight() - stage.getHeight()) / 2);
+            stage.show();
     }
 
     @FXML

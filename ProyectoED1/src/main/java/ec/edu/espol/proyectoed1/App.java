@@ -40,9 +40,9 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
         
-        Vehiculo v = new Vehiculo("67hf");
-        
-        Utilitaria.agregarVehiculo_ARCHIVO(v);
+//        Vehiculo v = new Vehiculo("67hf");
+//        
+//        Utilitaria.agregarVehiculo_ARCHIVO(v);
         
         System.out.println("done");
         

@@ -35,7 +35,7 @@
       </Text>
       <TextField fx:id="fcNombreApellido" layoutX="33.0" layoutY="200.0" prefHeight="28.0" prefWidth="281.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 0 0 2.5 0; -fx-background-color: none;" styleClass="textField">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Verdana" size="14.0" />
          </font>
          <stylesheets>
             <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
@@ -44,7 +44,7 @@
       </TextField>
       <TextField fx:id="fcEmail" layoutX="35.0" layoutY="267.0" prefHeight="28.0" prefWidth="281.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Verdana" size="14.0" />
          </font>
          <stylesheets>
             <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
@@ -53,7 +53,7 @@
       </TextField>
       <TextField fx:id="fcUsername" layoutX="35.0" layoutY="336.0" prefHeight="28.0" prefWidth="281.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Verdana" size="14.0" />
          </font>
          <stylesheets>
             <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
@@ -82,7 +82,7 @@
       </Text>
       <PasswordField fx:id="fcPassword" layoutX="35.0" layoutY="396.0" prefHeight="26.0" prefWidth="281.0" style="-fx-background-color: none; -fx-border-color: #FFFFFF; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
          <font>
-            <Font name="Arial" size="14.0" />
+            <Font name="Verdana" size="14.0" />
          </font>
          <stylesheets>
             <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
@@ -112,7 +112,7 @@
             <Font name="Verdana" size="14.0" />
          </font>
       </Text>
-      <Button fx:id="bcrearCuenta" layoutX="28.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#crearCuenta" prefHeight="26.0" prefWidth="304.0" style="-fx-border-color: none; -fx-background-color: B3001B; -fx-background-radius: 10;" text="Crear cuenta" textFill="WHITE">
+      <Button fx:id="bcrearCuenta" layoutX="28.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#crearCuenta" prefHeight="26.0" prefWidth="304.0" styleClass="btn" stylesheets="@estilos.css" text="Crear cuenta" textFill="WHITE">
          <font>
             <Font name="Verdana" size="12.0" />
          </font>

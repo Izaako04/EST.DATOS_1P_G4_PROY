@@ -39,10 +39,12 @@ public abstract class Persona implements Serializable {
         this.cedula = cedula;
     }
     
+
     
 
  
     
     
+
 
 }

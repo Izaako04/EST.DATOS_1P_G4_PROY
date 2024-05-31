@@ -2,39 +2,61 @@
     -fx-text-fill: #c2bcbc;
     -fx-background-color: transparent;
     -fx-border-width: 0 0 2.5 0;
-    -fx-border-color: #C880B7;
+    -fx-border-color:  #FFFFFF;
 
 }
 
 .buttonMenu:hover{
     -fx-border-width: 0 0 2.5 0;
     -fx-border-color: #C880B7;
-    
+
 }
 
 .buttonImg {
     -fx-background-color:  #C880B7;
-    
 }
 
 .combobox{
-    -fx-background-color:transparent;
-    
+    -fx-font-size: 14px; /* Tamaño de la letra */
+    -fx-font-family: "Verdana"; /* Tipo de letra */
+    -fx-background-color: #B3001B;
+    -fx-text-fill: white;
 }
 
-.combobox:showing {
-    -fx-border-radius: 10;
-    -fx-background-color: #D6EEFF; /* Cambia el color de fondo de las celdas */
-    -fx-font-size: 12px; /* Cambia el tamaño de la fuente de las celdas */
+.combobox:hover {
+    -fx-cursor: hand;
+}
+
+.combobox .list-cell:hover {
+    -fx-background-color: #980B20; /* Cambia el color de fondo cuando pasas el cursor sobre la opción */
+    -fx-text-fill: #ffffff; /* Cambia el color del texto cuando pasas el cursor sobre la opción */
+}
+
+.combobox .arrow-button {
+    -fx-background-color: transparent; /* Establece el fondo transparente */
+}
+
+.combobox .arrow-button .arrow {
+    -fx-background-color: #ffffff; /* Cambia el color del símbolo de la flecha */
+}
+
+.combobox .list-cell:selected {
+    -fx-text-fill: #ffffff; /* Cambia el color aquí */    
+    -fx-background-color: #B3001B;    
+}
+
+.combobox .list-view .list-cell:selected {
+    -fx-background-color: transparent; /* Establece el color de fondo de las opciones seleccionadas como transparente */
+     -fx-text-fill: black;
 }
 
 .btn{
-    -fx-background-color: #C880B7;    
+    -fx-background-color: #B3001B;    
     -fx-background-radius: 10;
 }
 
 .btn:hover {
-    -fx-background-color: #bf97b6;
+    -fx-background-color: #980B20;
 }
 
 /* Cambiar el color del texto en el cuadro de selección desplegable */
