@@ -41,10 +41,23 @@ public class Sistema {
             for (Usuario user : usuarios) {
                 if (!user.getCorreo().equals(correo) && !user.getContrasenia().equals(contrasenia)) {
                     return false;
-                }
-                
+                }  
             }
             return true;
+        }
+        return false;
+    }
+    
+    public static boolean verificarExistenciaUsuario_ARCHIVO(String correo, String contrasenia){
+        if(Utilitaria.leerArchivo("usuarios")==null){ 
+            return false;
+            }
+        else {
+            List<Usuario> usuarios= Utilitaria.leerArchivo("usuarios");
+            for(Usuario user:usuarios){
+                if(user.getCorreo().equals(correo) && user.getContrasenia().equals(contrasenia)) 
+                    return true;
+            }
         }
         return false;
     }
