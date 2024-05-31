@@ -24,19 +24,18 @@ public class Sistema {
         ArrayListG4 <Usuario> lUsuarios = leerArchivo("usuarios");
         
         if (lUsuarios == null){
-          List<Usuario> usuarios= new ArrayListG4<>();
-          usuarios.add(u);
-          escribirArchivo(usuarios,"usuarios" );
-      }
-    else{
-          List<Usuario> usuarios= leerArchivo("usuarios");
-          usuarios.add(u);
-          escribirArchivo(usuarios, "usuarios");
+            lUsuarios = new ArrayListG4 <Usuario> ();
+            lUsuarios.add(u);
+            escribirArchivo(lUsuarios,"usuarios" );
+            
+        } else{
+            lUsuarios.add(u);
+            escribirArchivo(lUsuarios, "usuarios");
       }
     }
     
     public static boolean verificarContraseia_ARCHIVO(String correo, String contrasenia){
-        List<Usuario> usuarios = leerArchivo("usuario");
+        List<Usuario> usuarios = leerArchivo("usuarios");
         if (usuarios != null) {
             for (Usuario user : usuarios) {
                 if (!user.getCorreo().equals(correo) && !user.getContrasenia().equals(contrasenia)) {
@@ -48,15 +47,18 @@ public class Sistema {
         return false;
     }
     
-    public static boolean verificarExistenciaUsuario_ARCHIVO(String correo, String contrasenia){
-        if(Utilitaria.leerArchivo("usuarios")==null){ 
+    public static boolean verificarExistenciaUsuario_ARCHIVO(String correo, String cedula){
+        ArrayListG4 <Usuario> lUsuarios = leerArchivo("usuarios");
+        if(lUsuarios == null){ 
             return false;
-            }
-        else {
-            List<Usuario> usuarios= Utilitaria.leerArchivo("usuarios");
-            for(Usuario user:usuarios){
-                if(user.getCorreo().equals(correo) && user.getContrasenia().equals(contrasenia)) 
+            
+        } else {
+            for(Usuario user : lUsuarios) {
+                if(user.getCorreo().equals(correo)) {
                     return true;
+                } else if (user.getCedula().equals(cedula)) {
+                    return true;
+                }
             }
         }
         return false;

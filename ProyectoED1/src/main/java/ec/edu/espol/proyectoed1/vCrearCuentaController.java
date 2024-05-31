@@ -18,6 +18,9 @@ import ec.edu.espol.proyectoed1.classes.Persona;
 import ec.edu.espol.proyectoed1.classes.Usuario;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextFormatter;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 public class vCrearCuentaController {
 
@@ -42,6 +45,11 @@ public class vCrearCuentaController {
     private Stage stage;
     private Scene scene;
 
+    @FXML
+    private void initialize() {
+        home();
+    }
+    
     private void switchToPrimary() throws IOException {
         App.setRoot("vInicioSesion");
     }
@@ -60,20 +68,50 @@ public class vCrearCuentaController {
         String cedula = this.fcUsername.getText();
         String contrasenia = this.fcPassword.getText();
         String correo = this.fcEmail.getText();
-        boolean camposLlenos = !(nombre.isBlank() && cedula.isBlank() && contrasenia.isBlank() && correo.isBlank());
+        boolean camposVacios = (nombre.isBlank() || cedula.isBlank() || contrasenia.isBlank() || correo.isBlank());
         
-        if (!camposLlenos) {
+        if (camposVacios) {
             muestraAlerta("Erorr al crear el usuario", "Por favor llena todos los campos.");
         } else if (!cbAceptoT.isSelected()) {
             muestraAlerta("Erorr al crear el usuario", "Por favor acepta los términos y condiciones.");
         } else {
             Usuario u = new Usuario (correo, contrasenia, nombre, cedula);
-            Sistema.agregarUsuario_Archivo(u);
-            muestraAlerta("Felicidades", "¡Ya eres parte de la familia AutoTrade!");
+            
+            boolean uExiste = Sistema.verificarExistenciaUsuario_ARCHIVO (correo, cedula);
+            
+            if (uExiste) {
+                muestraAlerta("Erorr al crear el usuario", "Ya existe un usuario registrado con ésa cédula o correo");
+            
+            } else {
+                Sistema.agregarUsuario_Archivo(u);
+                vaciarFields();
+                muestraAlerta("Felicidades", "¡Ya eres parte de la familia AutoTrade!");
+            }
         }
     }
     
+    private void vaciarFields () {
+        fcNombreApellido.setText("");
+        fcUsername.setText("");
+        fcPassword.setText("");
+        fcEmail.setText("");
+    }
+    
     public void home(){
+        // Configurar el TextFormatter para aceptar solo valores numéricos
+        TextFormatter<Integer> textFormatter = new TextFormatter<Integer> (
+            new IntegerStringConverter(),
+            null, // Valor inicial
+            change -> {
+                if (change.isAdded() && !change.getText().matches("\\d*\\.?\\d*")) {
+                    return null;
+                }
+                return change;
+            }
+        );
+
+        fcUsername.setTextFormatter(textFormatter);
+
         tIniciarSesion.setOnMouseClicked(event -> {
             try {
                 mostrarIniciarSesion(event);

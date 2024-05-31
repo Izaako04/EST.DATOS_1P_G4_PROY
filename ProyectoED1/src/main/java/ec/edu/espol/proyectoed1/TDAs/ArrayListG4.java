@@ -41,7 +41,23 @@ public class ArrayListG4<E> implements List<E>, Serializable{
 
     @Override
     public Iterator<E> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Iterator <E> it = new Iterator <E> () {
+            int cursor = 0;
+            
+            @Override
+            public boolean hasNext () {
+                return cursor < dimensionReal;
+            }
+            
+            @Override
+            public E next () {
+                E e = arreglo [cursor];
+                cursor++;
+                return e;
+            }
+        };
+        
+        return it;
     }
 
     @Override
