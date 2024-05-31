@@ -20,9 +20,10 @@ import java.util.List;
 
 public class Sistema {
     
-    public void agregarUsuario_Archivo(Usuario u){
-    
-        if (leerArchivo("usuarios")== null){
+    public static void agregarUsuario_Archivo(Usuario u){
+        ArrayListG4 <Usuario> lUsuarios = leerArchivo("usuarios");
+        
+        if (lUsuarios == null){
           List<Usuario> usuarios= new ArrayListG4<>();
           usuarios.add(u);
           escribirArchivo(usuarios,"usuarios" );
@@ -32,7 +33,6 @@ public class Sistema {
           usuarios.add(u);
           escribirArchivo(usuarios, "usuarios");
       }
-        
     }
     
     public static boolean verificarContraseia_ARCHIVO(String correo, String contrasenia){

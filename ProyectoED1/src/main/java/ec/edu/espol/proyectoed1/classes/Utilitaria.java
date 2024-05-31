@@ -32,9 +32,15 @@ public class Utilitaria {
         
     }
     
-    public static <T> List<T> leerArchivo(String filename){
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename+".ser"))) {
-            return (List<T>) in.readObject();
+    public static <T> ArrayListG4 <T> leerArchivo(String filename){
+        ArrayListG4 <T> returnList = new ArrayListG4 <T> ();
+        
+        try {
+            FileInputStream archivo = new FileInputStream (filename + ".ser");
+            ObjectInputStream lector = new ObjectInputStream(archivo);
+            returnList = (ArrayListG4 <T>) lector.readObject();
+            return returnList;
+            
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;

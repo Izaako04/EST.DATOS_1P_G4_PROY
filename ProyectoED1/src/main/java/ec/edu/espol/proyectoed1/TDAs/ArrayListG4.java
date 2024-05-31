@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.proyectoed1.TDAs;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.ListIterator;
  *
  * @author USER
  */
-public class ArrayListG4<E> implements List<E>{
+public class ArrayListG4<E> implements List<E>, Serializable{
     int dimensionMax = 10;
     int dimensionReal; 
     E arreglo[];

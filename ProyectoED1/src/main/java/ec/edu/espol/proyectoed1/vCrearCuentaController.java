@@ -15,6 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ec.edu.espol.proyectoed1.classes.Persona;
+import ec.edu.espol.proyectoed1.classes.Usuario;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class vCrearCuentaController {
 
@@ -43,12 +46,31 @@ public class vCrearCuentaController {
         App.setRoot("vInicioSesion");
     }
 
+    private void muestraAlerta (String titulo, String mssg) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mssg);
+        alert.showAndWait();
+    }
+    
     @FXML
     private void crearCuenta(MouseEvent event) {
         String nombre = this.fcNombreApellido.getText();
         String cedula = this.fcUsername.getText();
         String contrasenia = this.fcPassword.getText();
         String correo = this.fcEmail.getText();
+        boolean camposLlenos = !(nombre.isBlank() && cedula.isBlank() && contrasenia.isBlank() && correo.isBlank());
+        
+        if (!camposLlenos) {
+            muestraAlerta("Erorr al crear el usuario", "Por favor llena todos los campos.");
+        } else if (!cbAceptoT.isSelected()) {
+            muestraAlerta("Erorr al crear el usuario", "Por favor acepta los términos y condiciones.");
+        } else {
+            Usuario u = new Usuario (correo, contrasenia, nombre, cedula);
+            Sistema.agregarUsuario_Archivo(u);
+            muestraAlerta("Felicidades", "¡Ya eres parte de la familia AutoTrade!");
+        }
     }
     
     public void home(){
