@@ -1,5 +1,6 @@
 package ec.edu.espol.proyectoed1;
 
+import ec.edu.espol.proyectoed1.classes.RegistroVehiculo;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import javafx.application.Application;
@@ -40,9 +41,13 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
         
-        Vehiculo v = new Vehiculo("67hf");
+        RegistroVehiculo rv = new RegistroVehiculo("placa2");
         
-        Utilitaria.agregarVehiculo_ARCHIVO(v);
+        Vehiculo v = new Vehiculo(rv);
+        
+        v.agregarVehiculo_ARCHIVO();
+        
+       
         
         System.out.println("done");
         

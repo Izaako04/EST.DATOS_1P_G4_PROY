@@ -4,7 +4,11 @@
  */
 package ec.edu.espol.proyectoed1;
 
+import ec.edu.espol.proyectoed1.classes.Filtrable;
+import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import java.net.URL;
+import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +25,7 @@ import javafx.scene.text.Text;
  *
  * @author isaias
  */
-public class vPaginaPrincipalController implements Initializable {
+public class vPaginaPrincipalController implements Initializable, Filtrable {
 
     @FXML
     private VBox contenedorHbox;
@@ -53,6 +57,8 @@ public class vPaginaPrincipalController implements Initializable {
     private TextField tfYearHasta;
     @FXML
     private ComboBox<?> cmbOrdenar;
+    
+    private List<Vehiculo> vehiculos;
 
     /**
      * Initializes the controller class.
@@ -76,4 +82,21 @@ public class vPaginaPrincipalController implements Initializable {
     
     public void home () {
     }
+
+    @Override
+    public void filtrarPorX(Comparator cmp) {
+        vehiculos = (List) Vehiculo.getPriorityQueue(vehiculos, cmp); 
+    }
+
+    @Override
+    public void filtrarPorY(List<Object> objetos) {
+        
+        // los objetos los obtendre mediante lo que el usuario haya elegido
+        
+      
+    }
+
+    
+    
+
 }
