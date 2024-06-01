@@ -18,8 +18,8 @@ public class Usuario extends Persona{
     // nombre archivo >>>>>> usuarios
     private String correo;
     private String contrasenia;
-    private List<Vehiculo> vehiculosPropios;
-    private List<Vehiculo> vehiculosAgregadosAFavoritos;
+    private ArrayListG4<Vehiculo> vehiculosPropios;
+    private ArrayListG4<Vehiculo> vehiculosAgregadosAFavoritos;
 
     public Usuario(String nombre, String cedula) {
         super(nombre, cedula);
@@ -49,19 +49,19 @@ public class Usuario extends Persona{
         this.contrasenia = contrasenia;
     }
 
-    public List<Vehiculo> getVehiculosPropios() {
+    public ArrayListG4 <Vehiculo> getVehiculosPropios() {
         return vehiculosPropios;
     }
 
-    public void setVehiculosPropios(List<Vehiculo> vehiculosPropios) {
+    public void setVehiculosPropios(ArrayListG4<Vehiculo> vehiculosPropios) {
         this.vehiculosPropios = vehiculosPropios;
     }
 
-    public List<Vehiculo> getVehiculosAgregadosAFavoritos() {
+    public ArrayListG4<Vehiculo> getVehiculosAgregadosAFavoritos() {
         return vehiculosAgregadosAFavoritos;
     }
 
-    public void setVehiculosAgregadosAFavoritos(List<Vehiculo> vehiculosAgregadosAFavoritos) {
+    public void setVehiculosAgregadosAFavoritos(ArrayListG4<Vehiculo> vehiculosAgregadosAFavoritos) {
         this.vehiculosAgregadosAFavoritos = vehiculosAgregadosAFavoritos;
     }
     

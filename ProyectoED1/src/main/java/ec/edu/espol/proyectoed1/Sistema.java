@@ -19,6 +19,18 @@ import ec.edu.espol.proyectoed1.classes.excepcionDatoNoExistente;
 
 public class Sistema {
     
+    public static void actualizarUsuario_Archivo (Usuario u) {
+        ArrayListG4 <Usuario> lUsuarios = leerArchivo("usuarios");
+        
+        for (int i = 0; i < lUsuarios.size(); i++) {
+            if (lUsuarios.get(i).getCedula().equals(u.getCedula())) {
+                lUsuarios.set(i, u);
+            }
+        }
+        
+        escribirArchivo(lUsuarios,"usuarios");
+    }
+    
     public static void agregarUsuario_Archivo(Usuario u){
         ArrayListG4 <Usuario> lUsuarios = leerArchivo("usuarios");
         

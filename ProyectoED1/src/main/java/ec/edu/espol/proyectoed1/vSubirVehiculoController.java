@@ -111,6 +111,8 @@ public class vSubirVehiculoController implements Initializable {
     private LocalDate fechaReparacion;
     private LocalDate fechaAccidente;
 
+    private Usuario usuario;
+    
     @FXML
     private AnchorPane anchorPaneImgPortada;
     @FXML
@@ -163,6 +165,8 @@ public class vSubirVehiculoController implements Initializable {
     }
     
     public void home (Usuario user) {
+        usuario = user;
+        
         // Configurar el TextFormatter para aceptar solo valores numéricos
         TextFormatter<Integer> textFormatterYear = new TextFormatter<Integer> (
             new IntegerStringConverter(),
@@ -226,7 +230,7 @@ public class vSubirVehiculoController implements Initializable {
         });
         
         btnGuardar.setOnAction(event -> {
-            subirVehiculo (user, event);
+            subirVehiculo (event);
         });
         
         configBtnImagenes ();
@@ -277,7 +281,7 @@ public class vSubirVehiculoController implements Initializable {
     }
    
     
-    private void subirVehiculo (Usuario user, Event event) {
+    private void subirVehiculo (Event event) {
         // comprobación campos vacíos
         boolean camposVacios = (fcKilometraje.getText().equals("") || fcPrecio.getText().equals("") || fcYear.getText().equals("")  || fcPotencia.getText().equals("") || fcCombustible.getText() == null || fcPlaca.getText() == null|| cmbUbicacionVehiculo.getValue() == null || cmbMarca.getValue() == null || cmbModelo.getValue() == null || cmbTransmision.getValue() == null);
 
@@ -322,7 +326,7 @@ public class vSubirVehiculoController implements Initializable {
             }
             
             // Se crea objeto registro
-            RegistroVehiculo nuevoRegistro = new RegistroVehiculo (placa, user, year, marca, modelo, reparacion, accidente);
+            RegistroVehiculo nuevoRegistro = new RegistroVehiculo (placa, usuario, year, marca, modelo, reparacion, accidente);
             
             // Se crea objeto Transmision
             Transmision transmisionObj = new Transmision (transmision);
@@ -331,6 +335,12 @@ public class vSubirVehiculoController implements Initializable {
             Motor motorObj = new Motor (combustible, potencia);
             
             Vehiculo nuevoVehiculo = new Vehiculo (nuevoRegistro, motorObj, transmisionObj, precio, kilometraje, ubicacion, imagenes);
+            ArrayListG4<Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
+            listaVehiculosUsuarios.add(nuevoVehiculo);
+            usuario.setVehiculosAgregadosAFavoritos(listaVehiculosUsuarios);
+            
+            // Guardar en archivo usuario.ser y vehiculo.ser
+            Sistema.actualizarUsuario_Archivo(usuario);
         }
     }
     
