@@ -1,5 +1,6 @@
 package ec.edu.espol.proyectoed1.TDAs;
 
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
@@ -13,6 +14,7 @@ import java.util.NoSuchElementException;
  */
 
 public class CDLinkedList<E> implements List<E>, Serializable {
+
     protected class Node <E> {
         private E data;
         private Node<E> next;

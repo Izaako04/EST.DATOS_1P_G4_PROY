@@ -11,7 +11,9 @@ import static ec.edu.espol.proyectoed1.classes.Utilitaria.leerArchivo;
 import java.io.File;
 import java.util.List;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.PriorityQueue;
 
 
 /**
@@ -22,7 +24,6 @@ import java.util.Comparator;
 public class Vehiculo implements Serializable {
     
     // nombre archivo >>>> vehiculos
-    private static final long serialVersionUID = 1L;
     
     protected RegistroVehiculo registro;
     protected Motor motor;
@@ -30,7 +31,9 @@ public class Vehiculo implements Serializable {
     protected double precio;
     protected double kilometraje;
     protected Ubicacion ubicacion;
+
     protected CDLinkedList<File> cdLLImagenes; // se agrega CDLL de Files (va a contener las imágenes del vehículo)
+
 
     public Vehiculo(RegistroVehiculo registro, Motor motor, Transmision transmision, double precio, double kilometraje, Ubicacion ubicacion, CDLinkedList<File> cdLLImagenes) {
         this.registro = registro;
@@ -39,8 +42,16 @@ public class Vehiculo implements Serializable {
         this.precio = precio;
         this.kilometraje = kilometraje;
         this.ubicacion = ubicacion;
+
         this.cdLLImagenes = cdLLImagenes;
+
     }
+
+    public Vehiculo(RegistroVehiculo registro) {
+        this.registro = registro;
+    }
+    
+    
 
     public RegistroVehiculo getRegistro() {
         return registro;
@@ -96,11 +107,13 @@ public class Vehiculo implements Serializable {
           List<Vehiculo> vehiculos= new ArrayListG4<>();
           vehiculos.add(this);
           escribirArchivo(vehiculos ,"vehiculos" );
+          System.out.println("no hay archivo todavia");
       }
     else{
           List<Vehiculo> vehiculos= leerArchivo("vehiculos");
           vehiculos.add(this);
           escribirArchivo(vehiculos, "vehiculos");
+          System.out.println("else del agg ");
       }
         
     }
@@ -143,6 +156,83 @@ public class Vehiculo implements Serializable {
         }
         return null;
     }
+
+    
+    public static PriorityQueue<Vehiculo> getPriorityQueue(List<Vehiculo> vehiculos, Comparator cmp){
+        PriorityQueue sortVehiculos = new PriorityQueue(cmp);
+        for(Vehiculo v: vehiculos){
+            sortVehiculos.add(v);
+            
+        }
+        return sortVehiculos;
+    } 
+//    Comparator cmpXprecio
+    
+            
+    private static Comparator<Vehiculo> cmpXprecioMenMay = new Comparator<Vehiculo>() {
+        @Override
+        public int compare(Vehiculo v1, Vehiculo v2) {
+            return Double.compare(v1.getPrecio(),v2.getPrecio());
+        }
+    };
+    private static Comparator<Vehiculo> cmpXprecioMayMen = new Comparator<Vehiculo>() {
+        @Override
+        public int compare(Vehiculo v1, Vehiculo v2) {
+            return Double.compare(v2.getPrecio(),v1.getPrecio());
+        }
+    };
+    private static Comparator<Vehiculo> cmpXkilometrajeMenMay = new Comparator<Vehiculo>() {
+        @Override
+        public int compare(Vehiculo v1, Vehiculo v2) {
+            return Double.compare(v1.getKilometraje(),v2.getKilometraje());
+        }
+    };
+    
+    private static Comparator<Vehiculo> cmpXkilometrajeMayMen = new Comparator<Vehiculo>() {
+        @Override
+        public int compare(Vehiculo v1, Vehiculo v2) {
+            return Double.compare(v2.getKilometraje(),v1.getKilometraje());
+        }
+    };
+    
+    private static Comparator<Vehiculo> cmpXprecioYkm= new Comparator<Vehiculo>() {
+        @Override
+        public int compare(Vehiculo v1, Vehiculo v2) {
+            if (Double.compare(v1.getPrecio(),v2.getPrecio())==0){
+                return Double.compare(v1.getKilometraje(), v2.getKilometraje());
+            }
+            else return Double.compare(v1.getPrecio(),v2.getPrecio());
+        }
+    };
+    
+    
+    private static Comparator<Vehiculo> cmpXmarca = new Comparator<Vehiculo>() {
+        @Override
+        public int compare(Vehiculo v1, Vehiculo v2) {
+            return v1.getRegistro().getMarca().compareTo(v2.getRegistro().getMarca());
+        }
+    };
+    
+    private static Comparator<Vehiculo> cmpXmodelo = new Comparator<Vehiculo>() {
+        @Override
+        public int compare(Vehiculo v1, Vehiculo v2) {
+            return v1.getRegistro().getModelo().compareTo(v2.getRegistro().getModelo());
+        }
+    };
+    
+    private static Comparator<Vehiculo> cmpXtransmision = new Comparator<Vehiculo>() {
+        @Override
+        public int compare(Vehiculo v1, Vehiculo v2) {
+            return v1.getTransmision().getTipo().compareTo(v2.getTransmision().getTipo());
+        }
+    };
+    
+    private static Comparator<Vehiculo> cmpXmotor = new Comparator<Vehiculo>() {
+        @Override
+        public int compare(Vehiculo v1, Vehiculo v2) {
+            return v1.getMotor().getTipo().compareTo(v2.getMotor().getTipo());
+        }
+    };
 
     // getter de la CDLL de imgs
     public CDLinkedList<File> getCdLLImagenes() {

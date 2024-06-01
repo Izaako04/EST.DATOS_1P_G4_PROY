@@ -69,6 +69,22 @@ public class RegistroVehiculo {
     public void setAccidentes(List<Accidente> accidentes) {
         this.accidentes = accidentes;
     }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
     
     
 }
