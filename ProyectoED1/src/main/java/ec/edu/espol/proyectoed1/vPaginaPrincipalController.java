@@ -90,19 +90,13 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Map <String, ArrayListG4 <String> > marcaYModelo = generaMapa();
+        Set<String> keys = marcaYModelo.keySet();
+        ObservableList<String> keyList = FXCollections.observableArrayList(keys);
+        cmbMarca.setItems(keyList);
 
-        // TODO
-        // solo para probar estilos del combo box
-        ObservableList<String> options = FXCollections.observableArrayList(
-                "Opción 1",
-                "Opción 2",
-                "Opción 3"
-        );
-
-        // Agregar las opciones al ComboBox
-        //cmbTipoVehiculo.setItems(options);
-        
-
+        cmbMarca.setOnAction(event -> configuraComboBox (marcaYModelo));
+    
         // El cuadro morado solo es para identificar el anchopane, cuando la parte del sistema
         // esté terminada y se puedan colocar los autos con sus fotos el fondo pasará a negro
     }    
