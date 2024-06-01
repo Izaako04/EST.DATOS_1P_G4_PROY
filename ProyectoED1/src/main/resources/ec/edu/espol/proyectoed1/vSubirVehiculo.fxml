@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.proyectoed1.vSubirVehiculoController">
+   <children>
+      <Text fill="WHITE" layoutX="27.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Convierte tu carro en una oportunidad: ">
+         <font>
+            <Font name="Verdana" size="23.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="27.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¡vende con AutoTrade y acelera hacia tu próximo sueño!">
+         <font>
+            <Font name="Verdana" size="23.0" />
+         </font>
+      </Text>
+      <TextField fx:id="fcPrecio" layoutX="29.0" layoutY="217.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
+            <URL value="@estilos.css" />
+         </stylesheets>
+      </TextField>
+      <TextField fx:id="fcKilometraje" layoutX="31.0" layoutY="307.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
+            <URL value="@estilos.css" />
+         </stylesheets>
+      </TextField>
+      <Text fill="WHITE" layoutX="29.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio*">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="31.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometraje*">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="31.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor*">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="cmbMarca" layoutX="29.0" layoutY="123.0" prefHeight="42.0" prefWidth="174.0" promptText="Marca*" styleClass="combobox" stylesheets="@estilos.css" />
+      <ComboBox fx:id="cmbModelo" layoutX="286.0" layoutY="123.0" prefHeight="42.0" prefWidth="174.0" promptText="Modelo*" styleClass="combobox" stylesheets="@estilos.css" />
+      <TextField fx:id="fcYear" layoutX="287.0" layoutY="217.0" prefHeight="28.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
+            <URL value="@estilos.css" />
+         </stylesheets>
+      </TextField>
+      <Text fill="WHITE" layoutX="287.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año*">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="fcPlaca" layoutX="287.0" layoutY="307.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
+            <URL value="@estilos.css" />
+         </stylesheets>
+      </TextField>
+      <Text fill="WHITE" layoutX="287.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Placa">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="fcMotor" layoutX="32.0" layoutY="397.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
+            <URL value="@estilos.css" />
+         </stylesheets>
+      </TextField>
+      <CheckBox fx:id="cbTieneAccidente" layoutX="552.0" layoutY="132.0" mnemonicParsing="false" text="El carro ha tenido algún accidente" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </CheckBox>
+      <DatePicker fx:id="dpFechaAccidente" layoutX="553.0" layoutY="179.0" prefHeight="25.0" prefWidth="139.0" />
+      <TextField fx:id="fcUbicacionAccidente" layoutX="710.0" layoutY="176.0" prefHeight="30.0" prefWidth="139.0" promptText="Ubicación" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
+            <URL value="@estilos.css" />
+         </stylesheets>
+      </TextField>
+      <TextArea fx:id="taDescripcionAccidente" layoutX="549.0" layoutY="226.0" prefHeight="105.0" prefWidth="325.0" promptText="Describe el accidente" styleClass="textField" stylesheets="@estilos.css">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </TextArea>
+      <CheckBox fx:id="cbTieneReparacion" layoutX="552.0" layoutY="360.0" mnemonicParsing="false" text="El carro tiene alguna reparación" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </CheckBox>
+      <DatePicker fx:id="dpFechaReparacion" layoutX="553.0" layoutY="407.0" prefHeight="25.0" prefWidth="139.0" />
+      <TextArea fx:id="taDescripcionReparacion" layoutX="549.0" layoutY="454.0" prefHeight="90.0" prefWidth="325.0" promptText="Describe la reparación" styleClass="textField" stylesheets="@estilos.css">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </TextArea>
+      <Text fill="WHITE" layoutX="287.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ubicación*">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="fcUbicacion" layoutX="287.0" layoutY="397.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
+            <URL value="@estilos.css" />
+         </stylesheets>
+      </TextField>
+      <ComboBox fx:id="cmbTiransmision" layoutX="29.0" layoutY="474.0" prefHeight="42.0" prefWidth="197.0" promptText="Transmición*" styleClass="combobox" stylesheets="@estilos.css" />
+      <Button fx:id="btnExteriorFrontal" layoutX="23.0" layoutY="558.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" styleClass="btn" stylesheets="@estilos.css" text="Exterior Frontal*" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnExteriorLateral" layoutX="23.0" layoutY="608.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" styleClass="btn" stylesheets="@estilos.css" text="Exterior Lateral" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnExteriorTrasero" layoutX="277.0" layoutY="559.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" styleClass="btn" stylesheets="@estilos.css" text="Exterior Trasero" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="btnInterior" layoutX="277.0" layoutY="608.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" styleClass="btn" stylesheets="@estilos.css" text="Interior" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Text fill="#c2bcbc" layoutX="27.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserte aquí sus imágenes">
+         <font>
+            <Font name="Verdana" size="12.0" />
+         </font>
+      </Text>
+      <Text fill="#c2bcbc" layoutX="551.0" layoutY="560.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserción de dato obligatorio*">
+         <font>
+            <Font name="Verdana" size="12.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnGuardar" layoutX="702.0" layoutY="599.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="176.0" styleClass="btn" stylesheets="@estilos.css" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Text fill="#c2bcbc" layoutX="27.0" layoutY="688.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Imágen exterior frontal servirá de portada">
+         <font>
+            <Font name="Verdana" size="12.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="947.0" layoutY="109.0" prefHeight="539.0" prefWidth="271.0" style="-fx-background-color: #292727; -fx-background-radius: 20;">
+         <children>
+            <ImageView fx:id="portadaVehiculo" fitHeight="252.0" fitWidth="256.0" layoutX="10.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@banner-venderVehiculo.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+      <Button fx:id="btnRegresar" layoutX="1029.0" layoutY="34.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="176.0" styleClass="btn" stylesheets="@estilos.css" text="Regresar" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

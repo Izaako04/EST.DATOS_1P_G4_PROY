@@ -94,7 +94,8 @@
 }
 
 .text-area {
-    -fx-control-inner-background: #503D7B;
-    -fx-text-fill: #D6EEFF;
-    -fx-prompt-text-fill: #D6EEFF;
+    -fx-border-width: 0 0 0 0;
+    -fx-control-inner-background: #292727;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #c2bcbc;
 }

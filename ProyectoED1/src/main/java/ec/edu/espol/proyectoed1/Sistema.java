@@ -39,7 +39,7 @@ public class Sistema {
         ArrayListG4 <Usuario> usuarios = leerArchivo("usuarios");
         if (usuarios != null) {
             for (Usuario user : usuarios) {
-                if (!user.getCorreo().equals(correo) && !user.getContrasenia().equals(contrasenia)) {
+                if (user.getCorreo().equals(correo) && user.getContrasenia().equals(contrasenia)) {
                     return user;
                 }  
             }
