@@ -39,6 +39,7 @@ public class CDLinkedList<E> implements List<E>, Serializable {
     public CDLinkedList () {
         head = new Node ();
         tail = new Node ();
+        size = 0;
     }
     
     @Override
@@ -174,8 +175,11 @@ public class CDLinkedList<E> implements List<E>, Serializable {
 
     @Override
     public E get(int index) {
-        int size = size();
-        if (isEmpty() || index >= size) return null;
+        if (isEmpty()) {
+            return null;
+        } else if (!isEmpty() && index >= size) {
+            return null;
+        }
         
         if (index == 0) return head.data;
         else if (index == size - 1) return tail.data;
@@ -195,19 +199,38 @@ public class CDLinkedList<E> implements List<E>, Serializable {
 
     @Override
     public void add(int index, E element) {
-        int size = size();
-        if (isEmpty() || index >= size) return;
-        
-        Node <E> newNode = new Node (element);
-        Node <E> tempNode = head;
-        for (int i = 0; i < index - 1; i++) {
-            tempNode = tempNode.next;
+        if (isEmpty() && index != 0) {
+            return;
+        } else if (!isEmpty() && index >= size) {
+            return;
         }
         
-        newNode.prev = tempNode;
-        newNode.next = tempNode.next;
-        tempNode.next.prev = newNode;
-        tempNode.next = newNode;
+        Node <E> newNode = new Node (element);
+        
+        if (index == 0) {
+            newNode.next = head;
+            newNode.prev = tail;
+            tail.next = newNode;
+            head = newNode;
+            
+        } else if (index > 0 && index != size - 1) {
+            Node <E> tempNode = head;
+
+            for (int i = 0; i < index - 1; i++) {
+                tempNode = tempNode.next;
+            }
+
+            newNode.prev = tempNode;
+            newNode.next = tempNode.next;
+            tempNode.next.prev = newNode;
+            tempNode.next = newNode;
+            
+        } else {
+            newNode.next = head;
+            newNode.prev = tail;
+            head.prev = tail;
+            tail = newNode;
+        }
         size++;
     }
 

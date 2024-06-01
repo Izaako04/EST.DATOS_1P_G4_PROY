@@ -5,9 +5,13 @@
 package ec.edu.espol.proyectoed1;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
+import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
 import ec.edu.espol.proyectoed1.classes.Usuario;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +36,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
@@ -94,12 +101,16 @@ public class vSubirVehiculoController implements Initializable {
     private Scene scene;
     @FXML
     private ImageView portadaVehiculo;
+    private CDLinkedList <File> imagenes = new CDLinkedList <File> ();
     
     private String ubicacionAccidente;
     private String descripcionAccidente;
     private String descripcionReparacion;
     private LocalDate fechaReparacion;
     private LocalDate fechaAccidente;
+
+    @FXML
+    private AnchorPane anchorPaneImgPortada;
     
     
     /**
@@ -182,8 +193,9 @@ public class vSubirVehiculoController implements Initializable {
         btnGuardar.setOnAction(event -> {
             subirVehiculo (user, event);
         });
-
         
+        configBtnImagenes ();
+      
         Map <String, ArrayListG4 <String> > marcaYModelo = generaMapa();
         Set<String> keys = marcaYModelo.keySet();
         ObservableList<String> keyList = FXCollections.observableArrayList(keys);
@@ -194,7 +206,42 @@ public class vSubirVehiculoController implements Initializable {
         // resolver bug: Cuando el usuario seleeciona una fecha para el accidente y luego decide borrarla por el teclado
         // se le permite subir su vehículo sin haber registrado una fecha para el accidente
     }
- 
+    
+    private void configBtnImagenes () {
+        btnExteriorFrontal.setOnAction(event -> {
+            try {
+                seleccionarImg(0);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+        btnExteriorLateral.setOnAction(event -> {
+            try {
+                seleccionarImg(1);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+        btnExteriorTrasero.setOnAction(event -> {
+            try {
+                seleccionarImg(1);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+        btnInterior.setOnAction(event -> {
+            try {
+                seleccionarImg(1);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+    
+    
     private void subirVehiculo (Usuario user, Event event) {
         // campos obligatorios
         String precio = this.fcPrecio.getText();
@@ -210,14 +257,50 @@ public class vSubirVehiculoController implements Initializable {
         // campos opcionales
         boolean checkAccidente = checkAccidenteCamposVacios(); // devuelve true si el checkbox está activo y no ha llenado los campos
         boolean checkReparacion = checkReparacionCamposVacios();
+        boolean imgPortadaEmpty = imagenes.get(0) == null; 
         
         // comprobación de campos vacíos
         boolean camposVacios = (precio.isBlank() || kilometraje.isBlank() || year.isBlank() || motor.isBlank() || placa.isBlank() || ubicacion.isBlank() || marca == null || modelo == null || transmision == null);
         
         if (camposVacios || checkAccidente || checkReparacion) {
             muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber llenado todos los campos obligatorios*");
-        } else {
-            
+        } else if (imgPortadaEmpty) {
+            muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber cargado al menos la imágen 'Exterior Frontal'");
+        }
+    }
+    
+    public void seleccionarImg (int tipo) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        // filtro imágenes
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg", "*.gif");
+        fileChooser.getExtensionFilters().add(imageFilter);
+
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        if (selectedFile != null) {
+            // Copiar la imagen seleccionada a carpeta de imágenes
+            File targetFolder = new File("imgsVechiculos");
+            if (!targetFolder.exists()) {
+                targetFolder.mkdirs(); // Crea la carpeta si no existe
+            }
+
+            File targetFile = new File(targetFolder, selectedFile.getName());
+            Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            if (tipo == 0) { // 0 -> portada/imagen principal
+                imagenes.add(0, targetFile);
+                Image image = new Image(targetFile.toURI().toString());
+                
+                portadaVehiculo.setLayoutX(8 );
+                portadaVehiculo.setLayoutY(170);
+                
+                portadaVehiculo.setImage(image);
+
+            } else {
+                imagenes.add(targetFile);
+
+            }
         }
     }
     
