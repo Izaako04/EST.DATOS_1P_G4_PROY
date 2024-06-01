@@ -5,13 +5,14 @@
 package ec.edu.espol.proyectoed1.classes;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author USER
  */
-public class RegistroVehiculo {
+public class RegistroVehiculo implements Serializable {
     
     private String placa;
     private Persona duenio;

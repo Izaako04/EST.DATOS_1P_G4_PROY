@@ -8,12 +8,13 @@ import static ec.edu.espol.proyectoed1.classes.Utilitaria.leerArchivo;
 import java.util.Comparator;
 import java.util.List;
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
+import java.io.Serializable;
 
 /**
  *
  * @author USER
  */
-public class Usuario extends Persona{
+public class Usuario extends Persona implements Serializable {
     
     // nombre archivo >>>>>> usuarios
     private String correo;

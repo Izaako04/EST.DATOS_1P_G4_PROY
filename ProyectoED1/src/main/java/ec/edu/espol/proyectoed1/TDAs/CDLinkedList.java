@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 
 public class CDLinkedList<E> implements List<E>, Serializable {
 
-    protected class Node <E> {
+    protected class Node <E> implements Serializable{
         private E data;
         private Node<E> next;
         private Node<E> prev;
