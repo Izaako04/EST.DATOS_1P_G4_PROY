@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.proyectoed1.classes;
 
+import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
 import java.util.List;
 
 /**
@@ -17,10 +18,10 @@ public class RegistroVehiculo {
     private int año;
     protected String marca;
     protected String modelo;
-    private List<Reparacion> reparaciones;
-    private List<Accidente> accidentes;
+    private Reparacion reparaciones; // antes ArrayListG4
+    private Accidente accidentes;
 
-    public RegistroVehiculo(String placa, Persona duenio, int año, String marca, String modelo, List<Reparacion> reparaciones, List<Accidente> accidentes) {
+    public RegistroVehiculo(String placa, Persona duenio, int año, String marca, String modelo, Reparacion reparaciones, Accidente accidentes) {
         this.placa = placa;
         this.duenio = duenio;
         this.año = año;
@@ -54,19 +55,19 @@ public class RegistroVehiculo {
         this.año = año;
     }
 
-    public List<Reparacion> getReparaciones() {
+    public Reparacion getReparaciones() {
         return reparaciones;
     }
 
-    public void setReparaciones(List<Reparacion> reparaciones) {
+    public void setReparaciones(Reparacion reparaciones) {
         this.reparaciones = reparaciones;
     }
 
-    public List<Accidente> getAccidentes() {
+    public Accidente getAccidentes() {
         return accidentes;
     }
 
-    public void setAccidentes(List<Accidente> accidentes) {
+    public void setAccidentes(Accidente accidentes) {
         this.accidentes = accidentes;
     }
 

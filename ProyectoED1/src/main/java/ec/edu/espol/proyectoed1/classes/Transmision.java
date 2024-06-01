@@ -14,6 +14,10 @@ public class Transmision implements Serializable {
     private int numeroVelocidades;
     private String traccion;
 
+    public Transmision (String tipo) {
+        this.tipo = tipo;
+    }
+    
     public String getTipo() {
         return tipo;
     }

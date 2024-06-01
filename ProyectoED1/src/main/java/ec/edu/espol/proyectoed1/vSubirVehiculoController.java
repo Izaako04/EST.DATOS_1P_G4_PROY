@@ -6,7 +6,13 @@ package ec.edu.espol.proyectoed1;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
 import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
+import ec.edu.espol.proyectoed1.classes.Accidente;
+import ec.edu.espol.proyectoed1.classes.Motor;
+import ec.edu.espol.proyectoed1.classes.RegistroVehiculo;
+import ec.edu.espol.proyectoed1.classes.Reparacion;
+import ec.edu.espol.proyectoed1.classes.Transmision;
 import ec.edu.espol.proyectoed1.classes.Usuario;
+import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -66,12 +72,9 @@ public class vSubirVehiculoController implements Initializable {
     @FXML
     private TextField fcPlaca;
     @FXML
-    private TextField fcMotor;
-    @FXML
     private CheckBox cbTieneAccidente;
     @FXML
     private DatePicker dpFechaAccidente;
-    @FXML
     private TextField fcUbicacionAccidente;
     @FXML
     private TextArea taDescripcionAccidente;
@@ -81,7 +84,6 @@ public class vSubirVehiculoController implements Initializable {
     private DatePicker dpFechaReparacion;
     @FXML
     private TextArea taDescripcionReparacion;
-    @FXML
     private TextField fcUbicacion;
     @FXML
     private Button btnExteriorFrontal;
@@ -111,6 +113,14 @@ public class vSubirVehiculoController implements Initializable {
 
     @FXML
     private AnchorPane anchorPaneImgPortada;
+    @FXML
+    private ComboBox<String> cmbUbicacionVehiculo;
+    @FXML
+    private ComboBox<String> cmbUbicacionAccidente;
+    @FXML
+    private TextField fcCombustible;
+    @FXML
+    private TextField fcPotencia;
     
     
     /**
@@ -164,8 +174,20 @@ public class vSubirVehiculoController implements Initializable {
                 return change;
             }
         );
+        
+        TextFormatter<Integer> textFormatterPotencia = new TextFormatter<Integer> (
+            new IntegerStringConverter(),
+            null, // Valor inicial
+            change -> {
+                if (change.isAdded() && !change.getText().matches("\\d*\\.?\\d*")) {
+                    return null;
+                }
+                return change;
+            }
+        );
 
         fcYear.setTextFormatter(textFormatterYear);
+        fcPotencia.setTextFormatter(textFormatterPotencia);
         
         TextFormatter<Double> textFormatterPrecio = new TextFormatter<Double> (
             new DoubleStringConverter(),
@@ -178,9 +200,22 @@ public class vSubirVehiculoController implements Initializable {
             }
         );
 
+        TextFormatter<Double> textFormatterKilometraje = new TextFormatter<Double> (
+            new DoubleStringConverter(),
+            null, // Valor inicial
+            change -> {
+                if (change.isAdded() && !change.getText().matches("\\d*\\.?\\d*")) {
+                    return null;
+                }
+                return change;
+            }
+        );
+        
         fcPrecio.setTextFormatter(textFormatterPrecio);
+        fcKilometraje.setTextFormatter(textFormatterKilometraje);
         
         configurarComboBoxTransmision ();
+        configurarComboBoxUbicacion ();
         
         btnRegresar.setOnAction(event -> {
             try {
@@ -240,16 +275,24 @@ public class vSubirVehiculoController implements Initializable {
             }
         });
     }
-    
+   
     
     private void subirVehiculo (Usuario user, Event event) {
+        // comprobación campos vacíos
+        boolean camposVacios = (fcKilometraje.getText().equals("") || fcPrecio.getText().equals("") || fcYear.getText().equals("")  || fcPotencia.getText().equals("") || fcCombustible.getText() == null || fcPlaca.getText() == null|| cmbUbicacionVehiculo.getValue() == null || cmbMarca.getValue() == null || cmbModelo.getValue() == null || cmbTransmision.getValue() == null);
+
+        if (camposVacios) { // campos vacíos
+            muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber llenado todos los campos obligatorios*");
+        }
+
         // campos obligatorios
-        String precio = this.fcPrecio.getText();
-        String kilometraje = this.fcKilometraje.getText();
-        String year = this.fcYear.getText();
-        String motor = this.fcMotor.getText();
+        Double precio = Double.parseDouble(this.fcPrecio.getText()); ;
+        Double kilometraje = Double.parseDouble(this.fcKilometraje.getText());
+        Integer year = Integer.parseInt(this.fcYear.getText());
+        String combustible = this.fcCombustible.getText();
+        Integer potencia = Integer.parseInt(this.fcPotencia.getText());
         String placa = this.fcPlaca.getText();
-        String ubicacion = this.fcUbicacion.getText();
+        String ubicacion = this.cmbUbicacionVehiculo.getValue();
         String marca = this.cmbMarca.getValue();
         String modelo = this.cmbModelo.getValue();
         String transmision = this.cmbTransmision.getValue();
@@ -258,14 +301,36 @@ public class vSubirVehiculoController implements Initializable {
         boolean checkAccidente = checkAccidenteCamposVacios(); // devuelve true si el checkbox está activo y no ha llenado los campos
         boolean checkReparacion = checkReparacionCamposVacios();
         boolean imgPortadaEmpty = imagenes.get(0) == null; 
-        
-        // comprobación de campos vacíos
-        boolean camposVacios = (precio.isBlank() || kilometraje.isBlank() || year.isBlank() || motor.isBlank() || placa.isBlank() || ubicacion.isBlank() || marca == null || modelo == null || transmision == null);
-        
-        if (camposVacios || checkAccidente || checkReparacion) {
+
+        if (!camposVacios && ( checkAccidente || checkReparacion) ) { // campos vacíos
             muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber llenado todos los campos obligatorios*");
-        } else if (imgPortadaEmpty) {
+        } else if (imgPortadaEmpty) { // no hay portada
             muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber cargado al menos la imágen 'Exterior Frontal'");
+        } else { // crear vehiculo!
+            Accidente accidente = null;
+            Reparacion reparacion = null;
+            
+            // Caso 1: Hay accidente
+            if (cbTieneAccidente.isSelected()) {
+                String ubicacionAccidente = this.cmbUbicacionAccidente.getValue();
+                accidente = new Accidente (fechaAccidente.toString(), descripcionAccidente, ubicacionAccidente);
+            }
+            
+            // Caso 2: Hay reparación
+            if (cbTieneReparacion.isSelected()) {
+                reparacion = new Reparacion (fechaAccidente.toString(), descripcionReparacion);
+            }
+            
+            // Se crea objeto registro
+            RegistroVehiculo nuevoRegistro = new RegistroVehiculo (placa, user, year, marca, modelo, reparacion, accidente);
+            
+            // Se crea objeto Transmision
+            Transmision transmisionObj = new Transmision (transmision);
+            
+            // Se crea objeto Motor
+            Motor motorObj = new Motor (combustible, potencia);
+            
+            Vehiculo nuevoVehiculo = new Vehiculo (nuevoRegistro, motorObj, transmisionObj, precio, kilometraje, ubicacion, imagenes);
         }
     }
     
@@ -323,11 +388,11 @@ public class vSubirVehiculoController implements Initializable {
         boolean camposVacios = false;
         
         if (cbTieneAccidente.isSelected()) {
-            ubicacionAccidente = fcUbicacionAccidente.getText();
             descripcionAccidente = taDescripcionAccidente.getText();
             fechaAccidente = dpFechaAccidente.getValue();
+            ubicacionAccidente = cmbUbicacionAccidente.getValue();
             
-            camposVacios = (ubicacionAccidente.isBlank() || descripcionAccidente.isBlank() || fechaAccidente == null);
+            camposVacios = (cmbUbicacionAccidente.getValue() == null || descripcionAccidente.isBlank() || fechaAccidente == null);
             
         } else {
             camposVacios = false;
@@ -341,6 +406,18 @@ public class vSubirVehiculoController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(mssg);
         alert.showAndWait();
+    }
+    
+    private void configurarComboBoxUbicacion () {
+        ArrayListG4 <String> ciudades = new ArrayListG4<String>();
+        ciudades.add("Guayaquil");
+        ciudades.add("Manta");
+        ciudades.add("Quito");
+        ciudades.add("Cuenca");
+        
+        ObservableList<String> ciudadesEcuador = FXCollections.observableArrayList(ciudades);
+        cmbUbicacionAccidente.setItems(ciudadesEcuador);
+        cmbUbicacionVehiculo.setItems(ciudadesEcuador);
     }
     
     private void configurarComboBoxTransmision () {

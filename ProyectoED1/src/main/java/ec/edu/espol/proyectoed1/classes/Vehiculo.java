@@ -30,12 +30,12 @@ public class Vehiculo implements Serializable {
     protected Transmision transmision;
     protected double precio;
     protected double kilometraje;
-    protected Ubicacion ubicacion;
+    protected String ubicacion;
 
     protected CDLinkedList<File> cdLLImagenes; // se agrega CDLL de Files (va a contener las imágenes del vehículo)
 
 
-    public Vehiculo(RegistroVehiculo registro, Motor motor, Transmision transmision, double precio, double kilometraje, Ubicacion ubicacion, CDLinkedList<File> cdLLImagenes) {
+    public Vehiculo(RegistroVehiculo registro, Motor motor, Transmision transmision, double precio, double kilometraje, String ubicacion, CDLinkedList<File> cdLLImagenes) {
         this.registro = registro;
         this.motor = motor;
         this.transmision = transmision;
@@ -51,8 +51,6 @@ public class Vehiculo implements Serializable {
         this.registro = registro;
     }
     
-    
-
     public RegistroVehiculo getRegistro() {
         return registro;
     }
@@ -93,11 +91,11 @@ public class Vehiculo implements Serializable {
         this.kilometraje = kilometraje;
     }
 
-    public Ubicacion getUbicacion() {
+    public String getUbicacion() {
         return ubicacion;
     }
 
-    public void setUbicacion(Ubicacion ubicacion) {
+    public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
     

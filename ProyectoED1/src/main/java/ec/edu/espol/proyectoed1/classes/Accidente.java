@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Accidente implements Serializable {
     private String fecha;
     private String descripcion;
-    private Ubicacion ubicacion;
+    private String ubicacion;
 
     public String getFecha() {
         return fecha;
@@ -29,15 +29,15 @@ public class Accidente implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Ubicacion getUbicacion() {
+    public String getUbicacion() {
         return ubicacion;
     }
 
-    public void setUbicacion(Ubicacion ubicacion) {
+    public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
 
-    public Accidente(String fecha, String descripcion, Ubicacion ubicacion) {
+    public Accidente(String fecha, String descripcion, String ubicacion) {
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.ubicacion = ubicacion;

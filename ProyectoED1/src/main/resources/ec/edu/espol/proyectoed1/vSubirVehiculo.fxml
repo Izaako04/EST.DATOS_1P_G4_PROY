@@ -54,7 +54,7 @@
             <Font name="Verdana" size="14.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="31.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor*">
+      <Text fill="WHITE" layoutX="31.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combustible*">
          <font>
             <Font name="Verdana" size="14.0" />
          </font>
@@ -89,7 +89,7 @@
             <Font name="Verdana" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="fcMotor" layoutX="32.0" layoutY="397.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+      <TextField fx:id="fcCombustible" layoutX="32.0" layoutY="397.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
          <font>
             <Font name="Verdana" size="14.0" />
          </font>
@@ -104,15 +104,6 @@
          </font>
       </CheckBox>
       <DatePicker fx:id="dpFechaAccidente" layoutX="553.0" layoutY="179.0" prefHeight="25.0" prefWidth="139.0" />
-      <TextField fx:id="fcUbicacionAccidente" layoutX="710.0" layoutY="176.0" prefHeight="30.0" prefWidth="139.0" promptText="Ubicación" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
-         <font>
-            <Font name="Verdana" size="14.0" />
-         </font>
-         <stylesheets>
-            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
-            <URL value="@estilos.css" />
-         </stylesheets>
-      </TextField>
       <TextArea fx:id="taDescripcionAccidente" layoutX="549.0" layoutY="226.0" prefHeight="105.0" prefWidth="325.0" promptText="Describe el accidente" styleClass="textField" stylesheets="@estilos.css">
          <font>
             <Font name="Verdana" size="14.0" />
@@ -129,20 +120,6 @@
             <Font name="Verdana" size="14.0" />
          </font>
       </TextArea>
-      <Text fill="WHITE" layoutX="287.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ubicación*">
-         <font>
-            <Font name="Verdana" size="14.0" />
-         </font>
-      </Text>
-      <TextField fx:id="fcUbicacion" layoutX="287.0" layoutY="397.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
-         <font>
-            <Font name="Verdana" size="14.0" />
-         </font>
-         <stylesheets>
-            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
-            <URL value="@estilos.css" />
-         </stylesheets>
-      </TextField>
       <ComboBox fx:id="cmbTransmision" layoutX="29.0" layoutY="474.0" prefHeight="42.0" prefWidth="197.0" promptText="Transmición*" styleClass="combobox" stylesheets="@estilos.css" />
       <Button fx:id="btnExteriorFrontal" layoutX="23.0" layoutY="558.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" styleClass="btn" stylesheets="@estilos.css" text="Exterior Frontal*" textFill="WHITE">
          <font>
@@ -215,5 +192,21 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <ComboBox fx:id="cmbUbicacionVehiculo" layoutX="286.0" layoutY="474.0" prefHeight="42.0" prefWidth="174.0" promptText="Ubicación*" styleClass="combobox" stylesheets="@estilos.css" />
+      <ComboBox fx:id="cmbUbicacionAccidente" layoutX="702.0" layoutY="177.0" prefHeight="30.0" prefWidth="174.0" promptText="Ubicación*" styleClass="combobox" stylesheets="@estilos.css" />
+      <TextField fx:id="fcPotencia" layoutX="287.0" layoutY="397.0" prefHeight="30.0" prefWidth="197.0" promptText="                              [hp]" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
+            <URL value="@estilos.css" />
+         </stylesheets>
+      </TextField>
+      <Text fill="WHITE" layoutX="287.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Potencia*">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

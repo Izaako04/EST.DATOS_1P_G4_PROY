@@ -15,6 +15,11 @@ public class Motor implements Serializable {
     private int torque; // en Nm
     private int numeroCilindros;
 
+    public Motor (String tipo, int potencia) {
+        this.tipo = tipo;
+        this.potencia = potencia;
+    }
+    
     public String getTipo() {
         return tipo;
     }
