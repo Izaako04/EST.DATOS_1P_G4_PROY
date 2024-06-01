@@ -11,7 +11,6 @@ import static ec.edu.espol.proyectoed1.classes.Utilitaria.escribirArchivo;
 import static ec.edu.espol.proyectoed1.classes.Utilitaria.leerArchivo;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import ec.edu.espol.proyectoed1.classes.excepcionDatoNoExistente;
-import java.util.List;
 
 /**
  *
