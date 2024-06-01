@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.proyectoed1.classes;
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
+import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,6 +40,21 @@ public class Utilitaria {
             FileInputStream archivo = new FileInputStream (filename + ".ser");
             ObjectInputStream lector = new ObjectInputStream(archivo);
             returnList = (ArrayListG4 <T>) lector.readObject();
+            return returnList;
+            
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static <T> CDLinkedList <T> leerArchivoVehiculos (String filename){
+        CDLinkedList <T> returnList = new CDLinkedList <T> ();
+        
+        try {
+            FileInputStream archivo = new FileInputStream (filename + ".ser");
+            ObjectInputStream lector = new ObjectInputStream(archivo);
+            returnList = (CDLinkedList <T>) lector.readObject();
             return returnList;
             
         } catch (IOException | ClassNotFoundException e) {

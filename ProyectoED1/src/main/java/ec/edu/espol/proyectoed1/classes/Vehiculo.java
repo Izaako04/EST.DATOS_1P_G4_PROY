@@ -98,24 +98,7 @@ public class Vehiculo implements Serializable {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
-    
-    public void agregarVehiculo_ARCHIVO(){
 
-    if (leerArchivo("vehiculos")== null){
-          List<Vehiculo> vehiculos= new ArrayListG4<>();
-          vehiculos.add(this);
-          escribirArchivo(vehiculos ,"vehiculos" );
-          System.out.println("no hay archivo todavia");
-      }
-    else{
-          List<Vehiculo> vehiculos= leerArchivo("vehiculos");
-          vehiculos.add(this);
-          escribirArchivo(vehiculos, "vehiculos");
-          System.out.println("else del agg ");
-      }
-        
-    }
-    
     public void eliminarVehiculo_ARCHIVO(Comparator cmp){
         if (leerArchivo("vehiculos")== null){}
         else {

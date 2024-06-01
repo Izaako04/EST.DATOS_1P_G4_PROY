@@ -8,6 +8,7 @@ import static ec.edu.espol.proyectoed1.classes.Utilitaria.leerArchivo;
 import java.util.Comparator;
 import java.util.List;
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
+import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
 import java.io.Serializable;
 
 /**
@@ -19,8 +20,8 @@ public class Usuario extends Persona implements Serializable {
     // nombre archivo >>>>>> usuarios
     private String correo;
     private String contrasenia;
-    private ArrayListG4<Vehiculo> vehiculosPropios;
-    private ArrayListG4<Vehiculo> vehiculosAgregadosAFavoritos;
+    private CDLinkedList<Vehiculo> vehiculosPropios;
+    private CDLinkedList <Vehiculo> vehiculosAgregadosAFavoritos;
 
     public Usuario(String nombre, String cedula) {
         super(nombre, cedula);
@@ -30,8 +31,8 @@ public class Usuario extends Persona implements Serializable {
         super(nombre, cedula);
         this.correo = correo;
         this.contrasenia = contrasenia;
-        this.vehiculosPropios = new ArrayListG4<Vehiculo>();
-        this.vehiculosAgregadosAFavoritos = new ArrayListG4<Vehiculo>();
+        this.vehiculosPropios = new CDLinkedList<Vehiculo>();
+        this.vehiculosAgregadosAFavoritos = new CDLinkedList<Vehiculo>();
     }
     
     public String getCorreo() {
@@ -50,19 +51,19 @@ public class Usuario extends Persona implements Serializable {
         this.contrasenia = contrasenia;
     }
 
-    public ArrayListG4 <Vehiculo> getVehiculosPropios() {
+    public CDLinkedList <Vehiculo> getVehiculosPropios() {
         return vehiculosPropios;
     }
 
-    public void setVehiculosPropios(ArrayListG4<Vehiculo> vehiculosPropios) {
+    public void setVehiculosPropios(CDLinkedList<Vehiculo> vehiculosPropios) {
         this.vehiculosPropios = vehiculosPropios;
     }
 
-    public ArrayListG4<Vehiculo> getVehiculosAgregadosAFavoritos() {
+    public CDLinkedList<Vehiculo> getVehiculosAgregadosAFavoritos() {
         return vehiculosAgregadosAFavoritos;
     }
 
-    public void setVehiculosAgregadosAFavoritos(ArrayListG4<Vehiculo> vehiculosAgregadosAFavoritos) {
+    public void setVehiculosAgregadosAFavoritos(CDLinkedList<Vehiculo> vehiculosAgregadosAFavoritos) {
         this.vehiculosAgregadosAFavoritos = vehiculosAgregadosAFavoritos;
     }
     

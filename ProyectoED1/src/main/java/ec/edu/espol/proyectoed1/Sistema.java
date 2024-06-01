@@ -5,10 +5,12 @@
 package ec.edu.espol.proyectoed1;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
+import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
 import ec.edu.espol.proyectoed1.classes.Usuario;
 import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import static ec.edu.espol.proyectoed1.classes.Utilitaria.escribirArchivo;
 import static ec.edu.espol.proyectoed1.classes.Utilitaria.leerArchivo;
+import static ec.edu.espol.proyectoed1.classes.Utilitaria.leerArchivoVehiculos;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import ec.edu.espol.proyectoed1.classes.excepcionDatoNoExistente;
 
@@ -42,6 +44,20 @@ public class Sistema {
         } else{
             lUsuarios.add(u);
             escribirArchivo(lUsuarios, "usuarios");
+      }
+    }
+    
+    public static void agregarVehiculo_Archivo (Vehiculo v){
+        CDLinkedList <Vehiculo> lVehiculos = leerArchivoVehiculos("vehiculos");
+        
+        if (lVehiculos == null){
+            lVehiculos = new CDLinkedList <Vehiculo> ();
+            lVehiculos.add(v);
+            escribirArchivo(lVehiculos,"vehiculos" );
+            
+        } else{
+            lVehiculos.add(v);
+            escribirArchivo(lVehiculos, "vehiculos");
       }
     }
     

@@ -103,6 +103,10 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     
 
     public void home (Usuario user) {
+        for (Vehiculo v: user.getVehiculosPropios()) {
+            System.out.println(v.getRegistro().getPlaca());
+        }
+        
         textoSaludoUsuario.setText("Bienvenido " + user.getNombre());
         
         btnVenderVehiculo.setOnAction(event -> {

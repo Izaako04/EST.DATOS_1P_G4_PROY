@@ -335,12 +335,13 @@ public class vSubirVehiculoController implements Initializable {
             Motor motorObj = new Motor (combustible, potencia);
             
             Vehiculo nuevoVehiculo = new Vehiculo (nuevoRegistro, motorObj, transmisionObj, precio, kilometraje, ubicacion, imagenes);
-            ArrayListG4<Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
+            CDLinkedList <Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
             listaVehiculosUsuarios.add(nuevoVehiculo);
-            usuario.setVehiculosAgregadosAFavoritos(listaVehiculosUsuarios);
+            usuario.setVehiculosPropios(listaVehiculosUsuarios);
             
             // Guardar en archivo usuario.ser y vehiculo.ser
             Sistema.actualizarUsuario_Archivo(usuario);
+            Sistema.agregarVehiculo_Archivo(nuevoVehiculo);
         }
     }
     
