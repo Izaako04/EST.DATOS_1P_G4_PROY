@@ -143,7 +143,7 @@
             <URL value="@estilos.css" />
          </stylesheets>
       </TextField>
-      <ComboBox fx:id="cmbTiransmision" layoutX="29.0" layoutY="474.0" prefHeight="42.0" prefWidth="197.0" promptText="Transmición*" styleClass="combobox" stylesheets="@estilos.css" />
+      <ComboBox fx:id="cmbTransmision" layoutX="29.0" layoutY="474.0" prefHeight="42.0" prefWidth="197.0" promptText="Transmición*" styleClass="combobox" stylesheets="@estilos.css" />
       <Button fx:id="btnExteriorFrontal" layoutX="23.0" layoutY="558.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" styleClass="btn" stylesheets="@estilos.css" text="Exterior Frontal*" textFill="WHITE">
          <font>
             <Font name="Verdana" size="16.0" />
