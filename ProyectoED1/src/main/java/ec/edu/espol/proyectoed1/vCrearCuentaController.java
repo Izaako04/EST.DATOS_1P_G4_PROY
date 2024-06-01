@@ -131,12 +131,13 @@ public class vCrearCuentaController {
     }
     
     private void mostrarIniciarSesion(MouseEvent event) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("vInicioSesionController.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vInicioSesion.fxml"));
         root = loader.load();
 
         vInicioSesionController vInicioSesionController = loader.getController();
         vInicioSesionController.home();
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 800, 600);
         stage.setScene(scene);
         stage.setResizable(false);

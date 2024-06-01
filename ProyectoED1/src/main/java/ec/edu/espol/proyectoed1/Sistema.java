@@ -34,17 +34,17 @@ public class Sistema {
       }
     }
     
-    public static boolean verificarContraseia_ARCHIVO(String correo, String contrasenia){
-        List<Usuario> usuarios = leerArchivo("usuarios");
+    // me devuelve el usuario que sí existe
+    public static Usuario verificarContraseia_ARCHIVO(String correo, String contrasenia){
+        ArrayListG4 <Usuario> usuarios = leerArchivo("usuarios");
         if (usuarios != null) {
             for (Usuario user : usuarios) {
                 if (!user.getCorreo().equals(correo) && !user.getContrasenia().equals(contrasenia)) {
-                    return false;
+                    return user;
                 }  
             }
-            return true;
         }
-        return false;
+        return null;
     }
     
     public static boolean verificarExistenciaUsuario_ARCHIVO(String correo, String cedula){

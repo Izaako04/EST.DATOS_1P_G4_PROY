@@ -15,7 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ec.edu.espol.proyectoed1.classes.Persona;
+import ec.edu.espol.proyectoed1.classes.Usuario;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
 import javafx.stage.Screen;
 
 public class vInicioSesionController {
@@ -46,34 +48,50 @@ public class vInicioSesionController {
         App.setRoot("vCrearCuenta");
     }
 
+    private void muestraAlerta (String titulo, String mssg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mssg);
+        alert.showAndWait();
+    }
+    
     @FXML
     private void iniciarSesion(MouseEvent event) throws IOException {
         String correo = this.fUsuario.getText();
         String contra = this.fPassword.getText();
-        //import
-        
-        
-        
-        
+        boolean camposVacios = (correo.isBlank() || contra.isBlank());
+
+        if (camposVacios) {
+            muestraAlerta("Erorr al iniciar sesión", "Completa todos los campos.");
+        } else {
+            Usuario u = Sistema.verificarContraseia_ARCHIVO(correo, contra);
+            if (u != null) {
+                permitirAcceso(event, u);
+            } else {
+                muestraAlerta("Erorr al iniciar sesión", "Correo o contraseña incorrectos.");
+            }
+        }
+    }
+
+    private void permitirAcceso (MouseEvent event, Usuario u) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));
         root = loader.load();
             
         vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
-        vPaginaPrincipalController.home();
+        vPaginaPrincipalController.home(u); // pasar user
+        
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720); 
+        stage.setScene(scene);
             
-            
-            
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(root, 1280, 720); 
-            stage.setScene(scene);
-            
-            // Centrar la ventana en la pantalla
-            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX((primaryScreenBounds.getWidth() - stage.getWidth()) / 2);
-            stage.setY((primaryScreenBounds.getHeight() - stage.getHeight()) / 2);
-            stage.show();
+        // Centrar la ventana en la pantalla
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((primaryScreenBounds.getWidth() - stage.getWidth()) / 2);
+        stage.setY((primaryScreenBounds.getHeight() - stage.getHeight()) / 2);
+        stage.show();
     }
-
+    
     @FXML
     private void vCrearCuenta(MouseEvent event) throws IOException {
         App.setRoot("vCrearCuenta");
@@ -91,7 +109,7 @@ public class vInicioSesionController {
     }
     
     private void mostrarCrearCuenta(Event event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("vCrearCuentaController.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vCrearCuenta.fxml"));
         root = loader.load();
             
         vCrearCuentaController vCrearCuentaController = loader.getController();

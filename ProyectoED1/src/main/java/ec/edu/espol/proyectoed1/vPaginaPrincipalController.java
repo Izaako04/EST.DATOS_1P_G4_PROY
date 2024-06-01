@@ -4,6 +4,7 @@
  */
 package ec.edu.espol.proyectoed1;
 
+import ec.edu.espol.proyectoed1.classes.Usuario;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -59,7 +60,6 @@ public class vPaginaPrincipalController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         // solo para probar estilos del combo box
         ObservableList<String> options = FXCollections.observableArrayList(
                 "Opción 1",
@@ -74,6 +74,7 @@ public class vPaginaPrincipalController implements Initializable {
         // esté terminada y se puedan colocar los autos con sus fotos el fondo pasará a negro
     }    
     
-    public void home () {
+    public void home (Usuario user) {
+        textoSaludoUsuario.setText("Bienvenido " + user.getNombre());
     }
 }
