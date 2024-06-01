@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -12,6 +12,11 @@
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.proyectoed1.vPaginaPrincipalController">
    <children>
+      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="50.0" layoutY="160.0" prefHeight="522.0" prefWidth="641.0" style="-fx-background-color: transparent;" styleClass="scroll-bar" stylesheets="@estilos.css" vbarPolicy="ALWAYS">
+         <content>
+            <VBox fx:id="contenedorHbox" prefHeight="520.0" prefWidth="639.0" style="-fx-background-color: black; -fx-border-width: 0;" stylesheets="@estilos.css" />
+         </content>
+      </ScrollPane>
       <Button fx:id="btnMisVehiculos" layoutX="513.0" layoutY="43.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="176.0" styleClass="btn" stylesheets="@estilos.css" text="Mis vehículos" textFill="WHITE">
          <font>
             <Font name="Verdana" size="16.0" />
@@ -20,11 +25,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <VBox fx:id="contenedorHbox" alignment="TOP_CENTER" layoutX="67.0" layoutY="136.0" prefHeight="532.0" prefWidth="563.0" spacing="25.0" style="-fx-background-color: #392B58; -fx-border-width: 0;">
-         <padding>
-            <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
-         </padding>
-      </VBox>
       <Button fx:id="btnVenderVehiculo" layoutX="783.0" layoutY="43.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="176.0" styleClass="btn" stylesheets="@estilos.css" text="Vende tu vehículo" textFill="WHITE">
          <font>
             <Font name="Verdana" size="16.0" />
