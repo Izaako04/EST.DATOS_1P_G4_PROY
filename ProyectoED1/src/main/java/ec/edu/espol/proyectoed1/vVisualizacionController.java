@@ -135,62 +135,29 @@ public class vVisualizacionController {
     }
     
     private void avanzarVehiculoIzq () {
-        int posActual = cdlVehiculos.indexOf(vehiculo);
-        
-        if (posActual == 0) {
-            int size = cdlVehiculos.size();
-            vehiculo = cdlVehiculos.get(size - 1);
-        } else {
-            posActual -= 1;
-            vehiculo = cdlVehiculos.get(posActual);
-        }
-        
-        imgActual = vehiculo.getCdLLImagenes().get(0);
-        cambiarImg (imgActual);
+        vehiculo = cdlVehiculos.getPrev(vehiculo);
+        imgsVehiculos = vehiculo.getCdLLImagenes();
+        imgActual = imgsVehiculos.get(0);
         llenarDatosVehiculo();
+        cambiarImg(imgActual);
     }        
 
     private void avanzarVehiculoDer () {
-        int posActual = cdlVehiculos.indexOf(vehiculo);
-        int size = cdlVehiculos.size();
-        
-        if (posActual == size - 1) {
-            vehiculo = cdlVehiculos.get(0);
-        } else {
-            posActual += 1;
-            vehiculo = cdlVehiculos.get(posActual);
-        }
-        
-        imgActual = vehiculo.getCdLLImagenes().get(0);
-        cambiarImg(imgActual);
+        vehiculo = cdlVehiculos.getNext(vehiculo);
+        imgsVehiculos = vehiculo.getCdLLImagenes();
+        imgActual = imgsVehiculos.get(0);
         llenarDatosVehiculo();
+        cambiarImg(imgActual);
     } 
     
-    private void avanzarImgIzq () {        
-        int posActual = imgsVehiculos.indexOf(imgActual);
-        
-        if (posActual == 0) {
-            int size = imgsVehiculos.size();
-            imgActual = imgsVehiculos.get(size - 1);
-        } else {
-            imgActual = imgsVehiculos.get(posActual--);
-        }
-
-        cambiarImg(imgActual);
+    private void avanzarImgIzq () {   
+        imgActual = imgsVehiculos.getPrev(imgActual);
+        cambiarImg (imgActual);
     }
     
     private void avanzarImgDer () {
-        int posActual = imgsVehiculos.indexOf(imgActual);
-        int size = imgsVehiculos.size();
-        
-        if (posActual == size - 1) {
-            imgActual = imgsVehiculos.get(0);
-        } else {
-            posActual += 1;
-            imgActual = imgsVehiculos.get(posActual);
-        }
-        
-        cambiarImg(imgActual);
+        imgActual = imgsVehiculos.getNext(imgActual);
+        cambiarImg (imgActual);
     }
     
     private void cambiarImg (File img) {

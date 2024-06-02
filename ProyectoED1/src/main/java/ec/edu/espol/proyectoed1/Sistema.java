@@ -53,12 +53,11 @@ public class Sistema {
         if (lVehiculos == null){
             lVehiculos = new CDLinkedList <Vehiculo> ();
             lVehiculos.add(v);
-            escribirArchivo(lVehiculos,"vehiculos" );
             
         } else{
             lVehiculos.add(v);
-            escribirArchivo(lVehiculos, "vehiculos");
       }
+        escribirArchivo(lVehiculos, "vehiculos");
     }
     
     // me devuelve el usuario que sí existe

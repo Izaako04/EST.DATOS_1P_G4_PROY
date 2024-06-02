@@ -400,6 +400,7 @@ public class vSubirVehiculoController implements Initializable {
 
             if (tipo == 0) { // 0 -> portada/imagen principal
                 imagenes.add(0, targetFile);
+                System.out.println(targetFile.toString());
                 Image image = new Image(targetFile.toURI().toString());
                 
                 portadaVehiculo.setLayoutX(8 );
@@ -411,6 +412,8 @@ public class vSubirVehiculoController implements Initializable {
                 imagenes.add(targetFile);
 
             }
+            
+            System.out.println(imagenes);
         }
     }
     

@@ -37,8 +37,8 @@ public class CDLinkedList<E> implements List<E>, Serializable {
     private int size;
     
     public CDLinkedList () {
-        head = new Node ();
-        tail = new Node ();
+        head = null;
+        tail = null;
         size = 0;
     }
     
@@ -49,7 +49,7 @@ public class CDLinkedList<E> implements List<E>, Serializable {
 
     @Override
     public boolean isEmpty() {
-        return head.data == null && tail.data == null;
+        return size == 0;
     }
 
     @Override
@@ -107,6 +107,7 @@ public class CDLinkedList<E> implements List<E>, Serializable {
         if (isEmpty()) {
             head = tail = newNode;
             newNode.prev = newNode.next = newNode;
+      
         } else {
             newNode.next = head;
             newNode.prev = tail;
@@ -116,6 +117,7 @@ public class CDLinkedList<E> implements List<E>, Serializable {
         }
         
         size++;
+        System.out.println(this);
         return true;
     }
 
@@ -199,38 +201,45 @@ public class CDLinkedList<E> implements List<E>, Serializable {
 
     @Override
     public void add(int index, E element) {
-        if (isEmpty() && index != 0) {
-            return;
-        } else if (!isEmpty() && index >= size) {
-            return;
-        }
+        if (element == null) throw new IllegalArgumentException("Element cannot be null");
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         
         Node <E> newNode = new Node (element);
         
-        if (index == 0) {
+        if (head == null) {
+            head = tail = newNode;
+            newNode.prev = newNode.next = newNode;
+            size = 1;
+            
+        } else if (index == 0) {
             newNode.next = head;
             newNode.prev = tail;
+            head.prev = newNode;
             tail.next = newNode;
             head = newNode;
             
-        } else if (index > 0 && index != size - 1) {
-            Node <E> tempNode = head;
-
-            for (int i = 0; i < index - 1; i++) {
-                tempNode = tempNode.next;
-            }
-
-            newNode.prev = tempNode;
-            newNode.next = tempNode.next;
-            tempNode.next.prev = newNode;
-            tempNode.next = newNode;
-            
-        } else {
+        } else if (index >= size - 1) {
             newNode.next = head;
             newNode.prev = tail;
-            head.prev = tail;
+            head.prev = newNode;
+            tail.next = newNode;
             tail = newNode;
+            
+        } else {
+            Node <E> tempNode = head;
+            int i = 0;
+            
+            while (i < index - 1) {
+                tempNode = tempNode.next;
+                i++;
+            }
+            
+            newNode.prev = tempNode;
+            newNode.next = tempNode.next;
+            tempNode.next = newNode;
+            newNode.next.prev = newNode;
         }
+        
         size++;
     }
 
@@ -306,14 +315,48 @@ public class CDLinkedList<E> implements List<E>, Serializable {
     
     @Override
     public String toString () {
+        if (isEmpty()) return "Empty list";
+        
         String strReturn = "";
         Node tempNode = head;
         
         for (int i = 0; i < size; i++) {
-            strReturn = strReturn + tempNode.data.toString() + " -> ";
+            
+            if (tempNode.data != null) {
+                strReturn = strReturn + tempNode.data.toString() + " -> ";
+
+            }
+
+            
             tempNode = tempNode.next;
         }
 
         return strReturn.substring(0, strReturn.length() - 3);
+    }
+    
+    public E getNext (E e) {
+        Node <E> tempNode = head;
+        
+        for (int i = 0; i < size; i++) {
+            if (tempNode.data.equals(e)) {
+                return tempNode.next.data;
+            }
+            tempNode = tempNode.next;
+        }
+        
+        return null;
+    }
+    
+    public E getPrev (E e) {
+        Node <E> tempNode = head;
+        
+        for (int i = 0; i < size; i++) {
+            if (tempNode.data.equals(e)) {
+                return tempNode.prev.data;
+            }
+            tempNode = tempNode.prev;
+        }
+        
+        return null;
     }
 }

@@ -163,11 +163,15 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         
-        cargarVehiculos ();
+        CDLinkedList <Vehiculo> CDLLVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
+        if (CDLLVehiculos != null) {
+            cargarVehiculos (CDLLVehiculos);
+        }
+        
     }
     
-    private void cargarVehiculos() {
-        CDLinkedList <Vehiculo> CDLLVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
+    private void cargarVehiculos(CDLinkedList <Vehiculo> CDLLVehiculos) {
+        
         
         int cantidadVehiculos = CDLLVehiculos.size();
         int j = 0;
