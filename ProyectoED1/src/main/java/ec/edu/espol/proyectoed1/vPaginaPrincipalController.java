@@ -92,6 +92,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     private TextField tfYearHasta;
     @FXML
     private ComboBox<?> cmbOrdenar;
+    
     private Parent root;
     private Stage stage;
     private Scene scene;
@@ -197,7 +198,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
                     btnSeleccionar.setPrefSize(widthBtn, heightBtn);
                     btnSeleccionar.setStyle(estilo2);
                     btnSeleccionar.setCursor(Cursor.HAND);
-                    
+                      
                     spane.getChildren().addAll(visualizadorImg, btnSeleccionar);
 
                     hbox.getChildren().addAll(spane);
@@ -210,7 +211,13 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
                     visualizadorImg.setOnMouseExited(event -> estiloNotHover(btnSeleccionar, visualizadorImg));
                     btnSeleccionar.setOnMouseExited(event -> estiloNotHover(btnSeleccionar, visualizadorImg));
                     
-                    // btnSeleccionar.setOnAction(event -> ); implementar cambiar a vista modo circular!
+                    btnSeleccionar.setOnAction(event -> {
+                        try {
+                            seleccionarVehiculo (vehiculo, event, CDLLVehiculos);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    });
                     
                     j++;
                 }
@@ -225,13 +232,27 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         contenedorHbox.setSpacing(20);
     }
     
-    public void estiloHover(Button btnAnadirCod, ImageView img){
+    private void seleccionarVehiculo (Vehiculo vehiculo, Event event, CDLinkedList<Vehiculo> CDLLVehiculos) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vVisualizacion.fxml"));
+        root = loader.load();
+            
+        vVisualizacionController vVisualizadorController = loader.getController();
+        vVisualizadorController.home(vehiculo, usuario, CDLLVehiculos);
+            
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();  
+    }
+    
+    private void estiloHover(Button btnAnadirCod, ImageView img){
         btnAnadirCod.setStyle("-fx-background-color: #980B20; -fx-background-radius: 10; -fx-text-fill: white; cursor: hand;");
         img.setOpacity(0.5);
         btnAnadirCod.setFont(new Font("Verdana", 14));
     }
     
-    public void estiloNotHover(Button btnAnadirCod, ImageView img){
+    private void estiloNotHover(Button btnAnadirCod, ImageView img){
         btnAnadirCod.setStyle("-fx-background-color: transparent; -fx-text-fill: transparent;");
         img.setOpacity(1.0);
     }
