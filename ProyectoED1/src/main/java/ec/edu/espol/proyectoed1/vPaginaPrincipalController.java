@@ -151,7 +151,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
                 ex.printStackTrace();
             }
         });
-        
+
         Map <String, ArrayListG4 <String> > marcaYModelo = generaMapa();
         Set<String> keys = marcaYModelo.keySet();
         ObservableList<String> keyList = FXCollections.observableArrayList(keys);
@@ -316,7 +316,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
 
     public void home () {
     }
-    
+
     public void regresar(Usuario user, Event event) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vInicioSesion.fxml"));
         root = loader.load();
@@ -345,7 +345,6 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     public void filtrarPorY(List<Object> objetos) {
         
         // los objetos los obtendre mediante lo que el usuario haya elegido
-
+          
     }
 }
-

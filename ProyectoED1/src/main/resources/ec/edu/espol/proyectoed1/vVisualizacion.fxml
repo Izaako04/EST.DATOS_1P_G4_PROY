@@ -1,128 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #141414;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.proyectoed1.vVisualizacionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #141414;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.proyectoed1.vVisualizacionController">
    <children>
-      <AnchorPane layoutX="22.0" layoutY="99.0" pickOnBounds="false" prefHeight="417.0" prefWidth="455.0" style="-fx-background-color: #8F0015; -fx-background-radius: 20;" stylesheets="@estilos.css" AnchorPane.bottomAnchor="84.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="323.0" AnchorPane.topAnchor="99.0">
+      <AnchorPane layoutX="49.0" layoutY="102.0" pickOnBounds="false" prefHeight="585.0" prefWidth="1193.0" style="-fx-background-color: #8F0015; -fx-background-radius: 20;" stylesheets="@estilos.css" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="83.0">
          <children>
-            <Pane layoutX="6.0" layoutY="9.0" prefHeight="401.0" prefWidth="437.0">
+            <Pane layoutX="54.0" layoutY="45.0" prefHeight="539.0" prefWidth="658.0">
                <children>
-                  <Button fx:id="btInMoverDerecha" layoutX="407.0" layoutY="189.0" mnemonicParsing="false" styleClass="textField" stylesheets="@estilos.css" text="&gt;" />
-                  <Button fx:id="btInMoverIzquierda" layoutX="13.0" layoutY="189.0" mnemonicParsing="false" styleClass="textField" stylesheets="@estilos.css" text="&lt;" />
+                  <Button fx:id="btnImgMovDer" layoutX="619.0" layoutY="203.0" mnemonicParsing="false" styleClass="textField" stylesheets="@estilos.css" text="&gt;" />
+                  <Button fx:id="btnImgMovIzq" layoutY="203.0" mnemonicParsing="false" styleClass="textField" stylesheets="@estilos.css" text="&lt;" />
+                  <ImageView fx:id="visualizadorImgs" fitHeight="473.0" fitWidth="531.0" layoutX="59.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </Pane>
+            <AnchorPane layoutX="767.0" layoutY="11.0" prefHeight="586.0" prefWidth="418.0" style="-fx-background-color: #66000F; -fx-background-radius: 20;">
+               <children>
+                  <Text fill="WHITE" layoutX="82.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometraje">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="109.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="98.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modelo">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="102.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marca">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="bAccidentes" layoutX="61.0" layoutY="527.0" mnemonicParsing="false" onMouseClicked="#verAccidentes" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@estilos.css" text="Accidentes" textFill="WHITE">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fill="WHITE" layoutX="102.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="92.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Potencia">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="80.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transmision">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="79.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combustible">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tGuardar" fill="WHITE" layoutX="273.0" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guardar" wrappingWidth="67.005859375">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="89.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ubicacion">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="101.0" layoutY="466.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tMarca" fill="WHITE" layoutX="284.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tModelo" fill="WHITE" layoutX="284.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tYear" fill="WHITE" layoutX="284.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tKilometraje" fill="WHITE" layoutX="284.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tPrecio" fill="WHITE" layoutX="284.0" layoutY="466.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tUbicacion" fill="WHITE" layoutX="284.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tCombustible" fill="WHITE" layoutX="284.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tTransmicion" fill="WHITE" layoutX="284.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tPotencia" fill="WHITE" layoutX="284.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="tMotor" fill="WHITE" layoutX="284.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOLA">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <Button id="moverIzquierda" fx:id="btOutMoverDerecha" layoutX="752.0" layoutY="236.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="24.0" styleClass="combobox" stylesheets="@estilos.css" text="&gt;" />
+            <Button id="moverIzquierda" fx:id="btOutMoverIzquierda" layoutX="-10.0" layoutY="236.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="30.0" styleClass="combobox" stylesheets="@estilos.css" text="&lt;" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="477.0" layoutY="78.0" prefHeight="458.0" prefWidth="303.0" style="-fx-background-color: #66000F; -fx-background-radius: 20;">
-         <children>
-            <Text fill="WHITE" layoutX="19.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometraje">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <Text fill="WHITE" layoutX="46.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <Text fill="WHITE" layoutX="35.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modelo">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <Text fill="WHITE" layoutX="39.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marca">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <Button fx:id="bAccidentes" layoutX="21.0" layoutY="411.0" mnemonicParsing="false" onMouseClicked="#verAccidentes" prefHeight="26.0" prefWidth="150.0" styleClass="btn" stylesheets="@estilos.css" text="Accidentes" textFill="WHITE">
-               <font>
-                  <Font name="Verdana" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <TextField fx:id="fcModelo" layoutX="135.0" layoutY="51.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 0 0 2.5 0; -fx-background-color: none;" styleClass="textField">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-               <stylesheets>
-                  <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
-                  <URL value="@estilos.css" />
-               </stylesheets>
-            </TextField>
-            <TextField fx:id="fcKm" layoutX="135.0" layoutY="129.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-               <stylesheets>
-                  <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
-                  <URL value="@estilos.css" />
-               </stylesheets>
-            </TextField>
-            <TextField fx:id="fcAnio" layoutX="135.0" layoutY="90.0" prefHeight="30.0" prefWidth="150.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-               <stylesheets>
-                  <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
-                  <URL value="@estilos.css" />
-               </stylesheets>
-            </TextField>
-            <Text fill="WHITE" layoutX="39.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Motor">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <TextField fx:id="fcMotor" layoutX="135.0" layoutY="166.0" prefHeight="28.0" prefWidth="150.0" styleClass="textField" stylesheets="@estilos.css" />
-            <Text fill="WHITE" layoutX="29.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Potencia">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <TextField fx:id="fcPotencia" layoutX="135.0" layoutY="203.0" styleClass="textField" stylesheets="@estilos.css" />
-            <Text fill="WHITE" layoutX="17.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transmision">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <TextField fx:id="fcTrans" layoutX="135.0" layoutY="242.0" styleClass="textField" stylesheets="@estilos.css" />
-            <Text fill="WHITE" layoutX="16.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combustible">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <TextField fx:id="fcCombustible" layoutX="135.0" layoutY="280.0" styleClass="textField" stylesheets="@estilos.css" />
-            <TextField fx:id="fcMarca" layoutX="135.0" layoutY="14.0" styleClass="textField" stylesheets="@estilos.css" />
-            <Text fx:id="tGuardar" fill="WHITE" layoutX="227.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guardar">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <Text fill="WHITE" layoutX="26.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ubicacion">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-            <TextField fx:id="fcUbicacion" layoutX="135.0" layoutY="319.0" styleClass="textField" stylesheets="@estilos.css" />
-            <TextField fx:id="fcPrecio" layoutX="135.0" layoutY="358.0" styleClass="textField" stylesheets="@estilos.css" />
-            <Text fill="WHITE" layoutX="38.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio">
-               <font>
-                  <Font name="Verdana" size="14.0" />
-               </font>
-            </Text>
-         </children>
-      </AnchorPane>
-      <Button fx:id="btRegresar" layoutX="29.0" layoutY="35.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="113.0" styleClass="btn" stylesheets="@estilos.css" text="Regresar" textFill="WHITE">
+      <Button fx:id="btRegresar" layoutX="49.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="113.0" styleClass="btn" stylesheets="@estilos.css" text="Regresar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -130,7 +148,5 @@
             <Font name="Verdana" size="12.0" />
          </font>
       </Button>
-      <Button id="moverIzquierda" fx:id="btOutMoverDerecha" layoutX="771.0" layoutY="284.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="24.0" styleClass="combobox" stylesheets="@estilos.css" text="&gt;" />
-      <Button id="moverIzquierda" fx:id="btOutMoverIzquierda" layoutX="1.0" layoutY="284.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="30.0" styleClass="combobox" stylesheets="@estilos.css" text="&lt;" />
    </children>
 </AnchorPane>
