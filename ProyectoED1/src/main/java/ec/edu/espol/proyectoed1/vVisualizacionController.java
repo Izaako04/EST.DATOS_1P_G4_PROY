@@ -1,5 +1,6 @@
 package ec.edu.espol.proyectoed1;
 
+import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,9 +17,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ec.edu.espol.proyectoed1.classes.Persona;
 import ec.edu.espol.proyectoed1.classes.Usuario;
+import ec.edu.espol.proyectoed1.classes.Vehiculo;
+import java.io.File;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -29,21 +33,6 @@ public class vVisualizacionController {
     private Scene scene;
     @FXML
     private Button bAccidentes;
-    @FXML
-    private TextField fcMarca;
-    @FXML
-    private TextField fcModelo;
-    @FXML
-    private TextField fcKm;
-    @FXML
-    private TextField fcAnio;
-    @FXML
-    private TextField fcMotor;
-    @FXML
-    private TextField fcTrans;
-    @FXML
-    private TextField fcUbicacion;
-    @FXML
     private TextField fcPrecio;
     @FXML
     private Text tGuardar;
@@ -52,18 +41,41 @@ public class vVisualizacionController {
     @FXML
     private Button btOutMoverDerecha;
     @FXML
-    private Button btInMoverDerecha;
+    private Button btRegresar; 
     @FXML
-    private Button btInMoverIzquierda;
-    @FXML
-    private TextField fcPotencia;
-    @FXML
-    private TextField fcCombustible;
-    @FXML
-    private Button btRegresar;
+    private ImageView visualizadorImgs;
 
+    private Usuario usuario;
+    private Vehiculo vehiculo;
+    CDLinkedList <File> imgsVehiculos;
+    @FXML
+    private Button btnImgMovDer;
+    @FXML
+    private Text tMarca;
+    @FXML
+    private Text tModelo;
+    @FXML
+    private Text tYear;
+    @FXML
+    private Text tKilometraje;
+    @FXML
+    private Text tPrecio;
+    @FXML
+    private Text tUbicacion;
+    @FXML
+    private Text tCombustible;
+    @FXML
+    private Text tTransmicion;
+    @FXML
+    private Text tPotencia;
+    @FXML
+    private Text tMotor;
+    @FXML
+    private Button btnImgMovIzq;
+    private File imgActual;
+    private CDLinkedList<Vehiculo> cdlVehiculos;
+    
     private void initialize() {
-        home();
     }
     
     private void switchToPrimary() throws IOException {
@@ -79,7 +91,22 @@ public class vVisualizacionController {
     }
     
     
-    public void home(){
+    public void home(Vehiculo v, Usuario user, CDLinkedList<Vehiculo> listaVehiculos){
+        usuario = user;
+        vehiculo = v;
+        imgsVehiculos = vehiculo.getCdLLImagenes();
+        cdlVehiculos = listaVehiculos;
+        llenarDatosVehiculo();
+        
+        imgActual = imgsVehiculos.get(0);
+        cambiarImg (imgActual);
+        
+        btnImgMovIzq.setOnAction (event -> avanzarImgIzq ());
+        btnImgMovDer.setOnAction (event -> avanzarImgDer ());
+        btOutMoverIzquierda.setOnAction (event -> avanzarVehiculoIzq ());
+        btOutMoverDerecha.setOnAction (event -> avanzarVehiculoDer ());
+                
+        
         // Configurar el TextFormatter para aceptar solo valores numéricos
         TextFormatter<Integer> textFormatter = new TextFormatter<Integer> (
             new IntegerStringConverter(),
@@ -91,25 +118,97 @@ public class vVisualizacionController {
                 return change;
             }
         );
-
-        fcPrecio.setTextFormatter(textFormatter);
-
-        tGuardar.setOnMouseClicked(event -> {
-            try {
-                verAccidentes(event);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
         
     }
+    
+    private void llenarDatosVehiculo () {
+        tMarca.setText(vehiculo.getRegistro().getMarca());
+        tModelo.setText(vehiculo.getRegistro().getModelo());
+        tYear.setText(String.valueOf(vehiculo.getRegistro().getAño()));
+        tKilometraje.setText(String.valueOf(vehiculo.getKilometraje()));
+        tMotor.setText(vehiculo.getMotor().getTipo());
+        tPotencia.setText(String.valueOf(vehiculo.getMotor().getPotencia()));
+        tTransmicion.setText(vehiculo.getTransmision().getTipo());
+        tCombustible.setText(vehiculo.getMotor().getTipo());
+        tUbicacion.setText(vehiculo.getUbicacion());
+        tPrecio.setText(String.valueOf(vehiculo.getPrecio()));
+    }
+    
+    private void avanzarVehiculoIzq () {
+        int posActual = cdlVehiculos.indexOf(vehiculo);
+        
+        if (posActual == 0) {
+            int size = cdlVehiculos.size();
+            vehiculo = cdlVehiculos.get(size - 1);
+        } else {
+            posActual -= 1;
+            vehiculo = cdlVehiculos.get(posActual);
+        }
+        
+        imgActual = vehiculo.getCdLLImagenes().get(0);
+        cambiarImg (imgActual);
+        llenarDatosVehiculo();
+    }        
 
+    private void avanzarVehiculoDer () {
+        int posActual = cdlVehiculos.indexOf(vehiculo);
+        int size = cdlVehiculos.size();
+        
+        if (posActual == size - 1) {
+            vehiculo = cdlVehiculos.get(0);
+        } else {
+            posActual += 1;
+            vehiculo = cdlVehiculos.get(posActual);
+        }
+        
+        imgActual = vehiculo.getCdLLImagenes().get(0);
+        cambiarImg(imgActual);
+        llenarDatosVehiculo();
+    } 
+    
+    private void avanzarImgIzq () {        
+        int posActual = imgsVehiculos.indexOf(imgActual);
+        
+        if (posActual == 0) {
+            int size = imgsVehiculos.size();
+            imgActual = imgsVehiculos.get(size - 1);
+        } else {
+            imgActual = imgsVehiculos.get(posActual--);
+        }
+
+        cambiarImg(imgActual);
+    }
+    
+    private void avanzarImgDer () {
+        int posActual = imgsVehiculos.indexOf(imgActual);
+        int size = imgsVehiculos.size();
+        
+        if (posActual == size - 1) {
+            imgActual = imgsVehiculos.get(0);
+        } else {
+            posActual += 1;
+            imgActual = imgsVehiculos.get(posActual);
+        }
+        
+        cambiarImg(imgActual);
+    }
+    
+    private void cambiarImg (File img) {
+        visualizadorImgs.setX(0);
+        visualizadorImgs.setY(60);
+        
+        File imageFile = img;
+        Image image = new Image(imageFile.toURI().toString());
+        visualizadorImgs.setImage(image);
+    }
+    
     private void ventanaIniciarSesion(MouseEvent event) {
         try{
             App.setRoot("vInicioSesion");
         } catch(IOException e){
         }
-    }    
+    }
+    
     @FXML
     private void verAccidentes(MouseEvent event) throws IOException {
     }

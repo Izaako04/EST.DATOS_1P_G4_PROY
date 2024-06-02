@@ -272,7 +272,16 @@ public class CDLinkedList<E> implements List<E>, Serializable {
 
     @Override
     public int indexOf(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Node <E> tempNode = head;
+        
+        for (int i = 0; i < size; i++) {
+            if (o.equals(tempNode.data)) {
+                return i;
+            }
+            tempNode = tempNode.next;
+        }
+        
+        return -1;
     }
 
     @Override
