@@ -17,6 +17,11 @@
                   <Button fx:id="btnImgMovDer" layoutX="619.0" layoutY="203.0" mnemonicParsing="false" styleClass="textField" stylesheets="@estilos.css" text="&gt;" />
                   <Button fx:id="btnImgMovIzq" layoutY="203.0" mnemonicParsing="false" styleClass="textField" stylesheets="@estilos.css" text="&lt;" />
                   <ImageView fx:id="visualizadorImgs" fitHeight="473.0" fitWidth="531.0" layoutX="59.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
+                  <Text fx:id="tIndexImg" fill="WHITE" layoutX="566.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nImg">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
                </children>
             </Pane>
             <AnchorPane layoutX="767.0" layoutY="11.0" prefHeight="586.0" prefWidth="418.0" style="-fx-background-color: #66000F; -fx-background-radius: 20;">

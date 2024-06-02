@@ -242,7 +242,7 @@ public class vSubirVehiculoController implements Initializable {
         cmbMarca.setOnAction(event -> configuraComboBoxMarcaModelo (marcaYModelo));
         
         
-        dpFechaAccidente.setEditable(false);
+        dpFechaAccidente.setDisable(true);
         taDescripcionAccidente.setEditable(false);
         cmbUbicacionAccidente.setDisable(true);
         cbTieneAccidente.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -250,18 +250,38 @@ public class vSubirVehiculoController implements Initializable {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 // Set the editable property of the TextArea based on the CheckBox state
                 taDescripcionAccidente.setEditable(newValue);
-                dpFechaAccidente.setEditable(newValue);
+                dpFechaAccidente.setDisable(!newValue);
                 cmbUbicacionAccidente.setDisable(!newValue);
+                
+                // Set the text of the TextArea based on the CheckBox state
+                if (!newValue) {
+                    taDescripcionAccidente.clear();
+                    taDescripcionAccidente.setPromptText("Describe el accidente");
+                    dpFechaAccidente.setValue(null);
+                } else {
+                    taDescripcionAccidente.setPromptText("Describe el accidente*");
+                
+                }
             }
         });
-        dpFechaReparacion.setEditable(false);
+        
+        dpFechaReparacion.setDisable(true);
         taDescripcionReparacion.setEditable(false);
         cbTieneReparacion.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 // Set the editable property of the TextArea based on the CheckBox state
-                dpFechaReparacion.setEditable(newValue);
+                dpFechaReparacion.setDisable(!newValue);
                 taDescripcionReparacion.setEditable(newValue);
+                
+                if (!newValue) {
+                    taDescripcionReparacion.clear();
+                    taDescripcionReparacion.setPromptText("Describe la reparación");
+                    dpFechaReparacion.setValue(null);
+                } else {
+                    taDescripcionReparacion.setPromptText("Describe la reparación*");
+                
+                }
             }
         });
                
@@ -311,6 +331,7 @@ public class vSubirVehiculoController implements Initializable {
 
         if (camposVacios) { // campos vacíos
             muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber llenado todos los campos obligatorios*");
+            return;
         }
 
         // campos obligatorios
@@ -330,7 +351,7 @@ public class vSubirVehiculoController implements Initializable {
         boolean checkReparacion = checkReparacionCamposVacios();
         boolean imgPortadaEmpty = imagenes.get(0) == null; 
 
-        if (!camposVacios && ( checkAccidente || checkReparacion) ) { // campos vacíos
+        if (!camposVacios && (checkAccidente || checkReparacion) ) { // campos vacíos
             muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber llenado todos los campos obligatorios*");
         } else if (imgPortadaEmpty) { // no hay portada
             muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber cargado al menos la imágen 'Exterior Frontal'");
@@ -342,15 +363,25 @@ public class vSubirVehiculoController implements Initializable {
             if (cbTieneAccidente.isSelected()) {
                 dpFechaAccidente.setEditable(true);
                 taDescripcionAccidente.setEditable(true);
-                String ubicacionAccidente = this.cmbUbicacionAccidente.getValue();
+                
                 accidente = new Accidente (fechaAccidente.toString(), descripcionAccidente, ubicacionAccidente);
+                
+            } else {
+                dpFechaAccidente.setValue(null);
+                taDescripcionAccidente.setText("");
+                cmbUbicacionAccidente.setValue("");
             }
             
             // Caso 2: Hay reparación
             if (cbTieneReparacion.isSelected()) {
                 dpFechaReparacion.setEditable(true);
                 taDescripcionReparacion.setEditable(true);
+
                 reparacion = new Reparacion (fechaAccidente.toString(), descripcionReparacion);
+                
+            } else {
+                dpFechaReparacion.setValue(null);
+                taDescripcionReparacion.setText("");
             }
             
             // Se crea objeto registro
@@ -441,7 +472,7 @@ public class vSubirVehiculoController implements Initializable {
             ubicacionAccidente = cmbUbicacionAccidente.getValue();
             
             camposVacios = (cmbUbicacionAccidente.getValue() == null || descripcionAccidente.isBlank() || fechaAccidente == null);
-            
+
         } else {
             camposVacios = false;
         }

@@ -19,10 +19,15 @@ import ec.edu.espol.proyectoed1.classes.Persona;
 import ec.edu.espol.proyectoed1.classes.Usuario;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import java.io.File;
+import javafx.event.Event;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -31,6 +36,7 @@ public class vVisualizacionController {
     private Parent root;
     private Stage stage;
     private Scene scene;
+    
     @FXML
     private Button bAccidentes;
     private TextField fcPrecio;
@@ -74,6 +80,11 @@ public class vVisualizacionController {
     private Button btnImgMovIzq;
     private File imgActual;
     private CDLinkedList<Vehiculo> cdlVehiculos;
+    @FXML
+    private Text tIndexImg;
+    
+    private int nImages;
+    
     
     private void initialize() {
     }
@@ -96,16 +107,25 @@ public class vVisualizacionController {
         vehiculo = v;
         imgsVehiculos = vehiculo.getCdLLImagenes();
         cdlVehiculos = listaVehiculos;
-        llenarDatosVehiculo();
         
         imgActual = imgsVehiculos.get(0);
+        nImages = imgsVehiculos.size();
         cambiarImg (imgActual);
+        llenarDatosVehiculo();
         
         btnImgMovIzq.setOnAction (event -> avanzarImgIzq ());
         btnImgMovDer.setOnAction (event -> avanzarImgDer ());
         btOutMoverIzquierda.setOnAction (event -> avanzarVehiculoIzq ());
         btOutMoverDerecha.setOnAction (event -> avanzarVehiculoDer ());
-                
+               
+        
+        btRegresar.setOnAction(event -> {
+            try {
+                regresar(usuario, event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
         
         // Configurar el TextFormatter para aceptar solo valores numéricos
         TextFormatter<Integer> textFormatter = new TextFormatter<Integer> (
@@ -138,6 +158,7 @@ public class vVisualizacionController {
         vehiculo = cdlVehiculos.getPrev(vehiculo);
         imgsVehiculos = vehiculo.getCdLLImagenes();
         imgActual = imgsVehiculos.get(0);
+        nImages = imgsVehiculos.size();
         llenarDatosVehiculo();
         cambiarImg(imgActual);
     }        
@@ -145,6 +166,7 @@ public class vVisualizacionController {
     private void avanzarVehiculoDer () {
         vehiculo = cdlVehiculos.getNext(vehiculo);
         imgsVehiculos = vehiculo.getCdLLImagenes();
+        nImages = imgsVehiculos.size();
         imgActual = imgsVehiculos.get(0);
         llenarDatosVehiculo();
         cambiarImg(imgActual);
@@ -167,6 +189,9 @@ public class vVisualizacionController {
         File imageFile = img;
         Image image = new Image(imageFile.toURI().toString());
         visualizadorImgs.setImage(image);
+        
+        int posImg = imgsVehiculos.indexOf(img) + 1;
+        tIndexImg.setText(posImg + "/" + nImages);
     }
     
     private void ventanaIniciarSesion(MouseEvent event) {
@@ -178,5 +203,21 @@ public class vVisualizacionController {
     
     @FXML
     private void verAccidentes(MouseEvent event) throws IOException {
+    }
+    
+    public void regresar(Usuario user, Event event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));
+        root = loader.load();
+            
+        vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
+        // vPaginaPrincipalController.actualizarVehiculo(); alguna función para 'recargar' los vehiculos
+        vPaginaPrincipalController.home(user);
+            
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();    
+    
     }
 }

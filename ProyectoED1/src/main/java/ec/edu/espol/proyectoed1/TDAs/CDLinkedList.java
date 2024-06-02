@@ -209,7 +209,6 @@ public class CDLinkedList<E> implements List<E>, Serializable {
         if (head == null) {
             head = tail = newNode;
             newNode.prev = newNode.next = newNode;
-            size = 1;
             
         } else if (index == 0) {
             newNode.next = head;
