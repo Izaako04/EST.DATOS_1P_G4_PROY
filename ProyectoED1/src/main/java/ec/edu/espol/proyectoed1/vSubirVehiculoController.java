@@ -240,6 +240,30 @@ public class vSubirVehiculoController implements Initializable {
         ObservableList<String> keyList = FXCollections.observableArrayList(keys);
         cmbMarca.setItems(keyList);
         cmbMarca.setOnAction(event -> configuraComboBoxMarcaModelo (marcaYModelo));
+        
+        
+        dpFechaAccidente.setEditable(false);
+        taDescripcionAccidente.setEditable(false);
+        cmbUbicacionAccidente.setDisable(true);
+        cbTieneAccidente.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                // Set the editable property of the TextArea based on the CheckBox state
+                taDescripcionAccidente.setEditable(newValue);
+                dpFechaAccidente.setEditable(newValue);
+                cmbUbicacionAccidente.setDisable(!newValue);
+            }
+        });
+        dpFechaReparacion.setEditable(false);
+        taDescripcionReparacion.setEditable(false);
+        cbTieneReparacion.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                // Set the editable property of the TextArea based on the CheckBox state
+                dpFechaReparacion.setEditable(newValue);
+                taDescripcionReparacion.setEditable(newValue);
+            }
+        });
                
         
         // resolver bug: Cuando el usuario seleeciona una fecha para el accidente y luego decide borrarla por el teclado
@@ -316,12 +340,16 @@ public class vSubirVehiculoController implements Initializable {
             
             // Caso 1: Hay accidente
             if (cbTieneAccidente.isSelected()) {
+                dpFechaAccidente.setEditable(true);
+                taDescripcionAccidente.setEditable(true);
                 String ubicacionAccidente = this.cmbUbicacionAccidente.getValue();
                 accidente = new Accidente (fechaAccidente.toString(), descripcionAccidente, ubicacionAccidente);
             }
             
             // Caso 2: Hay reparación
             if (cbTieneReparacion.isSelected()) {
+                dpFechaReparacion.setEditable(true);
+                taDescripcionReparacion.setEditable(true);
                 reparacion = new Reparacion (fechaAccidente.toString(), descripcionReparacion);
             }
             
@@ -342,6 +370,12 @@ public class vSubirVehiculoController implements Initializable {
             // Guardar en archivo usuario.ser y vehiculo.ser
             Sistema.actualizarUsuario_Archivo(usuario);
             Sistema.agregarVehiculo_Archivo(nuevoVehiculo);
+            muestraAlerta("Felicidades", "¡Tu vehículo ya es parte de la familia AutoTrade!");
+            try {
+                regresar(this.usuario, event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
     
@@ -466,6 +500,5 @@ public class vSubirVehiculoController implements Initializable {
         stage.show();    
     
     }
-    
     
 }

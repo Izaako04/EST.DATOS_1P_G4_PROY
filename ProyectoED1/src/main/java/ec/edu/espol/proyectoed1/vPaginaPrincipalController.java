@@ -36,6 +36,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -49,6 +50,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 
@@ -136,6 +138,14 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         btnVenderVehiculo.setOnAction(event -> {
             try {
                 mostrarSubirVehiculo(event, user); // deberia pasar user
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+        vCerrarSesión.setOnAction(event -> {
+            try {
+                regresar(user,event); // deberia pasar user
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -285,6 +295,25 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
 
     public void home () {
     }
+    
+    public void regresar(Usuario user, Event event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vInicioSesion.fxml"));
+        root = loader.load();
+            
+        vInicioSesionController vInicioSesionController = loader.getController();
+        vInicioSesionController.home();
+            
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 800, 600);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+        
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((primaryScreenBounds.getWidth() - stage.getWidth()) / 2);
+        stage.setY((primaryScreenBounds.getHeight() - stage.getHeight()) / 2);
+        stage.show();
+    }
 
     @Override
     public void filtrarPorX(Comparator cmp) {
@@ -295,12 +324,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     public void filtrarPorY(List<Object> objetos) {
         
         // los objetos los obtendre mediante lo que el usuario haya elegido
-        
-      
+
     }
-
-    
-    
-
 }
 
