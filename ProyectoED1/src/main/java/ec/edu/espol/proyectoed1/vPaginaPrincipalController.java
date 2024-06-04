@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import ec.edu.espol.proyectoed1.classes.Filtrable;
+import ec.edu.espol.proyectoed1.classes.RegistroVehiculo;
 import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import java.io.File;
@@ -115,6 +116,8 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
 
     private String estilo2 = "-fx-background-color: transparent; -fx-text-fill: transparent;";
     
+    private CDLinkedList <Vehiculo> CDLLVehiculos;
+    
     /**
      * Initializes the controller class.
      */
@@ -140,6 +143,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     
 
     public void home (Usuario user) {
+        btnBuscar.setOnAction (event -> aplicarFiltro ());
         usuario = user;
         textoSaludoUsuario.setText("Bienvenido " + usuario.getNombre());
         
@@ -170,7 +174,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         
-        CDLinkedList <Vehiculo> CDLLVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
+        CDLLVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
         if (CDLLVehiculos != null) {
             cargarVehiculos (CDLLVehiculos);
         }
@@ -178,8 +182,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     }
     
     private void cargarVehiculos(CDLinkedList <Vehiculo> CDLLVehiculos) {
-        
-        
+
         int cantidadVehiculos = CDLLVehiculos.size();
         int j = 0;
         
@@ -241,6 +244,24 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
             
         }
         contenedorHbox.setSpacing(20);
+    }
+    
+    // por ahora solo marca
+    private void aplicarFiltro () {
+        CDLinkedList <Vehiculo> vFiltrados = new CDLinkedList <Vehiculo>();
+        
+        Vehiculo v = CDLLVehiculos.get(0);
+        
+        for (int i = 0; i < CDLLVehiculos.size(); i++) {
+            
+            v = CDLLVehiculos.getNext(v);
+            
+            if (v.getRegistro().getMarca().equals(cmbMarca.getValue())) vFiltrados.add(v);
+             
+        }
+        
+        contenedorHbox.getChildren().clear();
+        cargarVehiculos (vFiltrados);
     }
     
     private void seleccionarVehiculo (Vehiculo vehiculo, Event event, CDLinkedList<Vehiculo> CDLLVehiculos) throws IOException {
