@@ -138,14 +138,20 @@ public class Vehiculo implements Serializable {
         return null;
     }
 
-    
-    public static PriorityQueue<Vehiculo> getPriorityQueue(List<Vehiculo> vehiculos, Comparator cmp){
-        PriorityQueue sortVehiculos = new PriorityQueue(cmp);
+    // metodo para sortear por comparador los vehiculos, me da una nueva lista con los elementos ya sorteados ready para presentar
+    public static List<Vehiculo> getSortedList(List<Vehiculo> vehiculos, Comparator cmp){
+        PriorityQueue<Vehiculo> sortVehiculos = new PriorityQueue(cmp);
+        List<Vehiculo> ret = new CDLinkedList();
         for(Vehiculo v: vehiculos){
             sortVehiculos.add(v);
             
         }
-        return sortVehiculos;
+        for(Vehiculo v: sortVehiculos){
+            ret.add(v);
+            
+        }
+        
+        return ret;
     } 
 //    Comparator cmpXprecio
     
@@ -214,6 +220,44 @@ public class Vehiculo implements Serializable {
             return v1.getMotor().getTipo().compareTo(v2.getMotor().getTipo());
         }
     };
+
+    public static Comparator<Vehiculo> getCmpXprecioMenMay() {
+        return cmpXprecioMenMay;
+    }
+
+    public static Comparator<Vehiculo> getCmpXprecioMayMen() {
+        return cmpXprecioMayMen;
+    }
+
+    public static Comparator<Vehiculo> getCmpXkilometrajeMenMay() {
+        return cmpXkilometrajeMenMay;
+    }
+
+    public static Comparator<Vehiculo> getCmpXkilometrajeMayMen() {
+        return cmpXkilometrajeMayMen;
+    }
+
+    public static Comparator<Vehiculo> getCmpXprecioYkm() {
+        return cmpXprecioYkm;
+    }
+
+    public static Comparator<Vehiculo> getCmpXmarca() {
+        return cmpXmarca;
+    }
+
+    public static Comparator<Vehiculo> getCmpXmodelo() {
+        return cmpXmodelo;
+    }
+
+    public static Comparator<Vehiculo> getCmpXtransmision() {
+        return cmpXtransmision;
+    }
+
+    public static Comparator<Vehiculo> getCmpXmotor() {
+        return cmpXmotor;
+    }
+    
+    
 
     // getter de la CDLL de imgs
     public CDLinkedList<File> getCdLLImagenes() {

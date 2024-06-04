@@ -91,7 +91,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     @FXML
     private TextField tfYearHasta;
     @FXML
-    private ComboBox<?> cmbOrdenar;
+    private ComboBox<String> cmbOrdenar;
     
     private Parent root;
     private Stage stage;
@@ -126,6 +126,13 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         cmbMarca.setItems(keyList);
 
         cmbMarca.setOnAction(event -> configuraComboBox (marcaYModelo));
+        
+        cmbOrdenar.getItems().addAll("Precio (Mayor-Menor) ", "Precio (Menor-Mayor) ", "Kilometraje (Mayor-Menor) ", "Kilometraje (Menor-Mayor) ");
+        
+        cmbOrdenar.setOnAction(event -> {
+            String selectedOption = cmbOrdenar.getSelectionModel().getSelectedItem();
+            applyMethod(selectedOption);
+        });
     
         // El cuadro morado solo es para identificar el anchopane, cuando la parte del sistema
         // esté terminada y se puedan colocar los autos con sus fotos el fondo pasará a negro
@@ -342,7 +349,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
 
     @Override
     public void filtrarPorX(Comparator cmp) {
-        vehiculos = (List) Vehiculo.getPriorityQueue(vehiculos, cmp); 
+        vehiculos = Vehiculo.getSortedList(vehiculos, cmp); 
     }
 
     @Override
@@ -351,4 +358,29 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         // los objetos los obtendre mediante lo que el usuario haya elegido
           
     }
+
+    private void applyMethod(String selectedOption) {
+        
+        //, , , 
+         switch (selectedOption) {
+            case "Precio (Mayor-Menor) ":
+                filtrarPorX(Vehiculo.getCmpXprecioMayMen());
+                break;
+            case "Precio (Menor-Mayor) ":
+                filtrarPorX(Vehiculo.getCmpXprecioMenMay());
+                break;
+            case "Kilometraje (Mayor-Menor) ":
+                filtrarPorX(Vehiculo.getCmpXkilometrajeMayMen());
+                break;
+            case "Kilometraje (Menor-Mayor) ":
+                filtrarPorX(Vehiculo.getCmpXkilometrajeMenMay());
+                break;
+            default:
+                // Acción para cualquier otra opción (si la hay)
+                System.out.println("Se seleccionó una opción desconocida");
+                break;
+        }
+    }
+    
+    
 }
