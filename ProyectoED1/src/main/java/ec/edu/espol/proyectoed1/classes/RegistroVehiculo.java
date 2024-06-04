@@ -17,8 +17,8 @@ public class RegistroVehiculo implements Serializable {
     private String placa;
     private Persona duenio;
     private int año;
-    protected String marca;
-    protected String modelo;
+    private String marca;
+    private String modelo;
     private Reparacion reparaciones; // antes ArrayListG4
     private Accidente accidentes;
 
@@ -31,7 +31,11 @@ public class RegistroVehiculo implements Serializable {
         this.reparaciones = reparaciones;
         this.accidentes = accidentes;
     }
-
+    
+    public RegistroVehiculo (String marca) {
+        this.marca = marca;
+    }
+    
     public String getPlaca() {
         return placa;
     }

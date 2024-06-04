@@ -25,7 +25,7 @@ public class Vehiculo implements Serializable {
     
     // nombre archivo >>>> vehiculos
     
-    protected RegistroVehiculo registro;
+    private RegistroVehiculo registro;
     protected Motor motor;
     protected Transmision transmision;
     protected double precio;
@@ -187,7 +187,7 @@ public class Vehiculo implements Serializable {
     };
     
     
-    private static Comparator<Vehiculo> cmpXmarca = new Comparator<Vehiculo>() {
+    public static Comparator<Vehiculo> cmpXmarca = new Comparator<Vehiculo>() {
         @Override
         public int compare(Vehiculo v1, Vehiculo v2) {
             return v1.getRegistro().getMarca().compareTo(v2.getRegistro().getMarca());
