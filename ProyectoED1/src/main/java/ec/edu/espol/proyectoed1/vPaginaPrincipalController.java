@@ -110,7 +110,6 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     
     private Usuario usuario;
     
-    private List<Vehiculo> vehiculos;
     @FXML
     private ScrollPane scrollPane;
 
@@ -132,10 +131,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         
         cmbOrdenar.getItems().addAll("Precio (Mayor-Menor) ", "Precio (Menor-Mayor) ", "Kilometraje (Mayor-Menor) ", "Kilometraje (Menor-Mayor) ");
         
-        cmbOrdenar.setOnAction(event -> {
-            String selectedOption = cmbOrdenar.getSelectionModel().getSelectedItem();
-            applyMethod(selectedOption);
-        });
+        
     
         // El cuadro morado solo es para identificar el anchopane, cuando la parte del sistema
         // esté terminada y se puedan colocar los autos con sus fotos el fondo pasará a negro
@@ -178,6 +174,11 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         if (CDLLVehiculos != null) {
             cargarVehiculos (CDLLVehiculos);
         }
+        
+        cmbOrdenar.setOnAction(event -> {
+            String selectedOption = cmbOrdenar.getSelectionModel().getSelectedItem();
+            applyMethod(selectedOption);
+        });
         
     }
     
@@ -370,7 +371,12 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
 
     @Override
     public void filtrarPorX(Comparator cmp) {
-        vehiculos = Vehiculo.getSortedList(vehiculos, cmp); 
+        CDLLVehiculos = Vehiculo.getSortedList(CDLLVehiculos, cmp);
+        System.out.println("bine");
+        contenedorHbox.getChildren().clear();
+        System.out.println("bine0");
+        this.cargarVehiculos(CDLLVehiculos);
+        System.out.println("bie");
     }
 
     @Override
@@ -385,7 +391,9 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         //, , , 
          switch (selectedOption) {
             case "Precio (Mayor-Menor) ":
+                System.out.println("bien precio");
                 filtrarPorX(Vehiculo.getCmpXprecioMayMen());
+                System.out.println("bien precio 222");
                 break;
             case "Precio (Menor-Mayor) ":
                 filtrarPorX(Vehiculo.getCmpXprecioMenMay());

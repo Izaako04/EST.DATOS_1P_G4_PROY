@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
  * @author Isaías
  */
 
-public class CDLinkedList<E> implements List<E>, Serializable {
+public class CDLinkedList<E> implements List<E>, Serializable, Iterable<E> {
 
     protected class Node <E> implements Serializable{
         private E data;

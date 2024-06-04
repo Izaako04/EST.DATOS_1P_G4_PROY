@@ -139,18 +139,25 @@ public class Vehiculo implements Serializable {
     }
 
     // metodo para sortear por comparador los vehiculos, me da una nueva lista con los elementos ya sorteados ready para presentar
-    public static List<Vehiculo> getSortedList(List<Vehiculo> vehiculos, Comparator cmp){
+    public static CDLinkedList<Vehiculo> getSortedList(CDLinkedList<Vehiculo> vehiculos, Comparator<Vehiculo> cmp){
         PriorityQueue<Vehiculo> sortVehiculos = new PriorityQueue(cmp);
-        List<Vehiculo> ret = new CDLinkedList();
-        for(Vehiculo v: vehiculos){
-            sortVehiculos.add(v);
-            
+        CDLinkedList<Vehiculo> ret = new CDLinkedList();
+//        for(Vehiculo v: vehiculos){
+//            sortVehiculos.add(v);
+//            
+//        }
+//        for(Vehiculo v: sortVehiculos){
+//            ret.add(v);
+//            
+//        }
+//        
+        for (int i = 0; i < vehiculos.size(); i++) {
+            sortVehiculos.add(vehiculos.get(i));
         }
-        for(Vehiculo v: sortVehiculos){
-            ret.add(v);
-            
+
+        for (int i = 0; i < sortVehiculos.size(); i++) {
+            ret.add(vehiculos.get(i));
         }
-        
         return ret;
     } 
 //    Comparator cmpXprecio
