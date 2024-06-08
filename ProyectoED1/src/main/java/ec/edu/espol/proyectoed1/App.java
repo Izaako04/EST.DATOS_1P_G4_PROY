@@ -25,7 +25,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("vInicioSesion"), 800, 600);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("*nombre programa*");
+        stage.setTitle("*AutoTrade*");
         stage.show();
     }
 
@@ -42,5 +42,5 @@ public class App extends Application {
         launch();
         
     }
-
+    
 }

@@ -155,8 +155,8 @@ public class Vehiculo implements Serializable {
             sortVehiculos.add(vehiculos.get(i));
         }
 
-        for (int i = 0; i < sortVehiculos.size(); i++) {
-            ret.add(vehiculos.get(i));
+        while (!sortVehiculos.isEmpty()) {
+            ret.add(sortVehiculos.poll());
         }
         return ret;
     } 

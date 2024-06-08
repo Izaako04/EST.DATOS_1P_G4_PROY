@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ec.edu.espol.proyectoed1.classes.Persona;
 import ec.edu.espol.proyectoed1.classes.Usuario;
+import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import java.io.File;
 import javafx.event.Event;
@@ -205,13 +206,13 @@ public class vVisualizacionController {
     private void verAccidentes(MouseEvent event) throws IOException {
     }
     
-    public void regresar(Usuario user, Event event) throws IOException{
+    public void regresar(Usuario user, Event event) throws IOException{        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));
         root = loader.load();
             
         vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
         // vPaginaPrincipalController.actualizarVehiculo(); alguna función para 'recargar' los vehiculos
-        vPaginaPrincipalController.home(user);
+        vPaginaPrincipalController.home(user, cdlVehiculos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);

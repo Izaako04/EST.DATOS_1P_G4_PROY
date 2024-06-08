@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package ec.edu.espol.proyectoed1;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
@@ -41,6 +37,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -53,6 +51,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 
 /**
@@ -74,7 +73,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     @FXML
     private Text textoSaludoUsuario;
     @FXML
-    private ComboBox<?> cmbTipoVehiculo;
+    private ComboBox<String> cmbTipoVehiculo;
     @FXML
     private ComboBox<String> cmbMarca;
     @FXML
@@ -128,20 +127,15 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         cmbMarca.setItems(keyList);
 
         cmbMarca.setOnAction(event -> configuraComboBox (marcaYModelo));
-        
         cmbOrdenar.getItems().addAll("Precio (Mayor-Menor) ", "Precio (Menor-Mayor) ", "Kilometraje (Mayor-Menor) ", "Kilometraje (Menor-Mayor) ");
         
-        
-    
-        // El cuadro morado solo es para identificar el anchopane, cuando la parte del sistema
-        // esté terminada y se puedan colocar los autos con sus fotos el fondo pasará a negro
     }    
     
 
-    public void home (Usuario user) {
+    public void home (Usuario user, CDLinkedList <Vehiculo> listaVehiculos) {
         btnBuscar.setOnAction (event -> aplicarFiltro ());
         usuario = user;
-        textoSaludoUsuario.setText("Bienvenido " + usuario.getNombre());
+        textoSaludoUsuario.setText("Bienvenido, " + usuario.getNombre());
         
         btnVenderVehiculo.setOnAction(event -> {
             try {
@@ -166,11 +160,11 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         
         cmbMarca.setOnAction(event -> configuraComboBox (marcaYModelo));
         
-        
+        configuraComboBoxOrdenarPor();
         
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         
-        CDLLVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
+        CDLLVehiculos = listaVehiculos;
         if (CDLLVehiculos != null) {
             cargarVehiculos (CDLLVehiculos);
         }
@@ -183,7 +177,6 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     }
     
     private void cargarVehiculos(CDLinkedList <Vehiculo> CDLLVehiculos) {
-
         int cantidadVehiculos = CDLLVehiculos.size();
         int j = 0;
         
@@ -249,6 +242,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     
     // por ahora solo marca
     private void aplicarFiltro () {
+        CDLLVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
         CDLinkedList <Vehiculo> vFiltrados = new CDLinkedList <Vehiculo>();
         
         Vehiculo v = CDLLVehiculos.get(0);
@@ -262,7 +256,42 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         }
         
         contenedorHbox.getChildren().clear();
+        CDLLVehiculos = vFiltrados;
+        configuraComboBoxOrdenarPor();
         cargarVehiculos (vFiltrados);
+    }
+    
+    private void configuraComboBoxOrdenarPor () {
+        cmbOrdenar.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                        } else {
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
+
+        cmbOrdenar.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Ordenar por");
+                } else {
+                    setText(item);
+                }
+            }
+        });
+        
+        cmbOrdenar.getSelectionModel().select("Ordenar por");
     }
     
     private void seleccionarVehiculo (Vehiculo vehiculo, Event event, CDLinkedList<Vehiculo> CDLLVehiculos) throws IOException {
@@ -369,13 +398,12 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         stage.show();
     }
 
-    @Override
     public void filtrarPorX(Comparator cmp) {
         CDLLVehiculos = Vehiculo.getSortedList(CDLLVehiculos, cmp);
         System.out.println("bine");
         contenedorHbox.getChildren().clear();
         System.out.println("bine0");
-        this.cargarVehiculos(CDLLVehiculos);
+        cargarVehiculos(CDLLVehiculos);
         System.out.println("bie");
     }
 
@@ -387,8 +415,6 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     }
 
     private void applyMethod(String selectedOption) {
-        
-        //, , , 
          switch (selectedOption) {
             case "Precio (Mayor-Menor) ":
                 System.out.println("bien precio");

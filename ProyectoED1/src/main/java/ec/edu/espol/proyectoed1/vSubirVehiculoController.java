@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package ec.edu.espol.proyectoed1;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
@@ -12,6 +8,7 @@ import ec.edu.espol.proyectoed1.classes.RegistroVehiculo;
 import ec.edu.espol.proyectoed1.classes.Reparacion;
 import ec.edu.espol.proyectoed1.classes.Transmision;
 import ec.edu.espol.proyectoed1.classes.Usuario;
+import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import java.io.File;
 import java.io.IOException;
@@ -520,12 +517,14 @@ public class vSubirVehiculoController implements Initializable {
     }
     
     public void regresar(Usuario user, Event event) throws IOException{
+        CDLinkedList listaVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));
         root = loader.load();
             
         vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
         // vPaginaPrincipalController.actualizarVehiculo(); alguna función para 'recargar' los vehiculos
-        vPaginaPrincipalController.home(user);
+        vPaginaPrincipalController.home(user, listaVehiculos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);

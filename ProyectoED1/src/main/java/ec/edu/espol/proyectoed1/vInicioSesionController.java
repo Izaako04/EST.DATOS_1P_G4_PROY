@@ -1,5 +1,6 @@
 package ec.edu.espol.proyectoed1;
 
+import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
 import java.io.IOException;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -16,6 +17,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ec.edu.espol.proyectoed1.classes.Persona;
 import ec.edu.espol.proyectoed1.classes.Usuario;
+import ec.edu.espol.proyectoed1.classes.Utilitaria;
+import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Alert;
 import javafx.stage.Screen;
@@ -75,11 +78,13 @@ public class vInicioSesionController {
     }
 
     private void permitirAcceso (MouseEvent event, Usuario u) throws IOException {
+        CDLinkedList <Vehiculo> lVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));
         root = loader.load();
-            
+        
         vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
-        vPaginaPrincipalController.home(u); // pasar user
+        vPaginaPrincipalController.home(u, lVehiculos); // pasar user
         
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720); 
