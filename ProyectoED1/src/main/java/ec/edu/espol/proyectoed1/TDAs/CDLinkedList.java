@@ -3,6 +3,7 @@ package ec.edu.espol.proyectoed1.TDAs;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -55,12 +56,12 @@ public class CDLinkedList<E> implements List<E>, Serializable, Iterable<E> {
     @Override
     public boolean contains(Object o) {
         if (isEmpty()) return false;
-        
-        int size = size();
-        Node <E> tempNode = new Node <E> ();
+
+        Node <E> tempNode = head;
         
         for (int i = 0; i < size; i++) {
-            if (o.equals(tempNode.data)) return true;
+            if (tempNode.data.equals(o)) return true;
+            tempNode = tempNode.next;
         }
         
         return false;
@@ -68,12 +69,17 @@ public class CDLinkedList<E> implements List<E>, Serializable, Iterable<E> {
 
     @Override
     public Iterator<E> iterator() {
-        Iterator<E> it = new Iterator<E> () {
-            private Node<E> current = head.next;
+        return new Iterator<E>() {
+            private Node<E> current = head;
+            private int count = 0;
+            private final int expectedModCount = size;
 
             @Override
             public boolean hasNext() {
-                return current != tail;
+                if (expectedModCount != size) {
+                    throw new ConcurrentModificationException();
+                }
+                return count < size;
             }
 
             @Override
@@ -81,13 +87,13 @@ public class CDLinkedList<E> implements List<E>, Serializable, Iterable<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException("No hay más elementos en la lista");
                 }
-                
+
                 E data = current.data;
                 current = current.next;
+                count++;
                 return data;
             }
         };
-        return it;
     }
 
     @Override
@@ -123,22 +129,34 @@ public class CDLinkedList<E> implements List<E>, Serializable, Iterable<E> {
 
     @Override
     public boolean remove(Object o) {
-        if (!contains(o) || isEmpty()) return false;
-        
-        Node <E> tempNode = head;
-        for (int i = 0; i < size(); i++) {
+        if (isEmpty()) return false;
+    
+        Node<E> tempNode = head;
+
+        for (int i = 0; i < size; i++) {
             if (tempNode.data.equals(o)) {
-                Node <E> prevNode = tempNode.prev;
-                Node <E> sgtNode = tempNode.next;
-                prevNode.next = tempNode.next;
+                Node<E> prevNode = tempNode.prev;
+                Node<E> sgtNode = tempNode.next;
+
+                prevNode.next = sgtNode;
                 sgtNode.prev = prevNode;
+
+                if (tempNode == head) {
+                    head = sgtNode;
+                }
+
+                if (tempNode == tail) {
+                    tail = prevNode;
+                }
+
+                size--;
+                return true;
             }
-                
+
             tempNode = tempNode.next;
         }
-        
-        size--;
-        return true;
+    
+        return false;
     }
 
     @Override

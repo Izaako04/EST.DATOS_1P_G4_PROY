@@ -523,7 +523,6 @@ public class vSubirVehiculoController implements Initializable {
         root = loader.load();
             
         vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
-        // vPaginaPrincipalController.actualizarVehiculo(); alguna función para 'recargar' los vehiculos
         vPaginaPrincipalController.home(user, listaVehiculos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();

@@ -101,6 +101,8 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     private ComboBox<String> cmbOrdenar;
     @FXML
     private Button btnDefault;
+    @FXML
+    private Text tVerFavoritos;
     
     private Parent root;
     private Stage stage;
@@ -160,6 +162,15 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        });
+        
+        tVerFavoritos.setOnMouseClicked (event -> {
+            try {
+                favoritos (event, user);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         });
         
         vCerrarSesión.setOnAction(event -> {
@@ -351,24 +362,12 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         for (Vehiculo vvv: vehiculosFiltradosTemp) {
             vFiltrados.add(vvv);
         }
-        
-//        for (int i = 0; i < CDLLVehiculos.size(); i++) {
-//            
-//            v = CDLLVehiculos.getNext(v);
-//            
-//            if (v.getRegistro().getMarca().equals(cmbMarca.getValue())) vFiltrados.add(v);
-//             
-//        }
-//        
+          
         contenedorHbox.getChildren().clear();
         CDLLVehiculos = vFiltrados;
         configuraComboBoxOrdenarPor();
         cargarVehiculos (vFiltrados);
     }
-    
-//    private CDLinkedList <Vehiculo> filtrar (CDLinkedList <Vehiculo> v) {
-//        if (filtros.contains(""));
-//    }
     
     private Map <String, Object> leerFiltros () {
         
@@ -638,6 +637,27 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         stage.setX((primaryScreenBounds.getWidth() - stage.getWidth()) / 2);
         stage.setY((primaryScreenBounds.getHeight() - stage.getHeight()) / 2);
         stage.show();
+    }
+    
+    public void favoritos (Event event, Usuario user) throws IOException {
+        Vehiculo primerVehiculo = user.getVehiculosAgregadosAFavoritos().get(0);
+        
+        if (primerVehiculo == null) {
+            muestraAlerta("Error al cargar favoritos", "Al parecer no tienes ningún vehículo agregado a favoritos.\nAgrega uno para poder acceder a esta pestaña.");
+            return;
+        }
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vFavoritos.fxml"));
+        root = loader.load();
+
+        vFavoritosController vFavoritosController = loader.getController();
+        vFavoritosController.home(primerVehiculo, user); // pasar argumentos (user, this.controller) idk
+
+        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
     }
 
     public void filtrarPorX(Comparator cmp) {

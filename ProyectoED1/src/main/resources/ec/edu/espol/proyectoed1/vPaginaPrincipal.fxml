@@ -48,7 +48,7 @@
       </Text>
       <AnchorPane layoutX="722.0" layoutY="174.0" prefHeight="462.0" prefWidth="474.0" style="-fx-background-color: #292727; -fx-background-radius: 20;" stylesheets="@estilos.css">
          <children>
-            <Text fill="WHITE" layoutX="33.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Encuentra tu compañero de ruta perfecto" wrappingWidth="292.7728271484375">
+            <Text fill="WHITE" layoutX="36.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Encuentra tu compañero de ruta perfecto" wrappingWidth="346.7728271484375">
                <font>
                   <Font name="Verdana" size="20.0" />
                </font>
@@ -104,5 +104,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Text fx:id="tVerFavoritos" fill="WHITE" layoutX="1034.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver mis favoritos" wrappingWidth="152.7728271484375">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Text>
    </children>
 </AnchorPane>

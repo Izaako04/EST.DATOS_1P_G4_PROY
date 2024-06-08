@@ -1,38 +1,34 @@
 package ec.edu.espol.proyectoed1;
 
 import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
+import ec.edu.espol.proyectoed1.classes.Usuario;
+import ec.edu.espol.proyectoed1.classes.Utilitaria;
+import ec.edu.espol.proyectoed1.classes.Vehiculo;
+import java.io.File;
 import java.io.IOException;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import ec.edu.espol.proyectoed1.classes.Persona;
-import ec.edu.espol.proyectoed1.classes.Usuario;
-import ec.edu.espol.proyectoed1.classes.Utilitaria;
-import ec.edu.espol.proyectoed1.classes.Vehiculo;
-import java.io.File;
-import javafx.event.Event;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
-public class vVisualizacionController {
+/**
+ *
+ * @author Isaías
+ */
+
+public class vFavoritosController {
     
     private Parent root;
     private Stage stage;
@@ -82,7 +78,6 @@ public class vVisualizacionController {
     @FXML
     private Button btnImgMovIzq;
     private File imgActual;
-    private CDLinkedList<Vehiculo> cdlVehiculos;
     @FXML
     private Text tIndexImg;
     
@@ -100,7 +95,7 @@ public class vVisualizacionController {
     }
 
     private void muestraAlerta (String titulo, String mssg) {
-        Alert alert = new Alert(AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mssg);
@@ -108,14 +103,13 @@ public class vVisualizacionController {
     }
     
     
-    public void home(Vehiculo v, Usuario user, CDLinkedList<Vehiculo> listaVehiculos){   
+    public void home(Vehiculo v, Usuario user){   
         usuario = user;
         vehiculo = v;
         imgsVehiculos = vehiculo.getCdLLImagenes();
-        cdlVehiculos = listaVehiculos;
         vFavoritos = usuario.getVehiculosAgregadosAFavoritos();
         
-        imgCorazon.setOnMouseClicked (event -> removerAnadirFav ());
+        imgCorazon.setOnMouseClicked (event -> removerAnadirFav (event));
         
         imgActual = imgsVehiculos.get(0);
         nImages = imgsVehiculos.size();
@@ -130,7 +124,7 @@ public class vVisualizacionController {
         
         btRegresar.setOnAction(event -> {
             try {
-                regresar(event);
+                regresar(usuario, event);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -164,7 +158,7 @@ public class vVisualizacionController {
     }
     
     private void avanzarVehiculoIzq () {
-        vehiculo = cdlVehiculos.getPrev(vehiculo);
+        vehiculo = vFavoritos.getPrev(vehiculo);
         imgsVehiculos = vehiculo.getCdLLImagenes();
         imgActual = imgsVehiculos.get(0);
         nImages = imgsVehiculos.size();
@@ -173,7 +167,7 @@ public class vVisualizacionController {
     }        
 
     private void avanzarVehiculoDer () {
-        vehiculo = cdlVehiculos.getNext(vehiculo);
+        vehiculo = vFavoritos.getNext(vehiculo);
         imgsVehiculos = vehiculo.getCdLLImagenes();
         nImages = imgsVehiculos.size();
         imgActual = imgsVehiculos.get(0);
@@ -212,27 +206,45 @@ public class vVisualizacionController {
         }
     }
     
-    private void removerAnadirFav () {
+    private void removerAnadirFav (Event event) {
         if (estaEnFav()) {
-            boolean x = vFavoritos.remove(vehiculo);
-            System.out.println(x);
+            vehiculo = vFavoritos.getNext(vehiculo);
+            imgsVehiculos = vehiculo.getCdLLImagenes();
+            nImages = imgsVehiculos.size();
+            imgActual = imgsVehiculos.get(0);
+            llenarDatosVehiculo();
             
+            Vehiculo vehiculoRemover = vFavoritos.getPrev(vehiculo);
+            vFavoritos.remove(vehiculoRemover);
+
+            cambiarImg(imgActual);
+            
+            if (vFavoritos.size() == 0) {
+                muestraAlerta("Saliendo de favoritos", "Ya no tienes ningún favorito. Regresando a la página principal.");
+                usuario.setVehiculosAgregadosAFavoritos(vFavoritos);
+                Sistema.actualizarUsuario_Archivo(usuario);
+                
+                try {
+                    regresar(this.usuario, event);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
         } else {
             vFavoritos.add(vehiculo);
         }
         
         usuario.setVehiculosAgregadosAFavoritos(vFavoritos);
-        
         Sistema.actualizarUsuario_Archivo(usuario);
-        setCorazonFav ();
     }
     
     private boolean estaEnFav () {
         for (Vehiculo v : vFavoritos) {
-            System.out.println("Favorito: " + v.getRegistro().getPlaca());
+            System.out.println("Favorito: " + v);
         }
         
-        System.out.println("Vehiculo a verificar: " + vehiculo.getRegistro().getPlaca());
+        System.out.println("Vehiculo a verificar: " + vehiculo);
         return vFavoritos.contains(vehiculo);
     }
     
@@ -247,13 +259,13 @@ public class vVisualizacionController {
     private void verAccidentes(MouseEvent event) throws IOException {
     }
     
-    public void regresar(Event event) throws IOException{        
+    public void regresar(Usuario user, Event event) throws IOException{        
+        CDLinkedList listaVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));
         root = loader.load();
             
         vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
-        // vPaginaPrincipalController.actualizarVehiculo(); alguna función para 'recargar' los vehiculos
-        vPaginaPrincipalController.home(usuario, cdlVehiculos);
+        vPaginaPrincipalController.home(user, listaVehiculos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);

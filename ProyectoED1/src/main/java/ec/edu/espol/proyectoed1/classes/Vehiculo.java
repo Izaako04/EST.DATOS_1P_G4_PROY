@@ -13,6 +13,7 @@ import java.util.List;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.PriorityQueue;
 
 
@@ -46,7 +47,7 @@ public class Vehiculo implements Serializable {
         this.cdLLImagenes = cdLLImagenes;
 
     }
-
+    
     public Vehiculo(RegistroVehiculo registro) {
         this.registro = registro;
     }
@@ -264,8 +265,20 @@ public class Vehiculo implements Serializable {
         return cmpXmotor;
     }
     
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehiculo vehiculo = (Vehiculo) o;
+        int comparacion = vehiculo.getRegistro().getPlaca().compareTo(registro.getPlaca());
+        return comparacion == 0;
+    }
     
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(registro, motor, transmision, precio, kilometraje, ubicacion);
+    }
+    
     // getter de la CDLL de imgs
     public CDLinkedList<File> getCdLLImagenes() {
         return cdLLImagenes;
