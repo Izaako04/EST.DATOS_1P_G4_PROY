@@ -26,6 +26,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
+import static java.util.Locale.filter;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +36,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -42,6 +44,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -52,6 +55,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 
 /**
@@ -85,6 +90,8 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     @FXML
     private TextField tfKmHasta;
     @FXML
+    private TextField tfKmDesde;
+    @FXML
     private Button btnBuscar;
     @FXML
     private TextField tfYearDesde;
@@ -92,6 +99,8 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     private TextField tfYearHasta;
     @FXML
     private ComboBox<String> cmbOrdenar;
+    @FXML
+    private Button btnDefault;
     
     private Parent root;
     private Stage stage;
@@ -116,6 +125,12 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     
     private CDLinkedList <Vehiculo> CDLLVehiculos;
     
+    private int yearDesde, yearHasta, kilometrajeDesde, kilometrajeHasta;
+    private double precioDesde, precioHasta;
+    private String modeloActual, marcaActual, tipoAutoActual;
+    private ArrayListG4 <String> filtros = new ArrayListG4 <>();
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -137,6 +152,8 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         usuario = user;
         textoSaludoUsuario.setText("Bienvenido, " + usuario.getNombre());
         
+        btnDefault.setOnAction(event -> setDefault ());
+        
         btnVenderVehiculo.setOnAction(event -> {
             try {
                 mostrarSubirVehiculo(event, user); // deberia pasar user
@@ -152,7 +169,9 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
                 ex.printStackTrace();
             }
         });
-
+      
+        configurarTextField ();
+        
         Map <String, ArrayListG4 <String> > marcaYModelo = generaMapa();
         Set<String> keys = marcaYModelo.keySet();
         ObservableList<String> keyList = FXCollections.observableArrayList(keys);
@@ -174,6 +193,70 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
             applyMethod(selectedOption);
         });
         
+    }
+    
+    private void setDefault () {
+        CDLLVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
+        contenedorHbox.getChildren().clear();
+        cargarVehiculos (CDLLVehiculos);
+        
+        configuraComboBoxOrdenarPor();
+        configuraComboBoxMarcaModelo();
+
+        tfPrecioDesde.setText("");
+        tfPrecioHasta.setText("");
+        tfYearDesde.setText( "");
+        tfYearHasta.setText("");
+        tfKmDesde.setText("");
+        tfKmHasta.setText("");
+    }
+    
+    private void configurarTextField () {
+        tfYearDesde.setTextFormatter(createIntegerTextFormatter());
+        tfYearHasta.setTextFormatter(createIntegerTextFormatter());
+        tfPrecioDesde.setTextFormatter(createDoubleTextFormatter());
+        tfPrecioHasta.setTextFormatter(createDoubleTextFormatter());
+        tfKmDesde.setTextFormatter(createIntegerTextFormatter());
+        tfKmHasta.setTextFormatter(createIntegerTextFormatter());
+
+        tfPrecioDesde.setText(TextFieldValues.getPrecioDesdeValue() != null ? 
+        String.valueOf(TextFieldValues.getPrecioDesdeValue()) : "");
+        tfPrecioHasta.setText(TextFieldValues.getPrecioHastaValue() != null ? 
+        String.valueOf(TextFieldValues.getPrecioHastaValue()) : "");
+        tfYearDesde.setText(TextFieldValues.getYearDesdeValue() != null ? 
+        String.valueOf(TextFieldValues.getYearDesdeValue()) : "");
+        tfYearHasta.setText(TextFieldValues.getYearHastaValue() != null ? 
+        String.valueOf(TextFieldValues.getYearHastaValue()) : "");
+        tfKmDesde.setText(TextFieldValues.getKmDesdeValue() != null ? 
+        String.valueOf(TextFieldValues.getKmDesdeValue()) : "");
+        tfKmHasta.setText(TextFieldValues.getKmHastaValue() != null ? 
+        String.valueOf(TextFieldValues.getKmHastaValue()) : "");
+    }
+    
+    private TextFormatter<Double> createDoubleTextFormatter() {
+        return new TextFormatter<>(
+            new DoubleStringConverter(),
+            null, // Valor inicial
+            change -> {
+                if (change.isAdded() && !change.getText().matches("\\d*\\.?\\d*")) {
+                    return null;
+                }
+                return change;
+            }
+        );
+    }
+    
+    private TextFormatter<Integer> createIntegerTextFormatter() {
+        return new TextFormatter<>(
+            new IntegerStringConverter(),
+            null, // Valor inicial
+            change -> {
+                if (change.isAdded() && !change.getText().matches("\\d*")) {
+                    return null;
+                }
+                return change;
+            }
+        );
     }
     
     private void cargarVehiculos(CDLinkedList <Vehiculo> CDLLVehiculos) {
@@ -240,25 +323,112 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         contenedorHbox.setSpacing(20);
     }
     
+    private void muestraAlerta (String titulo, String mssg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mssg);
+        alert.showAndWait();
+    }
+    
+    
     // por ahora solo marca
     private void aplicarFiltro () {
+        Map <String, Object> m = leerFiltros ();
+        
+        if (filtros.isEmpty()) {
+            muestraAlerta ("Error al aplicar filtros", "Por favor asegúrate de haber aplicado al menos 1 filtro");
+            return;
+        }
+        
         CDLLVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
         CDLinkedList <Vehiculo> vFiltrados = new CDLinkedList <Vehiculo>();
         
         Vehiculo v = CDLLVehiculos.get(0);
         
-        for (int i = 0; i < CDLLVehiculos.size(); i++) {
-            
-            v = CDLLVehiculos.getNext(v);
-            
-            if (v.getRegistro().getMarca().equals(cmbMarca.getValue())) vFiltrados.add(v);
-             
+        List <Vehiculo> vehiculosFiltradosTemp = FiltradoVehiculos.filtrarVehiculos(CDLLVehiculos, filtros, m);
+        
+        for (Vehiculo vvv: vehiculosFiltradosTemp) {
+            vFiltrados.add(vvv);
         }
         
+//        for (int i = 0; i < CDLLVehiculos.size(); i++) {
+//            
+//            v = CDLLVehiculos.getNext(v);
+//            
+//            if (v.getRegistro().getMarca().equals(cmbMarca.getValue())) vFiltrados.add(v);
+//             
+//        }
+//        
         contenedorHbox.getChildren().clear();
         CDLLVehiculos = vFiltrados;
         configuraComboBoxOrdenarPor();
         cargarVehiculos (vFiltrados);
+    }
+    
+//    private CDLinkedList <Vehiculo> filtrar (CDLinkedList <Vehiculo> v) {
+//        if (filtros.contains(""));
+//    }
+    
+    private Map <String, Object> leerFiltros () {
+        
+        Map<String, Object> valoresFiltros = new HashMap <> ();
+        
+        filtros.clear();
+        
+        if (!tfKmDesde.getText().equals("")) {
+            kilometrajeDesde = Integer.parseInt(tfKmDesde.getText());
+            filtros.add ("kmDesde");
+            
+            valoresFiltros.put("kmDesde", kilometrajeDesde);
+        }
+        
+        if (!tfKmHasta.getText().equals("")) {
+            kilometrajeHasta = Integer.parseInt(tfKmHasta.getText());
+            filtros.add ("kmHasta");
+            valoresFiltros.put("kmHasta", kilometrajeHasta);
+        }
+        
+        if (!tfYearDesde.getText().equals("")) {
+            yearDesde = Integer.parseInt(tfYearDesde.getText());
+            filtros.add ("yearDesde");
+            valoresFiltros.put("yearDesde", yearDesde);
+        }
+        
+        if (!tfYearHasta.getText().equals("")) {
+            yearHasta = Integer.parseInt(tfYearHasta.getText());
+            filtros.add ("yearHasta");
+            valoresFiltros.put("yearHasta", yearHasta);
+        }
+        
+        if (!tfPrecioDesde.getText().equals("")) {
+            precioDesde = Double.parseDouble(tfPrecioDesde.getText());
+            filtros.add ("precioDesde");
+            valoresFiltros.put("precioDesde", precioDesde);
+        }
+        
+        if (!tfPrecioHasta.getText().equals("")) {
+            precioHasta = Double.parseDouble(tfPrecioHasta.getText());
+            filtros.add ("precioHasta");
+            valoresFiltros.put("precioHasta", precioHasta);
+        }
+        
+        if (cmbTipoVehiculo.getValue() != null) {
+            filtros.add("tipoVehiculo");
+            valoresFiltros.put("tipoVehiculo", cmbTipoVehiculo.getValue());
+        }
+        
+        if (cmbMarca.getValue() != null) {
+            filtros.add("marca");
+            valoresFiltros.put("marca", cmbMarca.getValue());
+        }
+        
+        if (cmbModelo.getValue() != null) {
+            filtros.add("modelo");
+            valoresFiltros.put("modelo", cmbModelo.getValue());
+        }
+        
+        return valoresFiltros;
     }
     
     private void configuraComboBoxOrdenarPor () {
@@ -294,7 +464,79 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         cmbOrdenar.getSelectionModel().select("Ordenar por");
     }
     
+    private void configuraComboBoxMarcaModelo () {
+        cmbMarca.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                        } else {
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
+
+        cmbMarca.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Marca");
+                } else {
+                    setText(item);
+                }
+            }
+        });
+        
+        
+        cmbModelo.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setText(null);
+                        } else {
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
+
+        cmbModelo.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Modelo");
+                } else {
+                    setText(item);
+                }
+            }
+        });
+        
+        cmbMarca.getSelectionModel().select("Marca");
+        cmbModelo.getSelectionModel().select("Modelo");
+        cmbModelo.setItems(null);
+    }
+    
     private void seleccionarVehiculo (Vehiculo vehiculo, Event event, CDLinkedList<Vehiculo> CDLLVehiculos) throws IOException {
+        if (!tfPrecioDesde.getText().equals("")) TextFieldValues.setPrecioDesdeValue(Double.valueOf(tfPrecioDesde.getText()));
+        if (!tfPrecioHasta.getText().equals("")) TextFieldValues.setPrecioHastaValue(Double.valueOf(tfPrecioHasta.getText()));
+        if (!tfYearDesde.getText().equals("")) TextFieldValues.setYearDesdeValue(Integer.valueOf(tfYearDesde.getText()));
+        if (!tfYearHasta.getText().equals("")) TextFieldValues.setYearHastaValue(Integer.valueOf(tfYearHasta.getText()));
+        if (!tfKmDesde.getText().equals("")) TextFieldValues.setKmDesdeValue(Integer.valueOf(tfKmDesde.getText()));
+        if (!tfKmHasta.getText().equals("")) TextFieldValues.setKmHastaValue(Integer.valueOf(tfKmHasta.getText()));
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vVisualizacion.fxml"));
         root = loader.load();
             
@@ -326,7 +568,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
             ArrayListG4 <String> values = marcaYModelo.get(selectedKey);
             cmbModelo.setItems(FXCollections.observableArrayList(values));
             cmbModelo.getSelectionModel().clearSelection();
-            cmbModelo.setPromptText("Modelo*");
+            cmbModelo.setPromptText("Modelo");
         }
     }
     
@@ -436,6 +678,4 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
                 break;
         }
     }
-    
-    
 }

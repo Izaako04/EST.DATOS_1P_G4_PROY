@@ -66,7 +66,7 @@
                   <Font name="Verdana" size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfKmHasta" layoutX="21.0" layoutY="240.0" prefHeight="44.0" prefWidth="203.0" promptText="Kilometraje desde" styleClass="textField" stylesheets="@estilos.css">
+            <TextField fx:id="tfKmDesde" layoutX="21.0" layoutY="240.0" prefHeight="44.0" prefWidth="203.0" promptText="Kilometraje desde" styleClass="textField" stylesheets="@estilos.css">
                <font>
                   <Font name="Verdana" size="14.0" />
                </font>
@@ -95,6 +95,14 @@
                </font>
             </TextField>
          </children></AnchorPane>
-      <ComboBox fx:id="cmbOrdenar" layoutX="67.0" layoutY="106.0" prefHeight="21.0" prefWidth="139.0" promptText="Ordenar por" styleClass="combobox" stylesheets="@estilos.css" />
+      <ComboBox fx:id="cmbOrdenar" layoutX="67.0" layoutY="106.0" prefHeight="28.0" prefWidth="224.0" promptText="Ordenar por" styleClass="combobox" stylesheets="@estilos.css" />
+      <Button fx:id="btnDefault" layoutX="324.0" layoutY="108.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" styleClass="btn" stylesheets="@estilos.css" text="Default" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

@@ -36,7 +36,10 @@ public class ArrayListG4<E> implements List<E>, Serializable{
 
     @Override
     public boolean contains(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for (int i = 0; i < dimensionReal; i++) {
+            if (arreglo [i].equals(o)) return true;
+        }
+        return false;
     }
 
     @Override
@@ -135,7 +138,10 @@ public class ArrayListG4<E> implements List<E>, Serializable{
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        for (int i = 0; i < dimensionReal; i++) {
+            arreglo [i] = null;
+        }
+        dimensionReal = 0;
     }
 
     @Override
