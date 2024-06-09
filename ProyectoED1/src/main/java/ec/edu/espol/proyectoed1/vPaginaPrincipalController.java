@@ -237,13 +237,15 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     }
     
     private void setDefault () {
+        vehiculosComparar = new ArrayListG4 <Vehiculo>();
         CDLLVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
         contenedorHbox.getChildren().clear();
         cargarVehiculos (CDLLVehiculos);
         
         configuraComboBoxOrdenarPor();
-        configuraComboBoxMarcaModelo();
-
+        cmbMarca.setValue(null);
+        cmbModelo.setValue(null);
+        
         tfPrecioDesde.setText("");
         tfPrecioHasta.setText("");
         tfYearDesde.setText( "");
@@ -520,71 +522,6 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         });
         
         cmbOrdenar.getSelectionModel().select("Ordenar por");
-    }
-    
-    private void configuraComboBoxMarcaModelo () {
-        cmbMarca.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> param) {
-                return new ListCell<String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty || item == null) {
-                            setText(null);
-                        } else {
-                            setText(item);
-                        }
-                    }
-                };
-            }
-        });
-
-        cmbMarca.setButtonCell(new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText("Marca");
-                } else {
-                    setText(item);
-                }
-            }
-        });
-        
-        
-        cmbModelo.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> param) {
-                return new ListCell<String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty || item == null) {
-                            setText(null);
-                        } else {
-                            setText(item);
-                        }
-                    }
-                };
-            }
-        });
-
-        cmbModelo.setButtonCell(new ListCell<String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText("Modelo");
-                } else {
-                    setText(item);
-                }
-            }
-        });
-        
-        cmbMarca.getSelectionModel().select("Marca");
-        cmbModelo.getSelectionModel().select("Modelo");
-        cmbModelo.setItems(null);
     }
     
     private void seleccionarVehiculo (Vehiculo vehiculo, Event event, CDLinkedList<Vehiculo> CDLLVehiculos) throws IOException {
