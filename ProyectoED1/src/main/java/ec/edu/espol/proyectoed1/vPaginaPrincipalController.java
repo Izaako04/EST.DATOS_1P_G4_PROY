@@ -38,6 +38,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -69,8 +70,6 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
 
     @FXML
     private VBox contenedorHbox;
-    @FXML
-    private Button btnMisVehiculos;
     @FXML
     private Button btnVenderVehiculo;
     @FXML
@@ -123,6 +122,9 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     @FXML
     private ScrollPane scrollPane;
 
+    @FXML
+    private Button btnComparar;
+    
     private String estilo2 = "-fx-background-color: transparent; -fx-text-fill: transparent;";
     
     private CDLinkedList <Vehiculo> CDLLVehiculos;
@@ -132,6 +134,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     private String modeloActual, marcaActual, tipoAutoActual;
     private ArrayListG4 <String> filtros = new ArrayListG4 <>();
     
+    private ArrayListG4 <Vehiculo> vehiculosComparar;
     
     /**
      * Initializes the controller class.
@@ -150,6 +153,14 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     
 
     public void home (Usuario user, CDLinkedList <Vehiculo> listaVehiculos) {
+        vehiculosComparar = new ArrayListG4 <Vehiculo>();
+        btnComparar.setOnAction (event -> {
+            try {
+                compararVehiculos (event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
         btnBuscar.setOnAction (event -> aplicarFiltro ());
         usuario = user;
         textoSaludoUsuario.setText("Bienvenido, " + usuario.getNombre());
@@ -204,6 +215,25 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
             applyMethod(selectedOption);
         });
         
+    }
+    
+    private void compararVehiculos (Event event) throws IOException {
+        if (vehiculosComparar.size() != 2) {
+            muestraAlerta ("Error al comparar los vehículos", "Por favor asegúrate de estar seleccionando 2 vehículos");
+            return;
+        }
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vComparaVehiculos.fxml"));
+        root = loader.load();
+
+        vComparaVehiculosController vComparaVehiculosController = loader.getController();
+        vComparaVehiculosController.home(vehiculosComparar, usuario);
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
     
     private void setDefault () {
@@ -301,18 +331,32 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
                     btnSeleccionar.setStyle(estilo2);
                     btnSeleccionar.setCursor(Cursor.HAND);
                       
-                    spane.getChildren().addAll(visualizadorImg, btnSeleccionar);
+                    CheckBox checkBoxSeleccionar = new CheckBox ("$"+ vehiculo.getPrecio());
+                    checkBoxSeleccionar.setStyle(
+                        "-fx-text-fill: white; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-background-color: black; " +
+                        "-fx-border-color: black; " +  // Añade un borde para que el fondo sea más visible
+                        "-fx-border-radius: 5; " +    // Bordes redondeados
+                        "-fx-background-radius: 5; "  // Bordes redondeados
+                    );
+
+                    StackPane checkBoxPane = new StackPane();
+                    checkBoxPane.setAlignment(Pos.TOP_LEFT);
+                    checkBoxPane.getChildren().addAll(checkBoxSeleccionar);
+
+                    spane.getChildren().addAll(visualizadorImg, checkBoxPane, btnSeleccionar);
 
                     hbox.getChildren().addAll(spane);
                     
                     // Manejar el evento cuando el cursor entra del botón
                     visualizadorImg.setOnMouseEntered(event -> estiloHover(btnSeleccionar, visualizadorImg));
                     btnSeleccionar.setOnMouseEntered(event -> estiloHover(btnSeleccionar, visualizadorImg));
-
+                    
                     // Manejar el evento cuando el cursor sale del botón
                     visualizadorImg.setOnMouseExited(event -> estiloNotHover(btnSeleccionar, visualizadorImg));
                     btnSeleccionar.setOnMouseExited(event -> estiloNotHover(btnSeleccionar, visualizadorImg));
-                    
+
                     btnSeleccionar.setOnAction(event -> {
                         try {
                             seleccionarVehiculo (vehiculo, event, CDLLVehiculos);
@@ -321,17 +365,33 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
                         }
                     });
                     
+                    checkBoxSeleccionar.setOnAction(event -> permitir2Selecciones (checkBoxSeleccionar, vehiculo));
+                    
                     j++;
                 }
                 
                 hbox.setSpacing(0.5);
                 tope += 3;
-                contenedorHbox.getChildren().addAll(hbox);   
+                contenedorHbox.getChildren().addAll(hbox);
             
             }
             
         }
         contenedorHbox.setSpacing(20);
+    }
+    
+    private void permitir2Selecciones (CheckBox checkBox, Vehiculo vehiculo) {
+        if (vehiculosComparar.size() >= 2 && checkBox.isSelected()) {
+            muestraAlerta ("Error al seleccionar el vehículo.", "Sólo se permiten 2 selecciones.");
+            checkBox.setSelected(false);
+            return;
+        } else if (!checkBox.isSelected()) {
+            vehiculosComparar.remove(vehiculo);
+            checkBox.setSelected(false);
+        } else {
+            vehiculosComparar.add(vehiculo);
+            checkBox.setSelected(true);
+        }
     }
     
     private void muestraAlerta (String titulo, String mssg) {
@@ -341,7 +401,6 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
         alert.setContentText(mssg);
         alert.showAndWait();
     }
-    
     
     // por ahora solo marca
     private void aplicarFiltro () {

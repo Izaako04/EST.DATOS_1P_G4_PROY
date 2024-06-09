@@ -99,7 +99,22 @@ public class ArrayListG4<E> implements List<E>, Serializable{
 
     @Override
     public boolean remove(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (!contains(o)) return false;
+        
+        int pos = 0;
+        for (int i = 0; i < dimensionReal; i++) {
+            if  (o.equals(arreglo[i])) {
+                pos = i;
+                arreglo[i] = null;
+            }
+        }
+        
+        for (int i = pos; i < dimensionReal; i++) {
+            arreglo[i] = arreglo[i+1];
+        }
+        
+        dimensionReal--;
+        return true;
     }
 
     @Override

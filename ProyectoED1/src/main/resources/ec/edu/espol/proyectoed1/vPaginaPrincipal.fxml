@@ -46,7 +46,7 @@
             <Font name="Verdana" size="22.0" />
          </font>
       </Text>
-      <AnchorPane layoutX="722.0" layoutY="174.0" prefHeight="462.0" prefWidth="474.0" style="-fx-background-color: #292727; -fx-background-radius: 20;" stylesheets="@estilos.css">
+      <AnchorPane layoutX="722.0" layoutY="168.0" prefHeight="462.0" prefWidth="474.0" style="-fx-background-color: #292727; -fx-background-radius: 20;" stylesheets="@estilos.css">
          <children>
             <Text fill="WHITE" layoutX="36.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Encuentra tu compañero de ruta perfecto" wrappingWidth="346.7728271484375">
                <font>
@@ -96,7 +96,7 @@
             </TextField>
          </children></AnchorPane>
       <ComboBox fx:id="cmbOrdenar" layoutX="67.0" layoutY="106.0" prefHeight="28.0" prefWidth="224.0" promptText="Ordenar por" styleClass="combobox" stylesheets="@estilos.css" />
-      <Button fx:id="btnDefault" layoutX="324.0" layoutY="108.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" styleClass="btn" stylesheets="@estilos.css" text="Default" textFill="WHITE">
+      <Button fx:id="btnDefault" layoutX="324.0" layoutY="104.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" styleClass="btn" stylesheets="@estilos.css" text="Default" textFill="WHITE">
          <font>
             <Font name="Verdana" size="16.0" />
          </font>
@@ -104,7 +104,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Text fx:id="tVerFavoritos" fill="WHITE" layoutX="1034.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver mis favoritos" wrappingWidth="152.7728271484375">
+      <Text fx:id="tVerFavoritos" fill="WHITE" layoutX="1034.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver mis favoritos" wrappingWidth="152.7728271484375">
          <font>
             <Font name="Verdana" size="16.0" />
          </font>
@@ -112,5 +112,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
+      <Button fx:id="btnComparar" layoutX="1022.0" layoutY="649.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="176.0" styleClass="btn" stylesheets="@estilos.css" text="Comparar" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>
