@@ -98,6 +98,10 @@ public class RegistroVehiculo implements Serializable {
     public String getTipo(){
         return tipo;
     }
+    
+    public void setTipo(String tipo){
+        this.tipo = tipo;
+    }
 
     public void setModelo(String modelo) {
         this.modelo = modelo;

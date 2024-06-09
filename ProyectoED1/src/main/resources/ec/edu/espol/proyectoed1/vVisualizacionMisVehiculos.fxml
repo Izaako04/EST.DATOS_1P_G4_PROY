@@ -45,24 +45,24 @@
                   </Button>
                </children>
             </Pane>
-            <AnchorPane layoutX="767.0" layoutY="11.0" prefHeight="586.0" prefWidth="418.0" style="-fx-background-color: #b3001b; -fx-background-radius: 20;">
+            <AnchorPane fx:id="anchorPane" layoutX="767.0" layoutY="11.0" prefHeight="586.0" prefWidth="418.0" style="-fx-background-color: #b3001b; -fx-background-radius: 20;">
                <children>
-                  <Text fill="WHITE" layoutX="72.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometraje">
+                  <Text fill="WHITE" layoutX="72.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometraje">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="103.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año">
+                  <Text fill="WHITE" layoutX="100.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="94.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modelo">
+                  <Text fill="WHITE" layoutX="89.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modelo">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="98.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marca">
+                  <Text fill="WHITE" layoutX="93.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marca">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
@@ -100,26 +100,32 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <TextField fx:id="tfAnio" layoutX="218.0" layoutY="166.0" styleClass="textField2" stylesheets="@estilos.css" />
+                  <TextField fx:id="tfAnio" layoutX="217.0" layoutY="176.0" styleClass="textField2" stylesheets="@estilos.css" />
                   <TextField fx:id="tfKm" layoutX="217.0" layoutY="212.0" styleClass="textField2" stylesheets="@estilos.css" />
                   <TextField fx:id="tfPotencia" layoutX="217.0" layoutY="252.0" styleClass="textField2" stylesheets="@estilos.css" />
-                  <TextField fx:id="tfPrecio" layoutX="214.0" layoutY="431.0" styleClass="textField2" stylesheets="@estilos.css" />
+                  <TextField fx:id="tfPrecio" layoutX="212.0" layoutY="423.0" styleClass="textField2" stylesheets="@estilos.css" />
                   <ComboBox fx:id="cmbTransmision" layoutX="214.0" layoutY="303.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
                   <ComboBox fx:id="cmbCombustible" layoutX="213.0" layoutY="341.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
                   <ComboBox fx:id="cmbUbicacion" layoutX="214.0" layoutY="382.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
-                  <ComboBox fx:id="cmbTipo" layoutX="217.0" layoutY="122.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
-                  <Text fill="WHITE" layoutX="104.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo">
+                  <ComboBox fx:id="cmbTipo" layoutX="212.0" layoutY="97.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
+                  <Text fill="WHITE" layoutX="99.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo">
                      <font>
                         <Font name="Verdana" size="14.0" />
                      </font>
                   </Text>
-                  <ComboBox fx:id="cmbMarca" layoutX="213.0" layoutY="39.0" prefWidth="150.0" styleClass="combobox" />
-                  <ComboBox fx:id="cmbModelo" layoutX="213.0" layoutY="83.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
+                  <ComboBox fx:id="cmbMarca" layoutX="216.0" layoutY="19.0" prefWidth="150.0" styleClass="combobox" />
+                  <ComboBox fx:id="cmbModelo" layoutX="215.0" layoutY="57.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
                   <Button fx:id="btnAcsyReps" layoutX="134.0" layoutY="488.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" styleClass="btn2" stylesheets="@estilos.css" text="Ver Accidentes y Reparaciones" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Text fill="WHITE" layoutX="91.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Placa">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tfPlaca" layoutX="220.0" layoutY="135.0" styleClass="textField2" stylesheets="@estilos.css" />
                </children>
             </AnchorPane>
             <Button id="moverIzquierda" fx:id="btOutMoverDerecha" layoutX="739.0" layoutY="236.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="37.0" styleClass="btn2" stylesheets="@estilos.css" text="▶" textFill="WHITE">

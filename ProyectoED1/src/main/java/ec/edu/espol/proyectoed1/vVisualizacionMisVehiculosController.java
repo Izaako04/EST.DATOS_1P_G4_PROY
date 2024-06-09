@@ -2,6 +2,7 @@ package ec.edu.espol.proyectoed1;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
 import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
+import ec.edu.espol.proyectoed1.classes.Motor;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ec.edu.espol.proyectoed1.classes.Persona;
+import ec.edu.espol.proyectoed1.classes.RegistroVehiculo;
+import ec.edu.espol.proyectoed1.classes.Transmision;
 import ec.edu.espol.proyectoed1.classes.Usuario;
 import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
@@ -25,6 +28,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -39,6 +43,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
@@ -117,6 +122,10 @@ public class vVisualizacionMisVehiculosController {
     private Button btnAcsyReps;
     @FXML
     private Button btnSubirImg;
+    @FXML
+    private TextField tfPlaca;
+    @FXML
+    private AnchorPane anchorPane;
     
     private void initialize() {
     }
@@ -133,11 +142,12 @@ public class vVisualizacionMisVehiculosController {
         alert.showAndWait();
     }
     
-    private boolean alertar() {
+   
+    private boolean alertar(String tittle, String Header, String cuerpo) {
         Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle("Alerta!");
-        alert.setHeaderText("Estas apunto de borrar tu Vehiculo");
-        alert.setContentText("¿Estas seguro?");
+        alert.setTitle(tittle);
+        alert.setHeaderText(Header);
+        alert.setContentText(cuerpo);
 
         ButtonType btnContinue = new ButtonType("Continuar");
         ButtonType btnCancel = new ButtonType("Cancelar");
@@ -212,9 +222,24 @@ public class vVisualizacionMisVehiculosController {
         });
         
         btnRemover.setOnAction(event -> {
-            Boolean alertado = alertar();
+            Boolean alertado =  alertar("Alerta!","Estas apunto de borrar tu Vehiculo","¿Estas seguro?");
             if(alertado == true) removerVehiculoPropio (event);
             //else muestraAlerta("Aviso","Carro no borrado");
+        });
+        
+        btnGuardar.setOnAction(event -> {
+            Boolean alertado = alertar("Alerta!","Estas apunto de Actualizar este Vehiculo","Revisa que todos los campos esten bien llenados \n antes de hacerlo!");
+            if(alertado == true){ 
+                try { 
+                    editarAuto(event);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                anchorPane.getChildren().clear();
+                imgsVehiculos = vehiculo.getCdLLImagenes();
+                cdlVehiculos = user.getVehiculosPropios();
+            }
+            
         });
         
         btnSubirImg.setOnAction(event -> {
@@ -237,7 +262,6 @@ public class vVisualizacionMisVehiculosController {
             }
         );
         
-//        tfPotencia.setTextFormatter(textFormatterPotencia);
         
         TextFormatter<Double> textFormatterPrecio = new TextFormatter<Double> (
             new DoubleStringConverter(),
@@ -263,12 +287,14 @@ public class vVisualizacionMisVehiculosController {
         
         tfPrecio.setTextFormatter(textFormatterPrecio);
         tfKm.setTextFormatter(textFormatterKilometraje);
+        tfPotencia.setTextFormatter(textFormatterPotencia);
         llenarDatosVehiculo();
     }
     
     private void llenarDatosVehiculo () {
         cmbMarca.setPromptText(vehiculo.getRegistro().getMarca());
         cmbModelo.setPromptText(vehiculo.getRegistro().getModelo());
+        tfPlaca.setText(String.valueOf(vehiculo.getRegistro().getPlaca()));
         tfAnio.setText(String.valueOf(vehiculo.getRegistro().getAño()));
         tfKm.setText(String.valueOf(vehiculo.getKilometraje()));
         tfPotencia.setText(String.valueOf(vehiculo.getMotor().getPotencia()));
@@ -519,6 +545,52 @@ public class vVisualizacionMisVehiculosController {
       
         }
     }
+   public void editarAuto(Event event) throws IOException{
+       boolean camposVacios = (tfKm.getText().equals("") || tfPrecio.getText().equals("") || tfAnio.getText().equals("")  || tfPotencia.getText().equals("") || cmbCombustible.getValue() == null || tfPlaca.getText() == null|| cmbUbicacion.getValue() == null || cmbMarca.getValue() == null || cmbModelo.getValue() == null || cmbTransmision.getValue() == null || cmbTipo.getValue() == null);
+        if (camposVacios) { // campos vacíos
+            muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber llenado todos los campos obligatorios*");
+            return;
+        } 
+       
+        Vehiculo vehiculoRemover =  cdlVehiculos.getPrev(this.vehiculo);       
+        cdlVehiculos.remove(vehiculoRemover);
+        vehiculoRemover.eliminarVehiculo_ARCHIVO(Vehiculo.cmpXmarca);
+        
+       Double precio = Double.parseDouble(this.tfPrecio.getText()); ;
+        Double kilometraje = Double.parseDouble(this.tfKm.getText());
+        Integer year = Integer.parseInt(this.tfAnio.getText());
+        String combustible = this.cmbCombustible.getValue();
+        Integer potencia = Integer.parseInt(this.tfPotencia.getText());;
+        String ubicacion = this.cmbUbicacion.getValue();
+        String placa = this.tfPlaca.getText();
+        String marca = this.cmbMarca.getValue();
+        String modelo = this.cmbModelo.getValue();
+        String tipo = this.cmbTipo.getValue();
+        String transmision = this.cmbTransmision.getValue();
+        
+        this.vehiculo.setKilometraje(kilometraje);
+        this.vehiculo.setPrecio(precio);
+        Transmision nTransmision = new Transmision(transmision);
+        this.vehiculo.setTransmision(nTransmision);
+        this.vehiculo.setUbicacion(ubicacion);
+        this.vehiculo.getRegistro().setAño(year);
+        this.vehiculo.getRegistro().setMarca(marca);
+        this.vehiculo.getRegistro().setModelo(modelo);
+        this.vehiculo.getRegistro().setPlaca(placa);
+        this.vehiculo.getRegistro().setTipo(tipo);
+        this.vehiculo.getMotor().setPotencia(potencia);
+        this.vehiculo.getMotor().setTipo(combustible);
+        
+
+        
+        Sistema.agregarVehiculo_Archivo(this.vehiculo);
+         CDLinkedList <Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
+         listaVehiculosUsuarios.add(this.vehiculo);
+         usuario.setVehiculosPropios(listaVehiculosUsuarios);
+         Sistema.actualizarUsuario_Archivo(usuario);
+        muestraAlerta("Cambios Guardados", "¡Los datos de tu Vehiculo se han actualizado!");
+   
+   }
     
     public void regresar(Event event) throws IOException{        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));
