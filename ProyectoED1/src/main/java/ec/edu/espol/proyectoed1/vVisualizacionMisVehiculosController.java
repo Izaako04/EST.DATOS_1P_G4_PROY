@@ -22,6 +22,8 @@ import ec.edu.espol.proyectoed1.classes.Usuario;
 import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -39,6 +41,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -110,6 +113,10 @@ public class vVisualizacionMisVehiculosController {
     private ComboBox<String> cmbMarca;
     @FXML
     private ComboBox<String> cmbModelo;
+    @FXML
+    private Button btnAcsyReps;
+    @FXML
+    private Button btnSubirImg;
     
     private void initialize() {
     }
@@ -196,10 +203,26 @@ public class vVisualizacionMisVehiculosController {
             }
         });
         
+        btnAcsyReps.setOnAction(event -> {
+            try {
+                verAccidentesyReparaciones(event, usuario);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
         btnRemover.setOnAction(event -> {
             Boolean alertado = alertar();
             if(alertado == true) removerVehiculoPropio (event);
             //else muestraAlerta("Aviso","Carro no borrado");
+        });
+        
+        btnSubirImg.setOnAction(event -> {
+            try {
+                seleccionarImg ();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
         
         // Configurar el TextFormatter para aceptar solo valores numéricos
@@ -318,6 +341,21 @@ public class vVisualizacionMisVehiculosController {
         }
     }
     
+     public void verAccidentesyReparaciones (Event event, Usuario user) throws IOException {
+                 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vAccidentesyReparaciones.fxml"));
+        root = loader.load();
+
+        vAccidentesYReparacionesController vAccidentesyReparacionesController = loader.getController();
+        vAccidentesyReparacionesController.home(this.vehiculo, user); // pasar argumentos (user, this.controller) idk
+
+        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
+    }
+    
     private void removerVehiculoPropio (Event event) {
         if (estaEnPropios()) {
             vehiculo =  cdlVehiculos.getNext(vehiculo);
@@ -333,7 +371,7 @@ public class vVisualizacionMisVehiculosController {
             cambiarImg(imgActual);
             
             if ( cdlVehiculos.isEmpty()) {
-                muestraAlerta("Saliendo de favoritos", "Ya no tienes ningún favorito. Regresando a la página principal.");
+                muestraAlerta("Saliendo de Mis Vehiculos", "Ya no tienes ningún Vehiculo. Regresando a la página principal.");
                 usuario.setVehiculosPropios( cdlVehiculos);
                 Sistema.actualizarUsuario_Archivo(usuario);
                 
@@ -451,6 +489,36 @@ public class vVisualizacionMisVehiculosController {
         }
     }
     
+        public void seleccionarImg () throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        // filtro imágenes
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Archivos de Imagen", "*.png", "*.jpg", "*.jpeg", "*.gif");
+        fileChooser.getExtensionFilters().add(imageFilter);
+
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        if (selectedFile != null) {
+            // Copiar la imagen seleccionada a carpeta de imágenes
+            File targetFolder = new File("imgsVechiculos");
+            if (!targetFolder.exists()) {
+                targetFolder.mkdirs(); // Crea la carpeta si no existe
+            }
+
+            File targetFile = new File(targetFolder, selectedFile.getName());
+            Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+             this.vehiculo.setNuevaImagen(targetFile);
+             Vehiculo vehiculoRemover =  cdlVehiculos.getPrev(vehiculo);       
+             cdlVehiculos.remove(vehiculoRemover);
+             vehiculoRemover.eliminarVehiculo_ARCHIVO(Vehiculo.cmpXmarca);
+             Sistema.agregarVehiculo_Archivo(this.vehiculo);
+              CDLinkedList <Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
+              listaVehiculosUsuarios.add(this.vehiculo);
+              usuario.setVehiculosPropios(listaVehiculosUsuarios);
+              Sistema.actualizarUsuario_Archivo(usuario);
+      
+        }
+    }
     
     public void regresar(Event event) throws IOException{        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));

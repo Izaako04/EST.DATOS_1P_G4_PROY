@@ -40,9 +40,8 @@ public class vVisualizacionController {
     
     @FXML
     private Button bAccidentes;
-    private TextField fcPrecio;
     @FXML
-    private Text tGuardar;
+    private TextField fcPrecio;
     @FXML
     private Button btOutMoverIzquierda;
     @FXML
@@ -131,6 +130,14 @@ public class vVisualizacionController {
         btRegresar.setOnAction(event -> {
             try {
                 regresar(event);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
+         bAccidentes.setOnAction(event -> {
+            try {
+                verAccidentesyReparaciones(event, usuario);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -261,5 +268,20 @@ public class vVisualizacionController {
         stage.setResizable(false);
         stage.show();    
     
+    }
+    
+    public void verAccidentesyReparaciones (Event event, Usuario user) throws IOException {
+                 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vAccidentesyReparaciones.fxml"));
+        root = loader.load();
+
+        vAccidentesYReparacionesController vAccidentesyReparacionesController = loader.getController();
+        vAccidentesyReparacionesController.home(this.vehiculo, user); // pasar argumentos (user, this.controller) idk
+
+        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
     }
 }

@@ -35,7 +35,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnEditar" layoutX="449.0" layoutY="13.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="85.0" styleClass="btn2" stylesheets="@estilos.css" text="📷+" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="btnSubirImg" layoutX="449.0" layoutY="13.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="85.0" styleClass="btn2" stylesheets="@estilos.css" text="📷+" textAlignment="CENTER" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -115,6 +115,11 @@
                   </Text>
                   <ComboBox fx:id="cmbMarca" layoutX="213.0" layoutY="39.0" prefWidth="150.0" styleClass="combobox" />
                   <ComboBox fx:id="cmbModelo" layoutX="213.0" layoutY="83.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
+                  <Button fx:id="btnAcsyReps" layoutX="134.0" layoutY="488.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" styleClass="btn2" stylesheets="@estilos.css" text="Ver Accidentes y Reparaciones" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </AnchorPane>
             <Button id="moverIzquierda" fx:id="btOutMoverDerecha" layoutX="739.0" layoutY="236.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="37.0" styleClass="btn2" stylesheets="@estilos.css" text="▶" textFill="WHITE">

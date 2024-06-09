@@ -99,13 +99,15 @@ public class Vehiculo implements Serializable {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
+    
+    public void setNuevaImagen(File imgs){
+        this.cdLLImagenes.add(imgs);
+    }
 
     public  void eliminarVehiculo_ARCHIVO(Comparator cmp){
-        System.out.println("Hola 1");
         if (Utilitaria.leerArchivoVehiculos("vehiculos")== null){}
         else {
             if(verificarExistenciaVehiculo_ARCHIVO()){
-                System.out.println("Hola 2");
                 List<Vehiculo> vehiculos= Utilitaria.leerArchivoVehiculos("vehiculos");
                 vehiculos.remove(this);
                 Utilitaria.escribirArchivo(vehiculos, "vehiculos");
