@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.proyectoed1.vSubirVehiculoController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.proyectoed1.vSubirVehiculoController">
    <children>
       <Text fill="WHITE" layoutX="27.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Convierte tu carro en una oportunidad: ">
          <font>
@@ -26,7 +26,7 @@
             <Font name="Verdana" size="23.0" />
          </font>
       </Text>
-      <TextField fx:id="fcPrecio" layoutX="29.0" layoutY="217.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+      <TextField fx:id="fcPrecio" layoutX="28.0" layoutY="272.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
          <font>
             <Font name="Verdana" size="14.0" />
          </font>
@@ -35,7 +35,7 @@
             <URL value="@estilos.css" />
          </stylesheets>
       </TextField>
-      <TextField fx:id="fcKilometraje" layoutX="31.0" layoutY="307.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
+      <TextField fx:id="fcKilometraje" layoutX="28.0" layoutY="351.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
          <font>
             <Font name="Verdana" size="14.0" />
          </font>
@@ -44,23 +44,18 @@
             <URL value="@estilos.css" />
          </stylesheets>
       </TextField>
-      <Text fill="WHITE" layoutX="29.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio*">
+      <Text fill="WHITE" layoutX="28.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio*">
          <font>
             <Font name="Verdana" size="14.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="31.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometraje*">
+      <Text fill="WHITE" layoutX="28.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometraje*">
          <font>
             <Font name="Verdana" size="14.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="31.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combustible*">
-         <font>
-            <Font name="Verdana" size="14.0" />
-         </font>
-      </Text>
-      <ComboBox fx:id="cmbMarca" layoutX="29.0" layoutY="123.0" prefHeight="42.0" prefWidth="174.0" promptText="Marca*" styleClass="combobox" stylesheets="@estilos.css" />
-      <ComboBox fx:id="cmbModelo" layoutX="286.0" layoutY="123.0" prefHeight="42.0" prefWidth="174.0" promptText="Modelo*" styleClass="combobox" stylesheets="@estilos.css" />
+      <ComboBox fx:id="cmbMarca" layoutX="29.0" layoutY="123.0" prefHeight="42.0" prefWidth="197.0" promptText="Marca*" styleClass="combobox" stylesheets="@estilos.css" />
+      <ComboBox fx:id="cmbModelo" layoutX="286.0" layoutY="123.0" prefHeight="42.0" prefWidth="197.0" promptText="Modelo*" styleClass="combobox" stylesheets="@estilos.css" />
       <TextField fx:id="fcYear" layoutX="287.0" layoutY="217.0" prefHeight="28.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
          <font>
             <Font name="Verdana" size="14.0" />
@@ -89,15 +84,6 @@
             <Font name="Verdana" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="fcCombustible" layoutX="32.0" layoutY="397.0" prefHeight="30.0" prefWidth="197.0" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
-         <font>
-            <Font name="Verdana" size="14.0" />
-         </font>
-         <stylesheets>
-            <URL value="@../../../../../POO%20(universidad)/proyectoSegundoParcial2/src/main/resources/com/poo/proyectosegundoparcial/estilos.css" />
-            <URL value="@estilos.css" />
-         </stylesheets>
-      </TextField>
       <CheckBox fx:id="cbTieneAccidente" layoutX="552.0" layoutY="132.0" mnemonicParsing="false" text="El carro ha tenido algún accidente" textFill="WHITE">
          <font>
             <Font name="Verdana" size="14.0" />
@@ -120,7 +106,7 @@
             <Font name="Verdana" size="14.0" />
          </font>
       </TextArea>
-      <ComboBox fx:id="cmbTransmision" layoutX="29.0" layoutY="474.0" prefHeight="42.0" prefWidth="197.0" promptText="Transmición*" styleClass="combobox" stylesheets="@estilos.css" />
+      <ComboBox fx:id="cmbTransmision" layoutX="30.0" layoutY="485.0" prefHeight="42.0" prefWidth="197.0" promptText="Transmición*" styleClass="combobox" stylesheets="@estilos.css" />
       <Button fx:id="btnExteriorFrontal" layoutX="23.0" layoutY="558.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="197.0" styleClass="btn" stylesheets="@estilos.css" text="Exterior Frontal*" textFill="WHITE">
          <font>
             <Font name="Verdana" size="16.0" />
@@ -192,7 +178,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <ComboBox fx:id="cmbUbicacionVehiculo" layoutX="286.0" layoutY="474.0" prefHeight="42.0" prefWidth="174.0" promptText="Ubicación*" styleClass="combobox" stylesheets="@estilos.css" />
+      <ComboBox fx:id="cmbUbicacionVehiculo" layoutX="286.0" layoutY="464.0" prefHeight="42.0" prefWidth="174.0" promptText="Ubicación*" styleClass="combobox" stylesheets="@estilos.css" />
       <ComboBox fx:id="cmbUbicacionAccidente" layoutX="702.0" layoutY="177.0" prefHeight="30.0" prefWidth="174.0" promptText="Ubicación*" styleClass="combobox" stylesheets="@estilos.css" />
       <TextField fx:id="fcPotencia" layoutX="287.0" layoutY="397.0" prefHeight="30.0" prefWidth="197.0" promptText="                              [hp]" style="-fx-border-color: #FFFFFF; -fx-background-color: none; -fx-border-width: 0 0 2.5 0;" styleClass="textField">
          <font>
@@ -208,5 +194,7 @@
             <Font name="Verdana" size="14.0" />
          </font>
       </Text>
+      <ComboBox fx:id="cmbCombustible" layoutX="28.0" layoutY="420.0" prefHeight="42.0" prefWidth="197.0" promptText="Combustible*" styleClass="combobox" stylesheets="@estilos.css" />
+      <ComboBox fx:id="cmbTipo" layoutX="29.0" layoutY="186.0" prefHeight="42.0" prefWidth="197.0" styleClass="combobox" stylesheets="@estilos.css" />
    </children>
 </AnchorPane>

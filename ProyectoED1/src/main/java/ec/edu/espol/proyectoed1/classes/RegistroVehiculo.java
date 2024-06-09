@@ -21,8 +21,9 @@ public class RegistroVehiculo implements Serializable {
     private String modelo;
     private Reparacion reparaciones; // antes ArrayListG4
     private Accidente accidentes;
+    private String tipo;
 
-    public RegistroVehiculo(String placa, Persona duenio, int año, String marca, String modelo, Reparacion reparaciones, Accidente accidentes) {
+    public RegistroVehiculo(String placa, Persona duenio, int año, String marca, String modelo, Reparacion reparaciones, Accidente accidentes, String tipo) {
         this.placa = placa;
         this.duenio = duenio;
         this.año = año;
@@ -30,10 +31,16 @@ public class RegistroVehiculo implements Serializable {
         this.modelo = modelo;
         this.reparaciones = reparaciones;
         this.accidentes = accidentes;
+        this.tipo = tipo;
     }
     
     public RegistroVehiculo (String marca) {
         this.marca = marca;
+    }
+    
+    public RegistroVehiculo (String placa, Boolean lol) {
+        this.placa = placa;
+        System.out.println(lol);
     }
     
     public String getPlaca() {
@@ -86,6 +93,10 @@ public class RegistroVehiculo implements Serializable {
 
     public String getModelo() {
         return modelo;
+    }
+    
+    public String getTipo(){
+        return tipo;
     }
 
     public void setModelo(String modelo) {

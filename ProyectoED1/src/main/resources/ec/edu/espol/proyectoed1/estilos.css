@@ -6,6 +6,14 @@
 
 }
 
+.textField2{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2.5 0;
+    -fx-border-color:  #FFFFFF;
+
+}
+
 .buttonMenu:hover{
     -fx-border-width: 0 0 2.5 0;
     -fx-border-color: #C880B7;
@@ -21,6 +29,13 @@
     -fx-font-family: "Verdana"; /* Tipo de letra */
     -fx-background-color: #B3001B;
     -fx-text-fill: white;
+}
+
+.combobox2{
+    -fx-font-size: 14px; /* Tamaño de la letra */
+    -fx-font-family: "Verdana"; /* Tipo de letra */
+    -fx-background-color: #B3001B;
+    -fx-text-fill: #FFFFFF;
 }
 
 .combobox:hover {
@@ -54,6 +69,12 @@
     -fx-background-color: #B3001B;    
     -fx-background-radius: 10;
 }
+
+.btn2{
+    -fx-background-color: #90192B;    
+    -fx-background-radius: 10;
+}
+
 
 .btn:hover {
     -fx-background-color: #980B20;

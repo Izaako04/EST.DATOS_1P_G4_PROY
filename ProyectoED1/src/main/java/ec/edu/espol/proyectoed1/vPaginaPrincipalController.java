@@ -75,6 +75,8 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     @FXML
     private Button vCerrarSesión;
     @FXML
+    private Button btnMisVehiculos;
+    @FXML
     private Text textoSaludoUsuario;
     @FXML
     private ComboBox<String> cmbTipoVehiculo;
@@ -175,9 +177,18 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
             }
         });
         
-        tVerFavoritos.setOnMouseClicked (event -> {
+         tVerFavoritos.setOnMouseClicked (event -> {
             try {
                 favoritos (event, user);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        });
+        
+        btnMisVehiculos.setOnMouseClicked (event -> {
+            try {
+               verMisVehiculos (event, user);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -648,6 +659,27 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
 
         vFavoritosController vFavoritosController = loader.getController();
         vFavoritosController.home(primerVehiculo, user); // pasar argumentos (user, this.controller) idk
+
+        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
+    }
+    
+        public void verMisVehiculos (Event event, Usuario user) throws IOException {
+        Vehiculo primerVehiculo = user.getVehiculosPropios().get(0);
+        
+        if (primerVehiculo == null) {
+            muestraAlerta("Error al cargar Vehiculos", "Al parecer no tienes ningún vehículo agregado.\nAgrega uno para poder acceder a esta pestaña.");
+            return;
+        }
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vVisualizacionMisVehiculos.fxml"));
+        root = loader.load();
+
+        vVisualizacionMisVehiculosController vVisualizacionMisVehiculosController = loader.getController();
+        vVisualizacionMisVehiculosController.home(primerVehiculo, user); // pasar argumentos (user, this.controller) idk
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);
