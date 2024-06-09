@@ -86,6 +86,7 @@ public class vCrearCuentaController {
                 Sistema.agregarUsuario_Archivo(u);
                 vaciarFields();
                 muestraAlerta("Felicidades", "¡Ya eres parte de la familia AutoTrade!");
+                ventanaIniciarSesion( event);
             }
         }
     }

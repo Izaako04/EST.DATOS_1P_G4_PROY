@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
@@ -21,11 +22,16 @@ import ec.edu.espol.proyectoed1.classes.Usuario;
 import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
@@ -75,14 +81,12 @@ public class vVisualizacionMisVehiculosController {
     
     private int nImages;
     
-    private CDLinkedList <Vehiculo> vFavoritos;
+    private CDLinkedList <Vehiculo> vPropios;
     @FXML
     private Button btnEditar;
     @FXML
     private Button btnGuardar;
-    @FXML
     private TextField tfMarca;
-    @FXML
     private TextField tfModelo;
     @FXML
     private TextField tfAnio;
@@ -102,6 +106,10 @@ public class vVisualizacionMisVehiculosController {
     private ComboBox<String> cmbTipo;
     @FXML
     private Button btnRemover;
+    @FXML
+    private ComboBox<String> cmbMarca;
+    @FXML
+    private ComboBox<String> cmbModelo;
     
     private void initialize() {
     }
@@ -118,7 +126,23 @@ public class vVisualizacionMisVehiculosController {
         alert.showAndWait();
     }
     
-    
+    private boolean alertar() {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Alerta!");
+        alert.setHeaderText("Estas apunto de borrar tu Vehiculo");
+        alert.setContentText("¿Estas seguro?");
+
+        ButtonType btnContinue = new ButtonType("Continuar");
+        ButtonType btnCancel = new ButtonType("Cancelar");
+        alert.getButtonTypes().setAll(btnContinue, btnCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == btnContinue) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     
     public void home(Vehiculo v, Usuario user){   
@@ -132,9 +156,15 @@ public class vVisualizacionMisVehiculosController {
         configurarComboBoxTipo(); 
         configurarComboBoxCombustible ();
          configurarComboBoxUbicacion ();
+         
+         Map <String, ArrayListG4 <String> > marcaYModelo = generaMapa();
+        Set<String> keys = marcaYModelo.keySet();
+        ObservableList<String> keyList = FXCollections.observableArrayList(keys);
+        cmbMarca.setItems(keyList);
+        cmbMarca.setOnAction(event -> configuraComboBoxMarcaModelo (marcaYModelo));
         
-        tfMarca.setEditable(false);
-        tfModelo.setEditable(false);
+        cmbMarca.setDisable(true);
+        cmbModelo.setDisable(true);
         tfAnio.setEditable(false);
         tfKm.setEditable(false);
         tfPotencia.setEditable(false);
@@ -143,6 +173,7 @@ public class vVisualizacionMisVehiculosController {
         cmbUbicacion.setDisable(true);
         cmbTipo.setDisable(true);
         tfPrecio.setEditable(false);
+        btnGuardar.setDisable(true);
         
         btnEditar.setOnMouseClicked (event -> permitirEditar());
         
@@ -157,11 +188,18 @@ public class vVisualizacionMisVehiculosController {
                
         
         btRegresar.setOnAction(event -> {
+            
             try {
                 regresar(event);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        });
+        
+        btnRemover.setOnAction(event -> {
+            Boolean alertado = alertar();
+            if(alertado == true) removerVehiculoPropio (event);
+            //else muestraAlerta("Aviso","Carro no borrado");
         });
         
         // Configurar el TextFormatter para aceptar solo valores numéricos
@@ -206,8 +244,8 @@ public class vVisualizacionMisVehiculosController {
     }
     
     private void llenarDatosVehiculo () {
-        tfMarca.setText(vehiculo.getRegistro().getMarca());
-        tfModelo.setText(vehiculo.getRegistro().getModelo());
+        cmbMarca.setPromptText(vehiculo.getRegistro().getMarca());
+        cmbModelo.setPromptText(vehiculo.getRegistro().getModelo());
         tfAnio.setText(String.valueOf(vehiculo.getRegistro().getAño()));
         tfKm.setText(String.valueOf(vehiculo.getKilometraje()));
         tfPotencia.setText(String.valueOf(vehiculo.getMotor().getPotencia()));
@@ -219,8 +257,8 @@ public class vVisualizacionMisVehiculosController {
     }
          
     private void permitirEditar(){
-        tfMarca.setEditable(true);
-        tfModelo.setEditable(true);
+        cmbMarca.setDisable(false);
+        cmbModelo.setDisable(false);
         tfAnio.setEditable(true);
         tfKm.setEditable(true);
         tfPotencia.setEditable(true);
@@ -229,6 +267,7 @@ public class vVisualizacionMisVehiculosController {
         cmbUbicacion.setDisable(false);
         cmbTipo.setDisable(false);
         tfPrecio.setEditable(true);
+        btnGuardar.setDisable(false);
     
     }
     
@@ -279,6 +318,49 @@ public class vVisualizacionMisVehiculosController {
         }
     }
     
+    private void removerVehiculoPropio (Event event) {
+        if (estaEnPropios()) {
+            vehiculo =  cdlVehiculos.getNext(vehiculo);
+            imgsVehiculos = vehiculo.getCdLLImagenes();
+            nImages = imgsVehiculos.size();
+            imgActual = imgsVehiculos.get(0);
+            llenarDatosVehiculo();
+            
+            Vehiculo vehiculoRemover =  cdlVehiculos.getPrev(vehiculo);
+             cdlVehiculos.remove(vehiculoRemover);
+             vehiculoRemover.eliminarVehiculo_ARCHIVO(Vehiculo.cmpXmarca);
+             
+            cambiarImg(imgActual);
+            
+            if ( cdlVehiculos.isEmpty()) {
+                muestraAlerta("Saliendo de favoritos", "Ya no tienes ningún favorito. Regresando a la página principal.");
+                usuario.setVehiculosPropios( cdlVehiculos);
+                Sistema.actualizarUsuario_Archivo(usuario);
+                
+                try {
+                    regresar(event);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+        } else {
+             cdlVehiculos.add(vehiculo);
+        }
+        
+        usuario.setVehiculosPropios( cdlVehiculos);
+        Sistema.actualizarUsuario_Archivo(usuario);
+    }
+    
+    private boolean estaEnPropios () {
+        for (Vehiculo v : cdlVehiculos) {
+            System.out.println("Vehiculo propio: " + v);
+        }
+        
+        System.out.println("Vehiculo a verificar: " + vehiculo);
+        return cdlVehiculos.contains(vehiculo);
+    }
+    
     
     private void configurarComboBoxTransmision () {
         ArrayListG4 <String> transmisionTipo = new ArrayListG4<String>();
@@ -326,6 +408,48 @@ public class vVisualizacionMisVehiculosController {
         ObservableList<String> ciudadesEcuador = FXCollections.observableArrayList(ciudades);
         cmbUbicacion.setItems(ciudadesEcuador);
     }
+       
+       
+        private Map <String, ArrayListG4 <String> > generaMapa () {
+        Map <String, ArrayListG4 <String> > marcaYModelo = new HashMap <> (); // prueba
+        
+        ArrayListG4 <String> nissan = new ArrayListG4 <String> ();
+        nissan.add("Versa");
+        nissan.add("Leaf");
+        nissan.add("Kicks");
+        
+        ArrayListG4 <String> kia = new ArrayListG4 <String> ();
+        kia.add("Picanto");
+        kia.add("Sportage R");
+        kia.add("Sportage Active");
+        
+        ArrayListG4 <String> toyota = new ArrayListG4 <String> ();
+        toyota.add("Yaris FastBack");
+        toyota.add("Fortuner");
+        toyota.add("Corolla Sedan");
+        
+        ArrayListG4 <String> chevrolet = new ArrayListG4 <String> ();
+        chevrolet.add("Aveo Family");
+        chevrolet.add("Spark");
+        chevrolet.add("Sail");
+        
+        marcaYModelo.put("Nissan", nissan);
+        marcaYModelo.put("Kia", kia);
+        marcaYModelo.put("Toyota", toyota);
+        marcaYModelo.put("Chevrolet", chevrolet);
+        
+        return marcaYModelo;
+    }
+       
+        private void configuraComboBoxMarcaModelo (Map <String, ArrayListG4 <String> > marcaYModelo){
+        String selectedKey = cmbMarca.getValue();
+        if (selectedKey != null) {
+            ArrayListG4 <String> values = marcaYModelo.get(selectedKey);
+            cmbModelo.setItems(FXCollections.observableArrayList(values));
+            cmbModelo.getSelectionModel().clearSelection();
+            cmbModelo.setPromptText("Modelo*");
+        }
+    }
     
     
     public void regresar(Event event) throws IOException{        
@@ -334,7 +458,8 @@ public class vVisualizacionMisVehiculosController {
             
         vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
         // vPaginaPrincipalController.actualizarVehiculo(); alguna función para 'recargar' los vehiculos
-        vPaginaPrincipalController.home(usuario, cdlVehiculos);
+        CDLinkedList<Vehiculo> vehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
+        vPaginaPrincipalController.home(usuario, vehiculos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);
@@ -343,4 +468,5 @@ public class vVisualizacionMisVehiculosController {
         stage.show();    
     
     }
+//    public void agregarImgs(Event event)
 }

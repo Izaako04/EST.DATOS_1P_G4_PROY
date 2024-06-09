@@ -101,11 +101,14 @@ public class Vehiculo implements Serializable {
     }
 
     public  void eliminarVehiculo_ARCHIVO(Comparator cmp){
-        if (leerArchivo("vehiculos")== null){}
+        System.out.println("Hola 1");
+        if (Utilitaria.leerArchivoVehiculos("vehiculos")== null){}
         else {
             if(verificarExistenciaVehiculo_ARCHIVO()){
-                List<Vehiculo> vehiculos= Utilitaria.leerArchivo("vehiculos");
+                System.out.println("Hola 2");
+                List<Vehiculo> vehiculos= Utilitaria.leerArchivoVehiculos("vehiculos");
                 vehiculos.remove(this);
+                Utilitaria.escribirArchivo(vehiculos, "vehiculos");
             }
         }
         
@@ -113,7 +116,7 @@ public class Vehiculo implements Serializable {
     
     public boolean verificarExistenciaVehiculo_ARCHIVO(){
         
-        if(Utilitaria.leerArchivo("vehiculos")==null){ 
+        if(Utilitaria.leerArchivoVehiculos("vehiculos")==null){ 
             return false;
             }
         else {
@@ -145,7 +148,7 @@ public class Vehiculo implements Serializable {
     
     private Vehiculo obtenerDelArchivo() throws excepcionDatoNoExistente{
         try{
-            List<Vehiculo> vehiculos= Utilitaria.leerArchivo("vehiculos");
+           CDLinkedList<Vehiculo> vehiculos= Utilitaria.leerArchivoVehiculos("vehiculos");
             for(Vehiculo v:vehiculos){
                 if(this.getRegistro().getPlaca().equals(v.getRegistro().getPlaca())) return this;
             }

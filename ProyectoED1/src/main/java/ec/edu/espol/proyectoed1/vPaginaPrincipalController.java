@@ -155,6 +155,7 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
     
 
     public void home (Usuario user, CDLinkedList <Vehiculo> listaVehiculos) {
+        configurarComboBoxTipo ();
         vehiculosComparar = new ArrayListG4 <Vehiculo>();
         btnComparar.setOnAction (event -> {
             try {
@@ -576,6 +577,22 @@ public class vPaginaPrincipalController implements Initializable, Filtrable {
             cmbModelo.getSelectionModel().clearSelection();
             cmbModelo.setPromptText("Modelo");
         }
+    }
+    
+    private void configurarComboBoxTipo () {
+        ArrayListG4 <String> TipoVehiculos = new ArrayListG4<String>();
+        TipoVehiculos.add("Limusina");
+        TipoVehiculos.add("SUV");
+        TipoVehiculos.add("Coupé");
+        TipoVehiculos.add("HatchBack");
+        TipoVehiculos.add("Camioneta");
+        TipoVehiculos.add("Sedán");
+        TipoVehiculos.add("4x4");
+        TipoVehiculos.add("Electricos");
+        
+        ObservableList<String> tipos = FXCollections.observableArrayList(TipoVehiculos);
+        cmbTipoVehiculo.setItems(tipos);
+        cmbTipoVehiculo.setPromptText("Tipo*");
     }
     
     private Map <String, ArrayListG4 <String> > generaMapa () {
