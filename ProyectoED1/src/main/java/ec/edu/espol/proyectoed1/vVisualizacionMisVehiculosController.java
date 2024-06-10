@@ -235,7 +235,6 @@ public class vVisualizacionMisVehiculosController {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                anchorPane.getChildren().clear();
                 imgsVehiculos = vehiculo.getCdLLImagenes();
                 cdlVehiculos = user.getVehiculosPropios();
             }
@@ -245,6 +244,8 @@ public class vVisualizacionMisVehiculosController {
         btnSubirImg.setOnAction(event -> {
             try {
                 seleccionarImg ();
+                avanzarVehiculoIzq ();
+                avanzarVehiculoDer ();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -531,17 +532,17 @@ public class vVisualizacionMisVehiculosController {
                 targetFolder.mkdirs(); // Crea la carpeta si no existe
             }
 
-            File targetFile = new File(targetFolder, selectedFile.getName());
-            Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-             this.vehiculo.setNuevaImagen(targetFile);
-             Vehiculo vehiculoRemover =  cdlVehiculos.getPrev(vehiculo);       
-             cdlVehiculos.remove(vehiculoRemover);
-             vehiculoRemover.eliminarVehiculo_ARCHIVO(Vehiculo.cmpXmarca);
-             Sistema.agregarVehiculo_Archivo(this.vehiculo);
-              CDLinkedList <Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
-              listaVehiculosUsuarios.add(this.vehiculo);
-              usuario.setVehiculosPropios(listaVehiculosUsuarios);
-              Sistema.actualizarUsuario_Archivo(usuario);
+        File targetFile = new File(targetFolder, selectedFile.getName());
+        Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        this.vehiculo.setNuevaImagen(targetFile);
+        Sistema.agregarVehiculo_Archivo(this.vehiculo);
+        CDLinkedList <Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
+        listaVehiculosUsuarios.add(this.vehiculo);
+        usuario.setVehiculosPropios(listaVehiculosUsuarios);
+        Sistema.actualizarUsuario_Archivo(usuario);
+        Vehiculo vehiculoRemover =  cdlVehiculos.getPrev(vehiculo);       
+        cdlVehiculos.remove(vehiculoRemover);
+        vehiculoRemover.eliminarVehiculo_ARCHIVO(Vehiculo.cmpXmarca);
       
         }
     }
@@ -551,10 +552,6 @@ public class vVisualizacionMisVehiculosController {
             muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber llenado todos los campos obligatorios*");
             return;
         } 
-       
-        Vehiculo vehiculoRemover =  cdlVehiculos.getPrev(this.vehiculo);       
-        cdlVehiculos.remove(vehiculoRemover);
-        vehiculoRemover.eliminarVehiculo_ARCHIVO(Vehiculo.cmpXmarca);
         
        Double precio = Double.parseDouble(this.tfPrecio.getText()); ;
         Double kilometraje = Double.parseDouble(this.tfKm.getText());
@@ -584,11 +581,14 @@ public class vVisualizacionMisVehiculosController {
 
         
         Sistema.agregarVehiculo_Archivo(this.vehiculo);
-         CDLinkedList <Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
-         listaVehiculosUsuarios.add(this.vehiculo);
-         usuario.setVehiculosPropios(listaVehiculosUsuarios);
-         Sistema.actualizarUsuario_Archivo(usuario);
+        CDLinkedList <Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
+        listaVehiculosUsuarios.add(this.vehiculo);
+        usuario.setVehiculosPropios(listaVehiculosUsuarios);
+        Sistema.actualizarUsuario_Archivo(usuario);
         muestraAlerta("Cambios Guardados", "¡Los datos de tu Vehiculo se han actualizado!");
+        Vehiculo vehiculoRemover =  cdlVehiculos.getPrev(vehiculo);       
+        cdlVehiculos.remove(vehiculoRemover);
+        vehiculoRemover.eliminarVehiculo_ARCHIVO(Vehiculo.cmpXmarca);
    
    }
     
@@ -608,5 +608,4 @@ public class vVisualizacionMisVehiculosController {
         stage.show();    
     
     }
-//    public void agregarImgs(Event event)
 }

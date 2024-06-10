@@ -105,7 +105,7 @@ public class Vehiculo implements Serializable {
     }
 
     public  void eliminarVehiculo_ARCHIVO(Comparator cmp){
-        if (Utilitaria.leerArchivoVehiculos("vehiculos")== null){}
+        if (Utilitaria.leerArchivoVehiculos("vehiculos")== null){System.out.println("Vacio");}
         else {
             if(verificarExistenciaVehiculo_ARCHIVO()){
                 List<Vehiculo> vehiculos= Utilitaria.leerArchivoVehiculos("vehiculos");

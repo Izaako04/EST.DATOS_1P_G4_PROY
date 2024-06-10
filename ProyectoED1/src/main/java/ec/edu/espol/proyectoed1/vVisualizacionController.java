@@ -41,8 +41,6 @@ public class vVisualizacionController {
     @FXML
     private Button bAccidentes;
     @FXML
-    private TextField fcPrecio;
-    @FXML
     private Button btOutMoverIzquierda;
     @FXML
     private Button btOutMoverDerecha;
@@ -90,6 +88,8 @@ public class vVisualizacionController {
     private Image corazonNegro = new Image("file:src/main/resources/ec/edu/espol/proyectoed1/heart-solid.png");
     
     private CDLinkedList <Vehiculo> vFavoritos;
+    @FXML
+    private Text tTipo;
     
     private void initialize() {
     }
@@ -162,6 +162,7 @@ public class vVisualizacionController {
         tModelo.setText(vehiculo.getRegistro().getModelo());
         tYear.setText(String.valueOf(vehiculo.getRegistro().getAño()));
         tKilometraje.setText(String.valueOf(vehiculo.getKilometraje()));
+        tTipo.setText(vehiculo.getRegistro().getTipo());
         tMotor.setText(vehiculo.getMotor().getTipo());
         tPotencia.setText(String.valueOf(vehiculo.getMotor().getPotencia()));
         tTransmicion.setText(vehiculo.getTransmision().getTipo());
@@ -272,10 +273,10 @@ public class vVisualizacionController {
     
     public void verAccidentesyReparaciones (Event event, Usuario user) throws IOException {
                  
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("vAccidentesyReparaciones.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vAccidentesyReparacionesOUT.fxml"));
         root = loader.load();
 
-        vAccidentesYReparacionesController vAccidentesyReparacionesController = loader.getController();
+        vAccidentesYReparacionesOUTController vAccidentesyReparacionesController = loader.getController();
         vAccidentesyReparacionesController.home(this.vehiculo, user); // pasar argumentos (user, this.controller) idk
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();
