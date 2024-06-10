@@ -392,7 +392,11 @@ public class vSubirVehiculoController implements Initializable {
                 muestraAlerta ("Error al cargar tu vehículo", "La placa del vehiculo ya ha sido ingresada antes");
                 return;
             }else{
-                RegistroVehiculo nuevoRegistro = new RegistroVehiculo (placa, usuario, year, marca, modelo, reparacion, accidente, tipo);
+                CDLinkedList<Accidente> accidentes = new CDLinkedList();
+                CDLinkedList<Reparacion> reparaciones= new CDLinkedList();
+                if(accidente != null) accidentes.add(accidente);
+                if (reparacion != null) reparaciones.add(reparacion);
+                RegistroVehiculo nuevoRegistro = new RegistroVehiculo (placa, usuario, year, marca, modelo, reparaciones, accidentes, tipo);
                 // Se crea objeto Transmision
                 Transmision transmisionObj = new Transmision (transmision);
 

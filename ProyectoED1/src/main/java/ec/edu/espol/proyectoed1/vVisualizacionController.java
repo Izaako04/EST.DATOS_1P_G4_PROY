@@ -277,7 +277,7 @@ public class vVisualizacionController {
         root = loader.load();
 
         vAccidentesYReparacionesOUTController vAccidentesyReparacionesController = loader.getController();
-        vAccidentesyReparacionesController.home(this.vehiculo, user); // pasar argumentos (user, this.controller) idk
+        vAccidentesyReparacionesController.home(this.vehiculo, user, vehiculo.getRegistro().getAccidentes(), vehiculo.getRegistro().getReparaciones()); // pasar argumentos (user, this.controller) idk
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);

@@ -553,7 +553,7 @@ public class vVisualizacionMisVehiculosController {
             return;
         } 
         
-       Double precio = Double.parseDouble(this.tfPrecio.getText()); ;
+        Double precio = Double.parseDouble(this.tfPrecio.getText()); ;
         Double kilometraje = Double.parseDouble(this.tfKm.getText());
         Integer year = Integer.parseInt(this.tfAnio.getText());
         String combustible = this.cmbCombustible.getValue();

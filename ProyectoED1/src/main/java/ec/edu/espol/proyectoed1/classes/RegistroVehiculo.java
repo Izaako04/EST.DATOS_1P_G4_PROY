@@ -5,6 +5,7 @@
 package ec.edu.espol.proyectoed1.classes;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
+import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class RegistroVehiculo implements Serializable {
     private int año;
     private String marca;
     private String modelo;
-    private Reparacion reparaciones; // antes ArrayListG4
-    private Accidente accidentes;
+    private CDLinkedList<Reparacion> reparaciones; // antes ArrayListG4
+    private CDLinkedList<Accidente> accidentes;
     private String tipo;
 
-    public RegistroVehiculo(String placa, Persona duenio, int año, String marca, String modelo, Reparacion reparaciones, Accidente accidentes, String tipo) {
+    public RegistroVehiculo(String placa, Persona duenio, int año, String marca, String modelo, CDLinkedList<Reparacion> reparaciones, CDLinkedList<Accidente> accidentes, String tipo) {
         this.placa = placa;
         this.duenio = duenio;
         this.año = año;
@@ -33,6 +34,8 @@ public class RegistroVehiculo implements Serializable {
         this.accidentes = accidentes;
         this.tipo = tipo;
     }
+
+    
     
     public RegistroVehiculo (String marca) {
         this.marca = marca;
@@ -67,19 +70,19 @@ public class RegistroVehiculo implements Serializable {
         this.año = año;
     }
 
-    public Reparacion getReparaciones() {
+    public CDLinkedList<Reparacion> getReparaciones() {
         return reparaciones;
     }
 
-    public void setReparaciones(Reparacion reparaciones) {
+    public void setReparaciones(CDLinkedList<Reparacion> reparaciones) {
         this.reparaciones = reparaciones;
     }
 
-    public Accidente getAccidentes() {
+    public CDLinkedList<Accidente> getAccidentes() {
         return accidentes;
     }
 
-    public void setAccidentes(Accidente accidentes) {
+    public void setAccidentes(CDLinkedList<Accidente> accidentes) {
         this.accidentes = accidentes;
     }
 

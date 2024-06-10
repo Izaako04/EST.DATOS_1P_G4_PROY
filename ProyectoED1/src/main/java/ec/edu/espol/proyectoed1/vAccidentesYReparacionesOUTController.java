@@ -2,6 +2,7 @@ package ec.edu.espol.proyectoed1;
 
 import ec.edu.espol.proyectoed1.TDAs.ArrayListG4;
 import ec.edu.espol.proyectoed1.TDAs.CDLinkedList;
+import ec.edu.espol.proyectoed1.classes.Accidente;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ec.edu.espol.proyectoed1.classes.Persona;
+import ec.edu.espol.proyectoed1.classes.Reparacion;
 import ec.edu.espol.proyectoed1.classes.Usuario;
 import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
@@ -97,13 +99,27 @@ public class vAccidentesYReparacionesOUTController {
     @FXML
     private Button btnAcMovIzq;
     @FXML
-    private TextArea taAccidentes;
-    @FXML
     private Button btnRpMovDer;
     @FXML
     private Button btnRpMovIzq;
     @FXML
-    private TextArea taReparaciones;
+    private Text descripcionAccidente;
+    @FXML
+    private Text fechaAccidente;
+    @FXML
+    private Text ubicacionAccidente;
+    @FXML
+    private Text descripcionReparacion;
+    @FXML
+    private Text fechaReparacion;
+    
+    private CDLinkedList<Accidente> accidentes;
+    
+    private CDLinkedList<Reparacion> reparaciones;
+    
+    private Accidente accidenteActual ;
+    
+    private Reparacion reparacionActual ;
     
     private void initialize() {
     }
@@ -139,9 +155,25 @@ public class vAccidentesYReparacionesOUTController {
     }
     
     
-    public void home(Vehiculo v, Usuario user){ 
+    public void home(Vehiculo v, Usuario user, CDLinkedList<Accidente> accidentes, CDLinkedList<Reparacion> reparaciones){ 
         this.vehiculo = v;
         this.usuario = user;
+        this.accidentes = accidentes;
+        this.reparaciones = reparaciones;
+
+        if(accidentes!= null){
+            accidenteActual =  v.getRegistro().getAccidentes().get(0);
+            actualizarAccidente();
+        }
+        else descripcionAccidente.setText("el usuario no ha registrado accidente todavía");
+
+        
+        if(reparaciones!=null){
+            reparacionActual = v.getRegistro().getReparaciones().get(0);
+            actualizarReparacion();
+        }
+        else descripcionReparacion.setText("el usuario no ha registrado reparacion todavía");
+
         btRegresar.setOnAction(event -> {
             try {        
                 regresar(event);
@@ -149,6 +181,12 @@ public class vAccidentesYReparacionesOUTController {
                 ex.printStackTrace();
             }
         });
+        
+        btnAcMovDer.setOnAction(event ->{btnAcMovDerMethod(accidenteActual);} );
+        
+        btnAcMovIzq.setOnAction(event -> {btnAcMovIzqMethod(accidenteActual);} );
+        
+        
     }
     
     private void llenarDatosVehiculo () {
@@ -191,4 +229,37 @@ public class vAccidentesYReparacionesOUTController {
     
     }
 //    public void agregarImgs(Event event)
+    
+    private void btnAcMovIzqMethod(Accidente accidente){
+        accidenteActual = accidentes.getNext(accidente);
+        actualizarAccidente();
+                System.out.println("god");
+
+    }
+    
+    private void btnAcMovDerMethod(Accidente accidente){
+        accidenteActual = accidentes.getPrev(accidente);
+        actualizarAccidente();
+
+    }
+    
+    private void actualizarAccidente(){
+        String feAccidente=accidenteActual.getFecha();
+        String ubAccidente= accidenteActual.getUbicacion();
+        String desAccidente= accidenteActual.getDescripcion();
+        
+        fechaAccidente.setText(feAccidente);
+        ubicacionAccidente.setText(ubAccidente);
+        descripcionAccidente.setText(desAccidente);
+    }
+    
+    private void actualizarReparacion(){
+        
+        String feReparacion=reparacionActual.getFecha();
+        String desReparacion=reparacionActual.getDescripcion();
+        
+        fechaReparacion.setText(feReparacion);
+        descripcionReparacion.setText(desReparacion);
+        
+    }
 }
