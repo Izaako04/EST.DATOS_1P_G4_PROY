@@ -180,7 +180,8 @@ public class vAccidentesYReparacionesOUTController {
         root = loader.load();
         
         vVisualizacionController vVisualizacionController = loader.getController();
-        vVisualizacionController.home(this.vehiculo, usuario,cdlVehiculos);
+        CDLinkedList<Vehiculo> vs = Utilitaria.leerArchivoVehiculos("vehiculos");
+        vVisualizacionController.home(this.vehiculo, usuario,vs);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);

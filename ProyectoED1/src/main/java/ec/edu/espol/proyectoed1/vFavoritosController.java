@@ -288,10 +288,10 @@ public class vFavoritosController {
     
     public void verAccidentesyReparaciones (Event event, Usuario user) throws IOException {
                  
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("vAccidentesyReparaciones.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vAccidentesyReparacionesF.fxml"));
         root = loader.load();
 
-        vAccidentesYReparacionesOUTController vAccidentesyReparacionesController = loader.getController();
+        vAccidentesYReparacionesFController vAccidentesyReparacionesController = loader.getController();
         vAccidentesyReparacionesController.home(this.vehiculo, user); // pasar argumentos (user, this.controller) idk
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();
