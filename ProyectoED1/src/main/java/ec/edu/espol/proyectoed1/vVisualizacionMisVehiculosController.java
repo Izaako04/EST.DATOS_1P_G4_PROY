@@ -183,6 +183,7 @@ public class vVisualizacionMisVehiculosController {
         cmbMarca.setDisable(true);
         cmbModelo.setDisable(true);
         tfAnio.setEditable(false);
+        tfPlaca.setEditable(false);
         tfKm.setEditable(false);
         tfPotencia.setEditable(false);
         cmbTransmision.setDisable(true);
@@ -192,7 +193,7 @@ public class vVisualizacionMisVehiculosController {
         tfPrecio.setEditable(false);
         btnGuardar.setDisable(true);
         
-        btnEditar.setOnMouseClicked (event -> permitirEditar());
+        btnEditar.setOnMouseClicked (event -> {permitirEditar(); btnEditar.setDisable(true);});
         
         imgActual = imgsVehiculos.get(0);
         nImages = imgsVehiculos.size();
@@ -232,6 +233,20 @@ public class vVisualizacionMisVehiculosController {
             if(alertado == true){ 
                 try { 
                     editarAuto(event);
+                    btnGuardar.setDisable(true);
+                    btnEditar.setDisable(false);
+                    cmbMarca.setDisable(true);
+                    cmbModelo.setDisable(true);
+                    tfPlaca.setEditable(false);
+                    tfAnio.setEditable(false);
+                    tfKm.setEditable(false);
+                    tfPotencia.setEditable(false);
+                    cmbTransmision.setDisable(true);
+                    cmbCombustible.setDisable(true);
+                    cmbUbicacion.setDisable(true);
+                    cmbTipo.setDisable(true);
+                    tfPrecio.setEditable(false);
+                    btnGuardar.setDisable(true);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -246,6 +261,7 @@ public class vVisualizacionMisVehiculosController {
                 seleccionarImg ();
                 avanzarVehiculoIzq ();
                 avanzarVehiculoDer ();
+                muestraAlerta("Imagen agregada","La imagen ha sido agregada a tu vehiculo.");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -293,16 +309,16 @@ public class vVisualizacionMisVehiculosController {
     }
     
     private void llenarDatosVehiculo () {
-        cmbMarca.setPromptText(vehiculo.getRegistro().getMarca());
-        cmbModelo.setPromptText(vehiculo.getRegistro().getModelo());
+        cmbMarca.setValue(vehiculo.getRegistro().getMarca());
+        cmbModelo.setValue(vehiculo.getRegistro().getModelo());
         tfPlaca.setText(String.valueOf(vehiculo.getRegistro().getPlaca()));
         tfAnio.setText(String.valueOf(vehiculo.getRegistro().getAño()));
         tfKm.setText(String.valueOf(vehiculo.getKilometraje()));
         tfPotencia.setText(String.valueOf(vehiculo.getMotor().getPotencia()));
-        cmbTransmision.setPromptText(vehiculo.getTransmision().getTipo());
-        cmbTipo.setPromptText(vehiculo.getRegistro().getTipo());
-        cmbCombustible.setPromptText(vehiculo.getMotor().getTipo());
-        cmbUbicacion.setPromptText(vehiculo.getUbicacion());
+        cmbTransmision.setValue(vehiculo.getTransmision().getTipo());
+        cmbTipo.setValue(vehiculo.getRegistro().getTipo());
+        cmbCombustible.setValue(vehiculo.getMotor().getTipo());
+        cmbUbicacion.setValue(vehiculo.getUbicacion());
         tfPrecio.setText(String.valueOf(vehiculo.getPrecio()));
     }
          
@@ -374,7 +390,7 @@ public class vVisualizacionMisVehiculosController {
         root = loader.load();
 
         vAccidentesYReparacionesController vAccidentesyReparacionesController = loader.getController();
-        vAccidentesyReparacionesController.home(this.vehiculo, user); // pasar argumentos (user, this.controller) idk
+        vAccidentesyReparacionesController.home(this.vehiculo, user, this.cdlVehiculos); // pasar argumentos (user, this.controller) idk
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);
@@ -543,7 +559,7 @@ public class vVisualizacionMisVehiculosController {
         Vehiculo vehiculoRemover =  cdlVehiculos.getPrev(vehiculo);       
         cdlVehiculos.remove(vehiculoRemover);
         vehiculoRemover.eliminarVehiculo_ARCHIVO(Vehiculo.cmpXmarca);
-      
+        
         }
     }
    public void editarAuto(Event event) throws IOException{
@@ -553,7 +569,7 @@ public class vVisualizacionMisVehiculosController {
             return;
         } 
         
-        Double precio = Double.parseDouble(this.tfPrecio.getText()); ;
+       Double precio = Double.parseDouble(this.tfPrecio.getText()); ;
         Double kilometraje = Double.parseDouble(this.tfKm.getText());
         Integer year = Integer.parseInt(this.tfAnio.getText());
         String combustible = this.cmbCombustible.getValue();

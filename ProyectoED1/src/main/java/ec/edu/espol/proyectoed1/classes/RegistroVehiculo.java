@@ -23,6 +23,9 @@ public class RegistroVehiculo implements Serializable {
     private CDLinkedList<Reparacion> reparaciones; // antes ArrayListG4
     private CDLinkedList<Accidente> accidentes;
     private String tipo;
+    private Reparacion reparaciones2; // antes ArrayListG4
+    private Accidente accidentes2;
+    
 
     public RegistroVehiculo(String placa, Persona duenio, int año, String marca, String modelo, CDLinkedList<Reparacion> reparaciones, CDLinkedList<Accidente> accidentes, String tipo) {
         this.placa = placa;
@@ -108,6 +111,22 @@ public class RegistroVehiculo implements Serializable {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
+    }
+
+    public Reparacion getReparaciones2() {
+        return reparaciones2;
+    }
+
+    public void setReparaciones2(Reparacion reparaciones2) {
+        this.reparaciones2 = reparaciones2;
+    }
+
+    public Accidente getAccidentes2() {
+        return accidentes2;
+    }
+
+    public void setAccidentes2(Accidente accidentes2) {
+        this.accidentes2 = accidentes2;
     }
     
     
