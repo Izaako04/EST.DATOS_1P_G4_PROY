@@ -277,6 +277,7 @@ public class vVisualizacionController {
         root = loader.load();
 
         vAccidentesYReparacionesOUTController vAccidentesyReparacionesController = loader.getController();
+        if(vehiculo.getRegistro().getAccidentes()== null) System.out.println("el nullll?????");
         vAccidentesyReparacionesController.home(this.vehiculo, user, vehiculo.getRegistro().getAccidentes(), vehiculo.getRegistro().getReparaciones()); // pasar argumentos (user, this.controller) idk
 
         stage = (Stage)((Node) event.getSource()).getScene().getWindow();

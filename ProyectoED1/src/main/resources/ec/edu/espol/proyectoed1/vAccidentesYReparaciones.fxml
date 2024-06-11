@@ -2,6 +2,8 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -12,50 +14,51 @@
    <children>
       <AnchorPane layoutX="27.333333333333332" layoutY="102.0" pickOnBounds="false" prefHeight="603.0" prefWidth="1227.0" style="-fx-background-color: #66000F; -fx-background-radius: 20;" stylesheets="@estilos.css" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="83.0">
          <children>
-            <Pane layoutX="7.0" layoutY="9.0" prefHeight="584.0" prefWidth="619.0">
+            <Pane layoutX="-20.0" layoutY="7.0" prefHeight="584.0" prefWidth="619.0">
                <children>
-                  <Button fx:id="btnAcMovDer" layoutX="576.0" layoutY="276.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="&gt;" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                  <Button fx:id="btnAcMovIzq" layoutX="16.0" layoutY="278.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="&lt;" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                  <TextArea fx:id="taAccidentes" layoutX="28.0" layoutY="58.0" opacity="0.0" prefHeight="508.0" prefWidth="567.0" styleClass="textField" stylesheets="@estilos.css">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextArea>
                   <Text fill="WHITE" layoutX="258.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accidentes" textAlignment="CENTER" underline="true">
                      <font>
                         <Font name="Verdana Bold" size="18.0" />
                      </font>
                   </Text>
+                  <Button fx:id="btnAEditar" layoutX="40.0" layoutY="533.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="Editar" textFill="WHITE" />
+                  <Button fx:id="btnAGuardar" layoutX="524.0" layoutY="533.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="Guardar" textFill="WHITE" />
+                  <DatePicker fx:id="dpFechaAccidente" layoutX="387.0" layoutY="68.0" />
+                  <ComboBox fx:id="cmbUbicacionAccidente" layoutX="69.0" layoutY="67.0" prefWidth="150.0" promptText="Ubicacion" styleClass="combobox" stylesheets="@estilos.css" />
+                  <Button fx:id="btnAcMovIzq" layoutX="28.0" layoutY="252.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="&lt;" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="btnAcMovDer" layoutX="583.0" layoutY="251.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="&gt;" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <TextArea fx:id="taAccidente" layoutX="143.0" layoutY="138.0" prefHeight="226.0" prefWidth="339.0" text="para añadir nuevo accidente edite este y de click en guardar" />
                </children>
             </Pane>
             <Pane layoutX="627.0" layoutY="8.0" prefHeight="584.0" prefWidth="594.0">
                <children>
-                  <Button fx:id="btnRpMovDer" layoutX="551.0" layoutY="280.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="&gt;" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="btnRpMovIzq" layoutX="18.0" layoutY="279.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="&lt;" textFill="WHITE">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <TextArea fx:id="taReparaciones" layoutX="18.0" layoutY="60.0" opacity="0.0" prefHeight="507.0" prefWidth="558.0" styleClass="textField" stylesheets="@estilos.css">
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
-                  </TextArea>
                   <Text fill="WHITE" layoutX="236.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reparaciones" textAlignment="CENTER" underline="true">
                      <font>
                         <Font name="Verdana Bold" size="18.0" />
                      </font>
                   </Text>
+                  <Button fx:id="btnREditar" layoutX="42.0" layoutY="533.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="Editar" textFill="WHITE" />
+                  <Button fx:id="btnRGuardar" layoutX="499.0" layoutY="533.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="Guardar" textFill="WHITE" />
+                  <DatePicker fx:id="dpFechaReparacion" layoutX="383.0" layoutY="60.0" />
+                  <Button fx:id="btnRpMovIzq" layoutX="30.0" layoutY="252.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="&lt;" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="btnRpMovDer" layoutX="511.0" layoutY="254.0" mnemonicParsing="false" styleClass="btn" stylesheets="@estilos.css" text="&gt;" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <TextArea fx:id="taReparacion" layoutX="128.0" layoutY="141.0" prefHeight="226.0" prefWidth="339.0" text="para añadir nueva reparacion edite esta y de click en guardar" />
                </children>
             </Pane>
          </children>

@@ -161,14 +161,14 @@ public class vAccidentesYReparacionesOUTController {
         this.accidentes = accidentes;
         this.reparaciones = reparaciones;
 
-        if(accidentes!= null){
+        if(accidentes!= null && v.getRegistro().getAccidentes().get(0) != null ){
             accidenteActual =  v.getRegistro().getAccidentes().get(0);
             actualizarAccidente();
         }
         else descripcionAccidente.setText("el usuario no ha registrado accidente todavía");
 
         
-        if(reparaciones!=null){
+        if(reparaciones!=null && v.getRegistro().getReparaciones().get(0) != null ){
             reparacionActual = v.getRegistro().getReparaciones().get(0);
             actualizarReparacion();
         }
@@ -185,6 +185,11 @@ public class vAccidentesYReparacionesOUTController {
         btnAcMovDer.setOnAction(event ->{btnAcMovDerMethod(accidenteActual);} );
         
         btnAcMovIzq.setOnAction(event -> {btnAcMovIzqMethod(accidenteActual);} );
+        
+        btnRpMovDer.setOnAction(event ->{btnRpMovDerMethod(reparacionActual);} );
+        
+        btnRpMovIzq.setOnAction(event ->{btnRpMovIzqMethod(reparacionActual);} );
+
         
         
     }
@@ -233,12 +238,25 @@ public class vAccidentesYReparacionesOUTController {
     private void btnAcMovIzqMethod(Accidente accidente){
         accidenteActual = accidentes.getNext(accidente);
         actualizarAccidente();
-                System.out.println("god");
+        System.out.println("god");
 
     }
     
     private void btnAcMovDerMethod(Accidente accidente){
         accidenteActual = accidentes.getPrev(accidente);
+        actualizarAccidente();
+
+    }
+    
+    private void btnRpMovIzqMethod(Reparacion reparacion){
+        reparacionActual = reparaciones.getNext(reparacion);
+        actualizarAccidente();
+        System.out.println("god");
+
+    }
+    
+    private void btnRpMovDerMethod(Reparacion reparacion){
+        reparacionActual = reparaciones.getPrev(reparacion);
         actualizarAccidente();
 
     }

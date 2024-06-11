@@ -33,6 +33,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
@@ -97,13 +98,27 @@ public class vAccidentesYReparacionesController {
     @FXML
     private Button btnAcMovIzq;
     @FXML
-    private TextArea taAccidentes;
-    @FXML
     private Button btnRpMovDer;
     @FXML
     private Button btnRpMovIzq;
     @FXML
-    private TextArea taReparaciones;
+    private Button btnAEditar;
+    @FXML
+    private Button btnAGuardar;
+    @FXML
+    private DatePicker dpFechaAccidente;
+    @FXML
+    private ComboBox<?> cmbUbicacionAccidente;
+    @FXML
+    private TextArea taAccidente;
+    @FXML
+    private Button btnREditar;
+    @FXML
+    private Button btnRGuardar;
+    @FXML
+    private DatePicker dpFechaReparacion;
+    @FXML
+    private TextArea taReparacion;
     
     private void initialize() {
     }

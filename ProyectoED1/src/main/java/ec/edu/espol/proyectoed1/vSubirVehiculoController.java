@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -123,6 +125,16 @@ public class vSubirVehiculoController implements Initializable {
     private ComboBox<String> cmbCombustible;
     @FXML
     private ComboBox<String> cmbTipo;
+    @FXML
+    private Button btnAniadirOtroAccidente;
+    @FXML
+    private Button btnAniadirOtraReparacion;
+    
+    private CDLinkedList<Accidente> accidentes = new CDLinkedList();
+    private CDLinkedList<Reparacion> reparaciones= new CDLinkedList();
+    
+    private Accidente accTmp;
+    private Reparacion repTmp;
     
     
     /**
@@ -223,6 +235,40 @@ public class vSubirVehiculoController implements Initializable {
         configurarComboBoxTipo(); 
         configurarComboBoxCombustible ();
         
+        BooleanBinding fieldsFilled = Bindings.createBooleanBinding(() ->
+                 cbTieneAccidente.isSelected() &&
+                 dpFechaAccidente.getValue() != null &&
+                 !taDescripcionAccidente.getText().isEmpty() &&
+                 cmbUbicacionAccidente.getValue() != null,
+         cbTieneAccidente.selectedProperty(),
+         dpFechaAccidente.valueProperty(),
+         taDescripcionAccidente.textProperty(),
+         cmbUbicacionAccidente.valueProperty()
+        );
+
+        btnAniadirOtroAccidente.disableProperty().bind(fieldsFilled.not());
+        cbTieneAccidente.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            dpFechaAccidente.setEditable(isNowSelected);
+            taDescripcionAccidente.setEditable(isNowSelected);
+            cmbUbicacionAccidente.setDisable(!isNowSelected);
+        });
+        
+        BooleanBinding reparacionFieldsFilled = Bindings.createBooleanBinding(() ->
+                        cbTieneReparacion.isSelected() &&
+                        dpFechaReparacion.getValue() != null &&
+                        !taDescripcionReparacion.getText().isEmpty(),
+                cbTieneReparacion.selectedProperty(),
+                dpFechaReparacion.valueProperty(),
+                taDescripcionReparacion.textProperty()
+        );
+
+        btnAniadirOtraReparacion.disableProperty().bind(reparacionFieldsFilled.not());
+
+        cbTieneReparacion.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            dpFechaReparacion.setEditable(isNowSelected);
+            taDescripcionReparacion.setEditable(isNowSelected);
+        });
+        
         btnRegresar.setOnAction(event -> {
             try {
                 regresar(user, event);
@@ -233,6 +279,30 @@ public class vSubirVehiculoController implements Initializable {
         
         btnGuardar.setOnAction(event -> {
             subirVehiculo (event);
+        });
+        
+        btnAniadirOtroAccidente.setOnAction(event ->{
+            if (cbTieneAccidente.isSelected()) {
+                dpFechaAccidente.setEditable(true);
+                taDescripcionAccidente.setEditable(true);
+                                
+                accTmp = new Accidente (dpFechaAccidente.getValue().toString(), taDescripcionAccidente.getText(), cmbUbicacionAccidente.getValue());
+                                
+            }
+            accidentes.add(accTmp);
+            dpFechaAccidente.setValue(null);
+            taDescripcionAccidente.clear();
+            cmbUbicacionAccidente.setValue(null);
+            this.muestraAlerta("Accidente registrado", "Perfecto! se ha registrado un nuevo accidente al vehiculo" );
+        });
+        
+        btnAniadirOtraReparacion.setOnAction(event ->{
+            repTmp = new Reparacion (dpFechaReparacion.getValue().toString(), taDescripcionReparacion.getText());
+            reparaciones.add(repTmp);
+            dpFechaReparacion.setValue(null);
+            taDescripcionReparacion.clear();
+            this.muestraAlerta("Reparación registrada", "Perfecto! se ha registrado una nuevoa reparación al vehiculo" );
+
         });
         
         configBtnImagenes ();
@@ -359,15 +429,17 @@ public class vSubirVehiculoController implements Initializable {
         } else if (imgPortadaEmpty) { // no hay portada
             muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber cargado al menos la imágen 'Exterior Frontal'");
         } else { // crear vehiculo!
-            Accidente accidente = null;
-            Reparacion reparacion = null;
+            boolean accidente = false;
+            boolean reparacion = false;
             
             // Caso 1: Hay accidente
             if (cbTieneAccidente.isSelected()) {
                 dpFechaAccidente.setEditable(true);
                 taDescripcionAccidente.setEditable(true);
+                                
+                accTmp = new Accidente (dpFechaAccidente.getValue().toString(), descripcionAccidente, ubicacionAccidente);
                 
-                accidente = new Accidente (fechaAccidente.toString(), descripcionAccidente, ubicacionAccidente);
+                accidente = true;
                 
             } else {
                 dpFechaAccidente.setValue(null);
@@ -380,7 +452,8 @@ public class vSubirVehiculoController implements Initializable {
                 dpFechaReparacion.setEditable(true);
                 taDescripcionReparacion.setEditable(true);
 
-                reparacion = new Reparacion (fechaAccidente.toString(), descripcionReparacion);
+                repTmp = new Reparacion (dpFechaReparacion.getValue().toString(), descripcionReparacion);
+                reparacion = true; 
                 
             } else {
                 dpFechaReparacion.setValue(null);
@@ -392,10 +465,9 @@ public class vSubirVehiculoController implements Initializable {
                 muestraAlerta ("Error al cargar tu vehículo", "La placa del vehiculo ya ha sido ingresada antes");
                 return;
             }else{
-                CDLinkedList<Accidente> accidentes = new CDLinkedList();
-                CDLinkedList<Reparacion> reparaciones= new CDLinkedList();
-                if(accidente != null) accidentes.add(accidente);
-                if (reparacion != null) reparaciones.add(reparacion);
+                
+                if(accidente) accidentes.add(accTmp);
+                if (reparacion) reparaciones.add(repTmp);
                 RegistroVehiculo nuevoRegistro = new RegistroVehiculo (placa, usuario, year, marca, modelo, reparaciones, accidentes, tipo);
                 // Se crea objeto Transmision
                 Transmision transmisionObj = new Transmision (transmision);
