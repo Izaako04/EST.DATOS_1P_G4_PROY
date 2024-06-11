@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #141414;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.espol.proyectoed1.vVisualizacionMisVehiculosController">
+   <children>
+      <AnchorPane layoutX="49.0" layoutY="102.0" pickOnBounds="false" prefHeight="585.0" prefWidth="1193.0" style="-fx-background-color: #66000F; -fx-background-radius: 20;" stylesheets="@estilos.css" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="83.0">
+         <children>
+            <Pane layoutX="54.0" layoutY="45.0" prefHeight="539.0" prefWidth="658.0">
+               <children>
+                  <Button fx:id="btnImgMovDer" layoutX="619.0" layoutY="203.0" mnemonicParsing="false" styleClass="textField" stylesheets="@estilos.css" text="&gt;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="btnImgMovIzq" layoutY="203.0" mnemonicParsing="false" styleClass="textField" stylesheets="@estilos.css" text="&lt;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <ImageView fx:id="visualizadorImgs" fitHeight="473.0" fitWidth="531.0" layoutX="59.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
+                  <Text fx:id="tIndexImg" fill="WHITE" layoutX="566.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nImg">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="btnRemover" layoutX="-28.0" layoutY="513.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="90.0" styleClass="btn" stylesheets="@estilos.css" text="Remover" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="btnSubirImg" layoutX="449.0" layoutY="13.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="85.0" styleClass="btn2" stylesheets="@estilos.css" text="📷+" textAlignment="CENTER" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+            <AnchorPane fx:id="anchorPane" layoutX="767.0" layoutY="11.0" prefHeight="586.0" prefWidth="418.0" style="-fx-background-color: #b3001b; -fx-background-radius: 20;">
+               <children>
+                  <Text fill="WHITE" layoutX="72.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometraje">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="100.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Año">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="89.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modelo">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="93.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marca">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="82.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Potencia">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="70.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transmision">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="70.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combustible">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="79.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ubicacion">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="89.0" layoutY="452.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="btnEditar" layoutX="73.0" layoutY="537.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="90.0" styleClass="btn2" stylesheets="@estilos.css" text="Editar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="btnGuardar" layoutX="268.0" layoutY="537.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="90.0" styleClass="btn2" stylesheets="@estilos.css" text="Guardar" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <TextField fx:id="tfAnio" layoutX="217.0" layoutY="176.0" styleClass="textField2" stylesheets="@estilos.css" />
+                  <TextField fx:id="tfKm" layoutX="217.0" layoutY="212.0" styleClass="textField2" stylesheets="@estilos.css" />
+                  <TextField fx:id="tfPotencia" layoutX="217.0" layoutY="252.0" styleClass="textField2" stylesheets="@estilos.css" />
+                  <TextField fx:id="tfPrecio" layoutX="212.0" layoutY="423.0" styleClass="textField2" stylesheets="@estilos.css" />
+                  <ComboBox fx:id="cmbTransmision" layoutX="214.0" layoutY="303.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
+                  <ComboBox fx:id="cmbCombustible" layoutX="213.0" layoutY="341.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
+                  <ComboBox fx:id="cmbUbicacion" layoutX="214.0" layoutY="382.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
+                  <ComboBox fx:id="cmbTipo" layoutX="212.0" layoutY="97.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
+                  <Text fill="WHITE" layoutX="99.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <ComboBox fx:id="cmbMarca" layoutX="216.0" layoutY="19.0" prefWidth="150.0" styleClass="combobox" />
+                  <ComboBox fx:id="cmbModelo" layoutX="215.0" layoutY="57.0" prefWidth="150.0" styleClass="combobox" stylesheets="@estilos.css" />
+                  <Button fx:id="btnAcsyReps" layoutX="134.0" layoutY="488.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="182.0" styleClass="btn2" stylesheets="@estilos.css" text="Ver Accidentes y Reparaciones" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fill="WHITE" layoutX="91.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Placa">
+                     <font>
+                        <Font name="Verdana" size="14.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="tfPlaca" layoutX="220.0" layoutY="135.0" styleClass="textField2" stylesheets="@estilos.css" />
+               </children>
+            </AnchorPane>
+            <Button id="moverIzquierda" fx:id="btOutMoverDerecha" layoutX="739.0" layoutY="236.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="37.0" styleClass="btn2" stylesheets="@estilos.css" text="▶" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Button id="moverIzquierda" fx:id="btOutMoverIzquierda" layoutX="-10.0" layoutY="236.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="30.0" styleClass="btn2" stylesheets="@estilos.css" text="◀" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btRegresar" layoutX="49.0" layoutY="33.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="113.0" styleClass="btn" stylesheets="@estilos.css" text="Regresar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="Verdana" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

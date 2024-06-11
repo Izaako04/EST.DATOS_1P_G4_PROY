@@ -101,6 +101,7 @@ public class vSubirVehiculoController implements Initializable {
     @FXML
     private ImageView portadaVehiculo;
     private CDLinkedList <File> imagenes = new CDLinkedList <File> ();
+   private CDLinkedList<Vehiculo> cdlVehiculos;
     
     private String ubicacionAccidente;
     private String descripcionAccidente;
@@ -116,10 +117,13 @@ public class vSubirVehiculoController implements Initializable {
     private ComboBox<String> cmbUbicacionVehiculo;
     @FXML
     private ComboBox<String> cmbUbicacionAccidente;
-    @FXML
     private TextField fcCombustible;
     @FXML
     private TextField fcPotencia;
+    @FXML
+    private ComboBox<String> cmbCombustible;
+    @FXML
+    private ComboBox<String> cmbTipo;
     
     
     /**
@@ -161,8 +165,9 @@ public class vSubirVehiculoController implements Initializable {
         return marcaYModelo;
     }
     
-    public void home (Usuario user) {
+    public void home (Usuario user, CDLinkedList<Vehiculo> vehiculos) {
         usuario = user;
+        this.cdlVehiculos = vehiculos;
         
         // Configurar el TextFormatter para aceptar solo valores numéricos
         TextFormatter<Integer> textFormatterYear = new TextFormatter<Integer> (
@@ -217,6 +222,8 @@ public class vSubirVehiculoController implements Initializable {
         
         configurarComboBoxTransmision ();
         configurarComboBoxUbicacion ();
+        configurarComboBoxTipo(); 
+        configurarComboBoxCombustible ();
         
         btnRegresar.setOnAction(event -> {
             try {
@@ -324,7 +331,7 @@ public class vSubirVehiculoController implements Initializable {
     
     private void subirVehiculo (Event event) {
         // comprobación campos vacíos
-        boolean camposVacios = (fcKilometraje.getText().equals("") || fcPrecio.getText().equals("") || fcYear.getText().equals("")  || fcPotencia.getText().equals("") || fcCombustible.getText() == null || fcPlaca.getText() == null|| cmbUbicacionVehiculo.getValue() == null || cmbMarca.getValue() == null || cmbModelo.getValue() == null || cmbTransmision.getValue() == null);
+        boolean camposVacios = (fcKilometraje.getText().equals("") || fcPrecio.getText().equals("") || fcYear.getText().equals("")  || fcPotencia.getText().equals("") || cmbCombustible.getValue() == null || fcPlaca.getText() == null|| cmbUbicacionVehiculo.getValue() == null || cmbMarca.getValue() == null || cmbModelo.getValue() == null || cmbTransmision.getValue() == null || cmbTipo.getValue() == null);
 
         if (camposVacios) { // campos vacíos
             muestraAlerta ("Error al cargar tu vehículo", "Por favor asegúrate de haber llenado todos los campos obligatorios*");
@@ -335,12 +342,13 @@ public class vSubirVehiculoController implements Initializable {
         Double precio = Double.parseDouble(this.fcPrecio.getText()); ;
         Double kilometraje = Double.parseDouble(this.fcKilometraje.getText());
         Integer year = Integer.parseInt(this.fcYear.getText());
-        String combustible = this.fcCombustible.getText();
+        String combustible = this.cmbCombustible.getValue();
         Integer potencia = Integer.parseInt(this.fcPotencia.getText());
         String placa = this.fcPlaca.getText();
         String ubicacion = this.cmbUbicacionVehiculo.getValue();
         String marca = this.cmbMarca.getValue();
         String modelo = this.cmbModelo.getValue();
+        String tipo = this.cmbTipo.getValue();
         String transmision = this.cmbTransmision.getValue();
         
         // campos opcionales
@@ -382,27 +390,31 @@ public class vSubirVehiculoController implements Initializable {
             }
             
             // Se crea objeto registro
-            RegistroVehiculo nuevoRegistro = new RegistroVehiculo (placa, usuario, year, marca, modelo, reparacion, accidente);
-            
-            // Se crea objeto Transmision
-            Transmision transmisionObj = new Transmision (transmision);
-            
-            // Se crea objeto Motor
-            Motor motorObj = new Motor (combustible, potencia);
-            
-            Vehiculo nuevoVehiculo = new Vehiculo (nuevoRegistro, motorObj, transmisionObj, precio, kilometraje, ubicacion, imagenes);
-            CDLinkedList <Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
-            listaVehiculosUsuarios.add(nuevoVehiculo);
-            usuario.setVehiculosPropios(listaVehiculosUsuarios);
-            
-            // Guardar en archivo usuario.ser y vehiculo.ser
-            Sistema.actualizarUsuario_Archivo(usuario);
-            Sistema.agregarVehiculo_Archivo(nuevoVehiculo);
-            muestraAlerta("Felicidades", "¡Tu vehículo ya es parte de la familia AutoTrade!");
-            try {
-                regresar(this.usuario, event);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            if(Vehiculo.verificarExistenciaPlaca_ARCHIVO(placa)){
+                muestraAlerta ("Error al cargar tu vehículo", "La placa del vehiculo ya ha sido ingresada antes");
+                return;
+            }else{
+                RegistroVehiculo nuevoRegistro = new RegistroVehiculo (placa, usuario, year, marca, modelo, reparacion, accidente, tipo);
+                // Se crea objeto Transmision
+                Transmision transmisionObj = new Transmision (transmision);
+
+                // Se crea objeto Motor
+                Motor motorObj = new Motor (combustible, potencia);
+
+                Vehiculo nuevoVehiculo = new Vehiculo (nuevoRegistro, motorObj, transmisionObj, precio, kilometraje, ubicacion, imagenes);
+                CDLinkedList <Vehiculo> listaVehiculosUsuarios = usuario.getVehiculosPropios();
+                listaVehiculosUsuarios.add(nuevoVehiculo);
+                usuario.setVehiculosPropios(listaVehiculosUsuarios);
+
+                // Guardar en archivo usuario.ser y vehiculo.ser
+                Sistema.actualizarUsuario_Archivo(usuario);
+                Sistema.agregarVehiculo_Archivo(nuevoVehiculo);
+                muestraAlerta("Felicidades", "¡Tu vehículo ya es parte de la familia AutoTrade!");
+                try {
+                    regresar(this.usuario, event);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
@@ -504,6 +516,33 @@ public class vSubirVehiculoController implements Initializable {
         
         ObservableList<String> transmisiones = FXCollections.observableArrayList(transmisionTipo);
         cmbTransmision.setItems(transmisiones);
+    }
+    
+    private void configurarComboBoxCombustible () {
+        ArrayListG4 <String> CombustibleTipo = new ArrayListG4<String>();
+        CombustibleTipo.add("Gasolina");
+        CombustibleTipo.add("Diesel");
+        CombustibleTipo.add("Electricidad");
+        CombustibleTipo.add("Gas");
+        
+        ObservableList<String> combustibles = FXCollections.observableArrayList(CombustibleTipo);
+        cmbCombustible.setItems(combustibles);
+    }
+    
+     private void configurarComboBoxTipo () {
+        ArrayListG4 <String> TipoVehiculos = new ArrayListG4<String>();
+        TipoVehiculos.add("Limusina");
+        TipoVehiculos.add("SUV");
+        TipoVehiculos.add("Coupé");
+        TipoVehiculos.add("HatchBack");
+        TipoVehiculos.add("Camioneta");
+        TipoVehiculos.add("Sedán");
+        TipoVehiculos.add("4x4");
+        TipoVehiculos.add("Electricos");
+        
+        ObservableList<String> tipos = FXCollections.observableArrayList(TipoVehiculos);
+        cmbTipo.setItems(tipos);
+        cmbTipo.setPromptText("Tipo*");
     }
     
     private void configuraComboBoxMarcaModelo (Map <String, ArrayListG4 <String> > marcaYModelo){

@@ -16,6 +16,10 @@ public class FiltradoVehiculos {
             Object valorFiltro = valoresFiltros.get(filtro);
             if (valorFiltro != null) {
                 switch (filtro) {
+                    case "tipoVehiculo":
+                        String tipo = (String) valorFiltro;
+                        predicados.add(FiltrosDinamicos.filtrarPorTipo(tipo));
+                        break;
                     case "modelo":
                         String modelo = (String) valorFiltro;
                         predicados.add(FiltrosDinamicos.filtrarPorModelo(modelo));

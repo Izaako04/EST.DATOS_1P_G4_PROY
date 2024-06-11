@@ -36,9 +36,6 @@ public class vFavoritosController {
     
     @FXML
     private Button bAccidentes;
-    private TextField fcPrecio;
-    @FXML
-    private Text tGuardar;
     @FXML
     private Button btOutMoverIzquierda;
     @FXML
@@ -49,7 +46,7 @@ public class vFavoritosController {
     private ImageView visualizadorImgs;
     @FXML
     private ImageView imgCorazon;
-    
+    private CDLinkedList<Vehiculo> cdlVehiculos;
     private Usuario usuario;
     private Vehiculo vehiculo;
     CDLinkedList <File> imgsVehiculos;
@@ -86,6 +83,12 @@ public class vFavoritosController {
     private Image corazonNegro = new Image("file:src/main/resources/ec/edu/espol/proyectoed1/heart-solid.png");
     
     private CDLinkedList <Vehiculo> vFavoritos;
+    @FXML
+    private Text tTipo;
+    @FXML
+    private Text textoSaludoUsuario;
+    @FXML
+    private Text txPropietario;
     
     private void initialize() {
     }
@@ -103,11 +106,12 @@ public class vFavoritosController {
     }
     
     
-    public void home(Vehiculo v, Usuario user){   
+    public void home(Vehiculo v, Usuario user, CDLinkedList<Vehiculo> vehiculos){   
         usuario = user;
         vehiculo = v;
         imgsVehiculos = vehiculo.getCdLLImagenes();
         vFavoritos = usuario.getVehiculosAgregadosAFavoritos();
+       cdlVehiculos = vehiculos;
         
         imgCorazon.setOnMouseClicked (event -> removerAnadirFav (event));
         
@@ -130,6 +134,14 @@ public class vFavoritosController {
             }
         });
         
+         bAccidentes.setOnAction(event -> {
+            try {
+                verAccidentesyReparaciones(event, usuario);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
         // Configurar el TextFormatter para aceptar solo valores numéricos
         TextFormatter<Integer> textFormatter = new TextFormatter<Integer> (
             new IntegerStringConverter(),
@@ -145,10 +157,13 @@ public class vFavoritosController {
     }
     
     private void llenarDatosVehiculo () {
+        String nombreCorreo = "Propietario: " + vehiculo.getRegistro().getDuenio().getNombre();
+        txPropietario.setText(nombreCorreo);
         tMarca.setText(vehiculo.getRegistro().getMarca());
         tModelo.setText(vehiculo.getRegistro().getModelo());
         tYear.setText(String.valueOf(vehiculo.getRegistro().getAño()));
         tKilometraje.setText(String.valueOf(vehiculo.getKilometraje()));
+        tTipo.setText(vehiculo.getRegistro().getTipo());
         tMotor.setText(vehiculo.getMotor().getTipo());
         tPotencia.setText(String.valueOf(vehiculo.getMotor().getPotencia()));
         tTransmicion.setText(vehiculo.getTransmision().getTipo());
@@ -257,15 +272,16 @@ public class vFavoritosController {
     
     @FXML
     private void verAccidentes(MouseEvent event) throws IOException {
+        
     }
     
     public void regresar(Usuario user, Event event) throws IOException{        
-        CDLinkedList listaVehiculos = Utilitaria.leerArchivoVehiculos("vehiculos");
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("vPaginaPrincipal.fxml"));
         root = loader.load();
             
         vPaginaPrincipalController vPaginaPrincipalController = loader.getController();
-        vPaginaPrincipalController.home(user, listaVehiculos);
+        vPaginaPrincipalController.home(user, this.cdlVehiculos);
             
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root, 1280, 720);
@@ -274,4 +290,20 @@ public class vFavoritosController {
         stage.show();    
     
     }
+    
+    public void verAccidentesyReparaciones (Event event, Usuario user) throws IOException {
+                 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vAccidentesyReparacionesF.fxml"));
+        root = loader.load();
+
+        vAccidentesYReparacionesFController vAccidentesyReparacionesController = loader.getController();
+        vAccidentesyReparacionesController.home(this.vehiculo, user, cdlVehiculos); // pasar argumentos (user, this.controller) idk
+
+        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
+    }
+    
 }

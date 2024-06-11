@@ -20,6 +20,7 @@ import ec.edu.espol.proyectoed1.classes.Usuario;
 import ec.edu.espol.proyectoed1.classes.Utilitaria;
 import ec.edu.espol.proyectoed1.classes.Vehiculo;
 import java.io.File;
+import java.util.Set;
 import javafx.event.Event;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -40,9 +41,6 @@ public class vVisualizacionController {
     
     @FXML
     private Button bAccidentes;
-    private TextField fcPrecio;
-    @FXML
-    private Text tGuardar;
     @FXML
     private Button btOutMoverIzquierda;
     @FXML
@@ -91,6 +89,10 @@ public class vVisualizacionController {
     private Image corazonNegro = new Image("file:src/main/resources/ec/edu/espol/proyectoed1/heart-solid.png");
     
     private CDLinkedList <Vehiculo> vFavoritos;
+    @FXML
+    private Text tTipo;
+    @FXML
+    private Text txPropietario;
     
     private void initialize() {
     }
@@ -115,6 +117,8 @@ public class vVisualizacionController {
         cdlVehiculos = listaVehiculos;
         vFavoritos = usuario.getVehiculosAgregadosAFavoritos();
         
+        
+        
         imgCorazon.setOnMouseClicked (event -> removerAnadirFav ());
         
         imgActual = imgsVehiculos.get(0);
@@ -136,6 +140,14 @@ public class vVisualizacionController {
             }
         });
         
+         bAccidentes.setOnAction(event -> {
+            try {
+                verAccidentesyReparaciones(event, usuario);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        
         // Configurar el TextFormatter para aceptar solo valores numéricos
         TextFormatter<Integer> textFormatter = new TextFormatter<Integer> (
             new IntegerStringConverter(),
@@ -151,10 +163,13 @@ public class vVisualizacionController {
     }
     
     private void llenarDatosVehiculo () {
+        String nombreCorreo = "Propietario: " + vehiculo.getRegistro().getDuenio().getNombre();
+        txPropietario.setText(nombreCorreo);
         tMarca.setText(vehiculo.getRegistro().getMarca());
         tModelo.setText(vehiculo.getRegistro().getModelo());
         tYear.setText(String.valueOf(vehiculo.getRegistro().getAño()));
         tKilometraje.setText(String.valueOf(vehiculo.getKilometraje()));
+        tTipo.setText(vehiculo.getRegistro().getTipo());
         tMotor.setText(vehiculo.getMotor().getTipo());
         tPotencia.setText(String.valueOf(vehiculo.getMotor().getPotencia()));
         tTransmicion.setText(vehiculo.getTransmision().getTipo());
@@ -261,5 +276,20 @@ public class vVisualizacionController {
         stage.setResizable(false);
         stage.show();    
     
+    }
+    
+    public void verAccidentesyReparaciones (Event event, Usuario user) throws IOException {
+                 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("vAccidentesyReparacionesOUT.fxml"));
+        root = loader.load();
+
+        vAccidentesYReparacionesOUTController vAccidentesyReparacionesController = loader.getController();
+        vAccidentesyReparacionesController.home(this.vehiculo, user,cdlVehiculos); // pasar argumentos (user, this.controller) idk
+
+        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 1280, 720);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show(); 
     }
 }

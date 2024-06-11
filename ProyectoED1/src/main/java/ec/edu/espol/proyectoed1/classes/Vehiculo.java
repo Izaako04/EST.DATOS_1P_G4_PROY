@@ -99,13 +99,18 @@ public class Vehiculo implements Serializable {
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
     }
+    
+    public void setNuevaImagen(File imgs){
+        this.cdLLImagenes.add(imgs);
+    }
 
-    public void eliminarVehiculo_ARCHIVO(Comparator cmp){
-        if (leerArchivo("vehiculos")== null){}
+    public  void eliminarVehiculo_ARCHIVO(Comparator cmp){
+        if (Utilitaria.leerArchivoVehiculos("vehiculos")== null){System.out.println("Vacio");}
         else {
             if(verificarExistenciaVehiculo_ARCHIVO()){
-                List<Vehiculo> vehiculos= Utilitaria.leerArchivo("vehiculos");
+                List<Vehiculo> vehiculos= Utilitaria.leerArchivoVehiculos("vehiculos");
                 vehiculos.remove(this);
+                Utilitaria.escribirArchivo(vehiculos, "vehiculos");
             }
         }
         
@@ -113,7 +118,7 @@ public class Vehiculo implements Serializable {
     
     public boolean verificarExistenciaVehiculo_ARCHIVO(){
         
-        if(Utilitaria.leerArchivo("vehiculos")==null){ 
+        if(Utilitaria.leerArchivoVehiculos("vehiculos")==null){ 
             return false;
             }
         else {
@@ -127,9 +132,25 @@ public class Vehiculo implements Serializable {
         
     }
     
+     public static boolean verificarExistenciaPlaca_ARCHIVO(String placa){
+        CDLinkedList<Vehiculo> vehiculosArchivos = Utilitaria.leerArchivoVehiculos("vehiculos");
+        if(vehiculosArchivos == null){ 
+            return false;
+            }
+        else {
+                RegistroVehiculo rg = new RegistroVehiculo(placa,true);
+                Vehiculo cr1 = new Vehiculo(rg);
+                 for(Vehiculo v : vehiculosArchivos){
+                     System.out.println(v.getRegistro().getPlaca());
+                     if(v.equals(cr1)) return true;
+                 }
+         }
+        return false;
+    }
+    
     private Vehiculo obtenerDelArchivo() throws excepcionDatoNoExistente{
         try{
-            List<Vehiculo> vehiculos= Utilitaria.leerArchivo("vehiculos");
+           CDLinkedList<Vehiculo> vehiculos= Utilitaria.leerArchivoVehiculos("vehiculos");
             for(Vehiculo v:vehiculos){
                 if(this.getRegistro().getPlaca().equals(v.getRegistro().getPlaca())) return this;
             }

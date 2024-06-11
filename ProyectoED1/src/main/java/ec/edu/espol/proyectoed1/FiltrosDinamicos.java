@@ -7,6 +7,10 @@ public class FiltrosDinamicos {
     public static Predicate<Vehiculo> filtrarPorModelo (String modelo) {
         return v -> v.getRegistro().getModelo().equalsIgnoreCase(modelo);
     }
+    
+    public static Predicate<Vehiculo> filtrarPorTipo (String tipo) {
+        return v -> v.getRegistro().getTipo().equalsIgnoreCase(tipo);
+    }
 
     public static Predicate<Vehiculo> filtrarPorMarca (String marca) {
         return v -> v.getRegistro().getMarca().equalsIgnoreCase(marca);
